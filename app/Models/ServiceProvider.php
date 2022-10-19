@@ -25,7 +25,7 @@ class ServiceProvider extends Authenticatable implements JWTSubject
         'email',
         'password',
         'country',
-        'city_area',
+        'city area',
         'street',
         'phone',
         'store_location',
