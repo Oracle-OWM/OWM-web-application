@@ -157,10 +157,10 @@ class ProductsController extends Controller
         $products2 = [];
         foreach ($products2CarModel as $carModel) {
             foreach ($carModel->products as $product) {
-                $products[] = $product;
+                $products2[] = $product;
             }
         }
-        $products = $products1->merge($products2);
+        $products = $products1->merge($products2)->all();
 
 //        if($products!=null && $products->count()>=1) {
             return $this->returnData('products', $products, 'Products have been returned successfully');
