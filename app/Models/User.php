@@ -29,6 +29,7 @@ class User extends Authenticatable implements JWTSubject
         'street',
         'phone',
         'image',
+        'remember_token',
     ];
 
     /**
@@ -51,23 +52,12 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    /**
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
-        return $this->getKey();  // Eloquent model method
+        return $this->getKey();
     }
-
-    /**
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
-        return [
-            'user' => [
-                'id' => $this->id,
-            ]
-        ];
+        return [];
     }
 }

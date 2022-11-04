@@ -21,10 +21,11 @@ class CreateProductsTable extends Migration
                 ->nullable()
                 ->constrained('categories')
                 ->onDelete('set null');
-            $table->string('store_name');
+            $table->string('store_name', 50);
             $table->double('price');
+            $table->double('city');
             $table->integer('offer_percentage');
-            $table->string('desc');
+            $table->string('desc', 50);
             $table->foreignId('car_model_id')
                 ->nullable()
                 ->constrained('car_models')
