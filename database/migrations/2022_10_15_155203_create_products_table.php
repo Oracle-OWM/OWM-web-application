@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
                 ->onDelete('set null');
             $table->string('store_name', 50);
             $table->double('price');
-            $table->double('city');
+            $table->string('city', 50);
             $table->integer('offer_percentage');
             $table->string('desc', 50);
             $table->foreignId('car_model_id')

@@ -19,7 +19,7 @@ class BannersController extends Controller
     {
         $banners = Banner::all()->map(function($banner){
 //            $banner->department;
-            return $banner;
+            return $banner->image;
         });
         if ($banners->count()>= 1) {
             return $this->returnData('banners', $banners, 'All banners has been returned successfully');
