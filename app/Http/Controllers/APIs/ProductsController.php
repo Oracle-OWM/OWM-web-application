@@ -160,7 +160,7 @@ class ProductsController extends Controller
                 $products[] = $product;
             }
         }
-        $products = $products1->merge($products2)->all();
+        $products = $products1->merge($products2);
 
 //        if($products!=null && $products->count()>=1) {
             return $this->returnData('products', $products, 'Products have been returned successfully');
