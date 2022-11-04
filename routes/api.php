@@ -130,7 +130,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
 
-        Route::get('/category-products', [ProductsController::class, 'getCategoryProducts']);
+        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
 
         Route::get('/{id}', [UsersController::class, 'getUser']);
 //            Route::put('/{id}', [UsersController::class, 'updateUser']);
