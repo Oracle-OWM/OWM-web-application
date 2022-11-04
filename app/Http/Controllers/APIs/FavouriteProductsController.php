@@ -23,10 +23,10 @@ class FavouriteProductsController extends Controller
         try {
             $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->orWhere('is_seller', '=', true)->get();
 
-            if($favouriteProducts) {
-                return $this-> returnSuccessMessage('Favourite Product successfully returned');
+            if($favouriteProducts && $favouriteProducts->count()>=1) {
+                return $this->returnData('favourite_products', $favouriteProducts, 'Favourite Product successfully returned');
             } else {
-                return $this-> returnError('Failed to add product', 'S003');
+                return $this-> returnError('There is nor products', 'S003');
             }
         } catch (\Exception $e) {
             return $this->returnError($e->getCode(), $e->getMessage());
