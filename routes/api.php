@@ -38,7 +38,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/me', [AuthController::class, 'me']);
 
-    Route::group(['middleware'=>'jwt.verify'], function () {
+//    Route::group(['middleware'=>'jwt.verify'], function () {
         Route::post('/send-notification', [NotificationsController::class, 'sendNotificationToMobile']);
 
 
@@ -186,6 +186,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
         Route::post('/forgot-password', [NewPasswordController::class, 'forgotPassword']);
         Route::post('/reset-password', [NewPasswordController::class, 'reset']);
-    });
+//    });
 
 });
