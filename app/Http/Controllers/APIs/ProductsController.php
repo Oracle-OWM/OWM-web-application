@@ -144,22 +144,19 @@ class ProductsController extends Controller
     }
 
     public function productsSearch(ProductsSearchRequest $request) {
-        $products1 = Product::where(function ($query) use($request) {
-            $query->where('name', 'like', '%' . $request->keyword . '%')
+        $products1 = Product::where('name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('store_name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('price', 'like', '%' . $request->keyword . '%')
                 ->orWhere('city', 'like', '%' . $request->keyword . '%')
-                ->orWhere('rate', 'like', '%' . $request->keyword . '%');
-        })->get();
-        $products2CarModel = CarModel::where(function ($query) use($request) {
-            $query->where('car_manufacture', 'like', '%' . $request->keyword . '%')
+                ->orWhere('rate', 'like', '%' . $request->keyword . '%')
+        ->get();
+        $products2CarModel = CarModel::where('car_manufacture', 'like', '%' . $request->keyword . '%')
                 ->orWhere('model_name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('car_year', 'like', '%' . $request->keyword . '%');
-        })->get();
+                ->orWhere('car_year', 'like', '%' . $request->keyword . '%')
+        ->get();
         $products = [];
         foreach ($products2CarModel as $carModel) {
             $products = $products1->merge($carModel->products)->all();
-
         }
 
         if($products!=null && $products->count()>=1) {

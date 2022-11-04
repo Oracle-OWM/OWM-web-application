@@ -22,7 +22,7 @@ class FavouriteProductsController extends Controller
     public function getUserFavouriteProducts(GetUserSellerFavouriteProductsRequest $request) {
         $request->validated();
         try {
-            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->orWhere('is_seller', '=', true)->get()->map(function ($favouriteProduct) {
+            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', true)->get()->map(function ($favouriteProduct) {
                 return Product::find($favouriteProduct->product_id);
             });
 
@@ -69,7 +69,7 @@ class FavouriteProductsController extends Controller
 
     public function deleteProductFromFavourites(AddDeleteFavouriteProductRequest $request)
     {
-        $favouriteProduct = UserSellerFavouriteProduct::where('user_id','=',$request->user_id)->orWhere('is_seller','=',$request->is_seller)->orWhere('product_id','=',$request->product_id)->first();   // Product::where('id','$request->id') -> first();
+        $favouriteProduct = UserSellerFavouriteProduct::where('user_id','=',$request->user_id)->where('is_seller','=',$request->is_seller)->where('product_id','=',$request->product_id)->first();   // Product::where('id','$request->id') -> first();
         if (!$favouriteProduct)
             return $this->returnError('This product is not exist anymore', 'S004');
 
