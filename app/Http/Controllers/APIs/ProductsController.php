@@ -154,17 +154,19 @@ class ProductsController extends Controller
                 ->orWhere('model_name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('car_year', 'like', '%' . $request->keyword . '%')
         ->get();
-//        $products = [];
-//        foreach ($products2CarModel as $carModel) {
-//        }
-            $products = $products1->merge($products2CarModel->products)->all();
+        $products2 = [];
+        foreach ($products2CarModel as $carModel) {
+            foreach ($carModel->products as $product) {
+                $products[] = $product;
+            }
+        }
+        $products = $products1->merge($products2)->all();
 
-//        if($products!=null && $products->count()>=1) {
-//        return $this->returnData('products', [$products1, $products2CarModel], 'Products have been returned successfully');
-        return $this->returnData('products', $products, 'Products have been returned successfully');
-//        } else {
-//            return $this->returnError('There are no products exist', 'S004');
-//        }
+        if($products!=null && $products->count()>=1) {
+            return $this->returnData('products', $products, 'Products have been returned successfully');
+        } else {
+            return $this->returnError('There are no products exist', 'S004');
+        }
     }
 
 }
