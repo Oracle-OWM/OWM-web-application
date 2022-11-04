@@ -59,6 +59,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::delete('/{id}', [CategoriesController::class, 'deleteCategory']);
             });
 
+//            بثلبثقلق
             Route::group(['prefix'=>'car-model'], function() {
                 Route::get('/', [CarModelsController::class, 'getAllCarModels']);
                 Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
