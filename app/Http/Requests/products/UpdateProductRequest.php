@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'category_id'                   => [ 'required', 'exists:categories,id', ],
             'car_model_id'                  => [ 'required', 'exists:car_models,id', ],
+            'city.required'               => 'Field is required',
             'store_name'                    => [ 'required', 'string', ],
             'price'                         => [ 'required', 'numeric', ],
             'offer_percentage'              => [ 'required', 'integer', ],
@@ -46,6 +47,9 @@ class UpdateProductRequest extends FormRequest
 
             'car_model_id.required'              => 'Field is required',
             'car_model_id.exist'                 => 'This category doesn\'t exist',
+
+            'city.required'               => 'Field is required',
+            'city.string'                 => 'Field must be string',
 
             'store_name.required'               => 'Field is required',
             'store_name.string'                 => 'Field must be string',
