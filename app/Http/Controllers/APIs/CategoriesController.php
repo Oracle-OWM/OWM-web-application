@@ -86,7 +86,7 @@ class CategoriesController extends Controller
             ]);
 
             if($updated) {
-                return $this-> returnSuccessMessage('Category successfully added');
+                return $this-> returnSuccessMessage('Category successfully updated');
             } else {
                 return $this-> returnError('Registration Failed', 'S003');
             }

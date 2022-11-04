@@ -25,7 +25,7 @@ class ServiceProvider extends Authenticatable implements JWTSubject
         'email',
         'password',
         'country',
-        'city_area',
+        'city area',
         'street',
         'phone',
         'store_location',
@@ -33,6 +33,7 @@ class ServiceProvider extends Authenticatable implements JWTSubject
         'store_address',
         'store_image',
         'image',
+        'remember_token',
     ];
 
     /**
@@ -56,23 +57,12 @@ class ServiceProvider extends Authenticatable implements JWTSubject
 
 
 
-    /**
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
-        return $this->getKey();  // Eloquent model method
+        return $this->getKey();
     }
-
-    /**
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
-        return [
-            'user' => [
-                'id' => $this->id,
-            ]
-        ];
+        return [];
     }
 }

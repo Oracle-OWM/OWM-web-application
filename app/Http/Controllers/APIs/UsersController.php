@@ -8,6 +8,7 @@ use App\Http\Requests\users\RegisterUserRequest;
 use App\Http\Requests\users\UpdateUserRequest;
 use App\Http\Traits\APIsTrait;
 use App\Http\Traits\GeneralTrait;
+use App\Models\ServiceProvider;
 use App\Models\User;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -47,10 +48,10 @@ class UsersController extends Controller
 
             // $user = Auth::guard('user-api')->user();
             $user = User::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
+            $serviceProvider = ServiceProvider::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
 
-            if(!$user) {
+            if(!$user && !$serviceProvider) {
                 return $this->returnError('Email/Username is incorrect', 'S001');
-
             } else if(password_verify($request->password, $user->password)) { // check password
 //            } else if(Hash::check($request->password, $user->password)) { // check password
                 // update user firebase token
@@ -76,6 +77,36 @@ class UsersController extends Controller
                     'city_area'=> $user->city_area,
                     'street'=> $user->street,
                     'image'=> $user->image,
+                    'is_seller'=> false,
+                    'token_data'=> $this->createNewToken($token),
+                ];
+                return $this->returnData('data', $data, 'returned token');
+            } else if(password_verify($request->password, $serviceProvider->password)) { // check password
+//            } else if(Hash::check($request->password, $user->password)) { // check password
+                // update serviceProvider firebase token
+                if($request->firebase_token) {
+                    $serviceProvider->update([
+                        'firebase_token'=> $request->firebase_token,
+                    ]);
+                }
+
+                $token = JWTAuth::fromUser($serviceProvider);
+                if (!$token) {
+                    return $this->returnError('Unauthorized', 'E3001');
+                }
+
+                $data = [
+                    'id'=> $serviceProvider->id,
+                    'username'=> $serviceProvider->username,
+                    'first_name'=> $serviceProvider->first_name,
+                    'last_name'=> $serviceProvider->last_name,
+                    'email'=> $serviceProvider->email,
+                    'phone'=> $serviceProvider->phone,
+                    'country'=> $serviceProvider->country,
+                    'city_area'=> $serviceProvider->city_area,
+                    'street'=> $serviceProvider->street,
+                    'image'=> $serviceProvider->image,
+                    'is_seller'=> true,
                     'token_data'=> $this->createNewToken($token),
                 ];
 

@@ -33,6 +33,8 @@ return [
     |
     */
 
+
+
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
@@ -114,5 +116,15 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'host' => env('MAIL_HOST', 'smtp-mail.outlook.com'),
+    'port' => env('MAIL_PORT', 587),
+    'from' => ['address' => 'fehuhelwan@gmail.com', 'name' => 'Reset Password'],
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'username' => env('MAIL_USERNAME', 'omarabdo1452001@outlook.com'),
+    'password' => env('MAIL_PASSWORD', "AMORabdo1452001!%"),
+    'sendmail' => '/usr/sbin/sendmail -bs',
+    'pretend' => false,
 
 ];

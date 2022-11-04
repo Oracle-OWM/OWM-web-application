@@ -1,15 +1,21 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Eccomerce
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Commands
+* setup
+```
+$ composer i
+$ npm i
+$ php artisan key:generate
+$ php artisan migrate
+```
+* Run the serve
+update the hostname and the portname in the resources/js/App/APIs.js too
+```
+$ php artisan serve --host=<hostname> --port=<portname>
+```
 
-## Important instructions for setup
-1. duplicate the .env-example file with name .env
-2. run the following command
-`composer i`
-3. run the the following command
-`composer php artisan key:generate`
+* Run the npm for UI updates
+```
+$ npm run dev
+$ npm run watch
+```
