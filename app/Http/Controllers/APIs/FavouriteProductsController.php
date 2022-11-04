@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\APIs;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\favourite_products\AddDeleteFavouriteProductRequest;
 use App\Http\Requests\favourite_products\AddFavouriteProductRequest;
 use App\Http\Requests\favourite_products\GetUserSellerFavouriteProductsRequest;
 use App\Http\Traits\APIsTrait;
@@ -20,7 +21,7 @@ class FavouriteProductsController extends Controller
     public function getUserFavouriteProducts(GetUserSellerFavouriteProductsRequest $request) {
         $request->validated();
         try {
-            $favouriteProducts = UserSellerFavouriteProduct::where('is_seller', '=', true)->orWhere('user_id', '=', $request->user_id)->get();
+            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->orWhere('is_seller', '=', true)->get();
 
             if($favouriteProducts) {
                 return $this-> returnSuccessMessage('Favourite Product successfully returned');
@@ -32,7 +33,7 @@ class FavouriteProductsController extends Controller
         }
     }
 
-    public function addProductToFavourites(AddFavouriteProductRequest $request) {
+    public function addProductToFavourites(AddDeleteFavouriteProductRequest $request) {
 
         $request->validated();
 
@@ -63,15 +64,15 @@ class FavouriteProductsController extends Controller
         }
     }
 
-    public function deleteProductFromFavourites(Request $request)
+    public function deleteProductFromFavourites(AddDeleteFavouriteProductRequest $request)
     {
-        $favouriteProduct = UserSellerFavouriteProduct::find($id);   // Product::where('id','$request->id') -> first();
+        $favouriteProduct = UserSellerFavouriteProduct::where('user_id','=',$request->user_id)->orWhere('is_seller','=',$request->is_seller)->orWhere('product_id','=',$request->product_id)->first();   // Product::where('id','$request->id') -> first();
         if (!$favouriteProduct)
             return $this->returnError('This product is not exist anymore', 'S004');
 
         $deleted = $favouriteProduct->delete();
         if ($deleted)
-            return $this->returnSuccessMessage('Product No. ' . "$id" . ' has been deleted successfully');
+            return $this->returnSuccessMessage('Product No. ' . "$request->product_id" . ' has been removed from fav. successfully');
         else
             return $this->returnError('This product can\'t be deleted', 'S003');
     }

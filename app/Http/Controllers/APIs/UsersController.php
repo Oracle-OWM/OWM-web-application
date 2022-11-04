@@ -50,16 +50,13 @@ class UsersController extends Controller
             $user = User::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
             $serviceProvider = ServiceProvider::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
 
+
+//            return $this->returnData('ss', $serviceProvider, 'ss');
             if(!$user && !$serviceProvider) {
                 return $this->returnError('Email/Username is incorrect', 'S001');
-            } else if(password_verify($request->password, $user->password)) { // check password
+            } else if($user != null && password_verify($request->password, $user->password)) { // check password
 //            } else if(Hash::check($request->password, $user->password)) { // check password
                 // update user firebase token
-                if($request->firebase_token) {
-                    $user->update([
-                        'firebase_token'=> $request->firebase_token,
-                    ]);
-                }
 
                 $token = JWTAuth::fromUser($user);
                 if (!$token) {
@@ -81,7 +78,7 @@ class UsersController extends Controller
                     'token_data'=> $this->createNewToken($token),
                 ];
                 return $this->returnData('data', $data, 'returned token');
-            } else if(password_verify($request->password, $serviceProvider->password)) { // check password
+            } else if($serviceProvider != null && password_verify($request->password, $serviceProvider->password)) { // check password
 //            } else if(Hash::check($request->password, $user->password)) { // check password
                 // update serviceProvider firebase token
                 if($request->firebase_token) {
