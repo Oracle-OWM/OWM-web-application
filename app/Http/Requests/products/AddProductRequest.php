@@ -32,7 +32,7 @@ class AddProductRequest extends FormRequest
             'store_name'                    => [ 'required', 'string', ],
             'price'                         => [ 'required', 'numeric', ],
             'offer_percentage'              => [ 'required', 'integer', ],
-            'desc'                          => [ 'required', 'string', ],
+            'desc'                          => [ 'required', 'string', Rule::unique('products', 'desc'), ],
             'rate'                          => [ 'required', 'integer', ],
             'image'                         => [ 'nullable', ],
         ];
