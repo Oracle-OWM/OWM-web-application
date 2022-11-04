@@ -156,11 +156,12 @@ class ProductsController extends Controller
         ->get();
 //        $products = [];
 //        foreach ($products2CarModel as $carModel) {
-//            $products = $products1->merge($carModel->products)->all();
 //        }
+            $products = $products1->merge($products2CarModel->products)->all();
 
 //        if($products!=null && $products->count()>=1) {
-            return $this->returnData('products', [$products1, $products2CarModel], 'Products have been returned successfully');
+//        return $this->returnData('products', [$products1, $products2CarModel], 'Products have been returned successfully');
+        return $this->returnData('products', $products, 'Products have been returned successfully');
 //        } else {
 //            return $this->returnError('There are no products exist', 'S004');
 //        }
