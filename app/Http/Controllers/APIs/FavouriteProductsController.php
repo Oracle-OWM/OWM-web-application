@@ -8,6 +8,7 @@ use App\Http\Requests\favourite_products\AddFavouriteProductRequest;
 use App\Http\Requests\favourite_products\GetUserSellerFavouriteProductsRequest;
 use App\Http\Traits\APIsTrait;
 use App\Http\Traits\GeneralTrait;
+use App\Models\Product;
 use App\Models\ServiceProvider;
 use App\Models\User;
 use App\Models\UserSellerFavouriteProduct;
@@ -21,12 +22,14 @@ class FavouriteProductsController extends Controller
     public function getUserFavouriteProducts(GetUserSellerFavouriteProductsRequest $request) {
         $request->validated();
         try {
-            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->orWhere('is_seller', '=', true)->get();
+            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->orWhere('is_seller', '=', true)->get()->map(function ($favouriteProduct) {
+                return Product::find($favouriteProduct->product_id);
+            });
 
             if($favouriteProducts && $favouriteProducts->count()>=1) {
                 return $this->returnData('favourite_products', $favouriteProducts, 'Favourite Product successfully returned');
             } else {
-                return $this-> returnError('There is nor products', 'S003');
+                return $this-> returnError('There is no products', 'S003');
             }
         } catch (\Exception $e) {
             return $this->returnError($e->getCode(), $e->getMessage());
