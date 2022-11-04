@@ -176,7 +176,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
 
-        Route::get('/category-products', [ProductsController::class, 'getCategoryProducts']);
+        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
 
         Route::get('/{id}', [ServiceProvidersController::class, 'getServiceProvider']);
 //            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
