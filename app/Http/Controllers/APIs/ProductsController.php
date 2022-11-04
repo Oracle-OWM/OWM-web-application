@@ -140,7 +140,7 @@ class ProductsController extends Controller
 
         if (!$category_products || $category_products->count()<1)
             return $this->returnError('There are no products exist', 'S004');
-        return $this->returnSuccessMessage('Products have been returned successfully');
+        return $this->returnData('category_products', $category_products, 'Products have been returned successfully');
     }
 
     public function productsSearch(ProductsSearchRequest $request) {
