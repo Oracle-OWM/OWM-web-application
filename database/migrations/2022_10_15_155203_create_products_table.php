@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->double('price');
             $table->string('city', 50);
             $table->integer('offer_percentage');
-            $table->string('desc', 50);
+            $table->string('desc', 50)->unique();
             $table->foreignId('car_model_id')
                 ->nullable()
                 ->constrained('car_models')

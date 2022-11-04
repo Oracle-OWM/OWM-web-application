@@ -50,12 +50,21 @@ class CarModelsController extends Controller
             } else {
                 $imgPath = null;
             }
-            $car_model = CarModel::create([
-                'car_manufacture' => $request->car_manufacture,
-                'car_year' => $request->car_year,
-                'model_name' => $request->model_name,
-                'image' => $imgPath,
-            ]);
+            $flag = 1;
+            foreach (CarModel::all() as $carModel) {
+                if($carModel->car_manufacture == $request->car_manufacture && $carModel->car_year == $request->car_year && $carModel->model_name == $request->model_name) {
+                    $flag = 0;
+                }
+            }
+            if ($flag) {
+                $car_model = CarModel::create([
+                    'car_manufacture' => $request->car_manufacture,
+                    'car_year' => $request->car_year,
+                    'model_name' => $request->model_name,
+                    'image' => $imgPath,
+                ]);
+            } else
+                return $this-> returnError('This car model is already exist', 'S003');
 
             if($car_model) {
                 return $this-> returnSuccessMessage('Car model successfully added');
