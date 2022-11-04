@@ -133,7 +133,7 @@ class ProductsController extends Controller
             return $this->returnError('This product can\'t be deleted', 'S003');
     }
 
-    public function getCategoryProducts(GetCategoryProductsRequest $request, $id) {
+    public function getCategoryProducts(GetCategoryProductsRequest $request) {
         $request->validated();
 
         $category_products = Category::find($request->category_id)->products;
