@@ -24,7 +24,7 @@ class JwtMiddleware extends BaseMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $guard = null)
     {
         Config::set('auth.providers.admins.model', Admin::class);
         $admin = null;
