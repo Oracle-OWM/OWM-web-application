@@ -58,14 +58,14 @@ class ProductsController extends Controller
         $request->validated();
         $password = password_hash($request->password, PASSWORD_DEFAULT);
 
-            return $this->returnData('product', var_dump($_FILES), 'Product has been returned successfully');
+//             return $this->returnData('product', var_dump($_FILES), 'Product has been returned successfully');
 //         return [$request->name,$request->gallery];
         try {
             $gallery = [];
             if($request->gallery!=null) {
-                foreach($request->gallery as $image) {
+                foreach($_FILES['gallery'] as $image) {
 //                     if($image) {
-//                         return $image;
+                        return $image;
                         $gallery[] = $this->saveFile($image, 'public/images/products');
 //                     }
                 }
