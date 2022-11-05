@@ -15,7 +15,7 @@ use App\Models\CarModel;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Image;
 class ProductsController extends Controller
 {
     use GeneralTrait;
