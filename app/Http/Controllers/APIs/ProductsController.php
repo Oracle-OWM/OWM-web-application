@@ -59,7 +59,7 @@ class ProductsController extends Controller
         $password = password_hash($request->password, PASSWORD_DEFAULT);
 
 //             return $this->returnData('product', var_dump($request->gallery), 'Product has been returned successfully');
-        return [$request->name,$request->gallery];
+//         return [$request->name,$request->gallery];
         try {
             $gallery = [];
             if($request->gallery!=null) {
