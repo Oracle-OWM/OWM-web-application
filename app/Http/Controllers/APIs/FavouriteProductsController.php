@@ -27,7 +27,23 @@ class FavouriteProductsController extends Controller
             });
 
             if($favouriteProducts && $favouriteProducts->count()>=1) {
-                return $this->returnData('favourite_products', $favouriteProducts, 'Favourite Product successfully returned');
+                return $this->returnData('favourite_products', $favouriteProducts, 'Favourite Products successfully returned');
+            } else {
+                return $this-> returnError('There is no products', 'S003');
+            }
+        } catch (\Exception $e) {
+            return $this->returnError($e->getCode(), $e->getMessage());
+        }
+    }
+    
+    public function getUserFavouriteProductsIDs() {
+        try {
+            $favouriteProductsIDs = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', $request->is_seller)->get()->map(function ($favouriteProduct) {
+                return $favouriteProduct->product_id;
+            });
+
+            if($favouriteProductsIDs && $favouriteProductsIDs->count()>=1) {
+                return $this->returnData('favourite_products_IDs', $favouriteProductsIDs, 'Favourite Products IDs successfully returned');
             } else {
                 return $this-> returnError('There is no products', 'S003');
             }
