@@ -35,6 +35,7 @@ class AddProductRequest extends FormRequest
             'desc'                          => [ 'required', 'string', Rule::unique('products', 'desc'), ],
             'rate'                          => [ 'required', 'integer', ],
             'image'                         => [ 'required', ],
+            'gallery'                       => [ 'nullable', ],
         ];
     }
 
