@@ -99,6 +99,13 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
     });
 
     Route::group(['prefix'=>'user', ], function() {
+        Route::get('/banner', [BannersController::class, 'getAllBanners']);
+        Route::get('/category', [CategoriesController::class, 'getAllCategories']);
+        Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
+        Route::get('/product', [ProductsController::class, 'getAllProducts']);
+        Route::post('/products-search', [ProductsController::class, 'productsSearch']);
+        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
+
         Route::group(['middleware'=>'auth.guard:user-api'], function () {
             Route::get('/{id}', [UsersController::class, 'getUser']);
 
@@ -125,16 +132,16 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             });
 
         });
+    });
 
+    Route::group(['prefix'=>'service-provider'], function() {
         Route::get('/banner', [BannersController::class, 'getAllBanners']);
         Route::get('/category', [CategoriesController::class, 'getAllCategories']);
         Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
         Route::get('/product', [ProductsController::class, 'getAllProducts']);
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
         Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
-    });
 
-    Route::group(['prefix'=>'service-provider'], function() {
         Route::group(['middleware'=>'auth.guard:service-provider-api'], function() {
             Route::group(['prefix'=>'banner'], function () {
                 Route::get('/{id}', [BannersController::class, 'getBanner']);
@@ -173,14 +180,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 //            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
 //            Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);
         });
-
-        Route::get('/banner', [BannersController::class, 'getAllBanners']);
-        Route::get('/category', [CategoriesController::class, 'getAllCategories']);
-        Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
-        Route::get('/product', [ProductsController::class, 'getAllProducts']);
-        Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
-
     });
 
 });
