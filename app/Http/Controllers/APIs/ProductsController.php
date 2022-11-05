@@ -44,6 +44,7 @@ class ProductsController extends Controller
     {
         $product = Product::find($request->id);
         if ($product) {
+            $product->gallery = json_decode($product->category);
             $product->category;
             $product->carModel;
             return $this->returnData('product', $product, 'Product has been returned successfully');
