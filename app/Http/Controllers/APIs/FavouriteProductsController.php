@@ -36,7 +36,7 @@ class FavouriteProductsController extends Controller
         }
     }
     
-    public function getUserFavouriteProductsIDs() {
+    public function getUserFavouriteProductsIDs(AddDeleteFavouriteProductRequest $request) {
         try {
             $favouriteProductsIDs = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', $request->is_seller)->get()->map(function ($favouriteProduct) {
                 return $favouriteProduct->product_id;
