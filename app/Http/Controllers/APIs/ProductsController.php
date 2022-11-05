@@ -63,6 +63,16 @@ class ProductsController extends Controller
             } else {
                 $imgPath = null;
             }
+            
+            dd($request->gallery);
+            $gallery = [];
+            if($request->gallery!=null && $request->gallery->count()>=1) {
+                foreach($request->gallery as $image) {
+                    if($image) {
+                        $gallery[] = $this->saveFile($image, 'public/images/products');
+                    }
+                }
+            }
 
             $product = Product::create([
                 'name' => $request->name,
@@ -75,6 +85,7 @@ class ProductsController extends Controller
                 'desc' => $request->desc,
                 'rate' => $request->rate,
                 'image' => $imgPath,
+                'gallery' => json_encode($gallery),
             ]);
 
             if($product) {
