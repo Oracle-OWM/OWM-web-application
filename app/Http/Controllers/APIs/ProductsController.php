@@ -61,13 +61,13 @@ class ProductsController extends Controller
 //             return $this->returnData('product', var_dump($_FILES), 'Product has been returned successfully');
 //         return [$request->name,$request->gallery];
         try {
-            $gallery = [];
             if($request->gallery!=null) {
-                foreach($_FILES['gallery'] as $image) {
-//                     if($image) {
-                        return [$_FILES['gallery'], $image];
-                        $gallery[] = $this->saveFile($image, 'public/images/products');
-//                     }
+                foreach ($request->file('gallery') as $imagefile) {
+                    $image = new Image;
+                    $path = $imagefile->store('/public/images/products', ['disk' =>   'my_files']);
+                    $image->url = $path;
+                    $image->product_id = $product->id;
+                    $image->save();
                 }
             }
             
