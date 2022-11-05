@@ -153,18 +153,7 @@ class ProductsController extends Controller
                 ->orWhere('price', '=', $request->keyword)
                 ->orWhere('city', 'like', '%' . $request->keyword . '%')
                 ->orWhere('rate', '=', $request->keyword)
-        ->get();
-        $products2CarModel = CarModel::where('car_manufacture', 'like', '%' . $request->keyword . '%')
-                ->orWhere('model_name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('car_year', '=', $request->keyword)
-        ->get();
-        $products2 = [];
-        foreach ($products2CarModel as $carModel) {
-            foreach ($carModel->products as $product) {
-                $products2[] = $product;
-            }
-        }
-        $products = $products1->merge($products2)->all()->map(function($product){
+        ->get()->map(function($product){
             return [
                 'id'=> $product->id,
                 'name'=> $product->name,
@@ -173,6 +162,23 @@ class ProductsController extends Controller
                 'rate'=> $product->rate,
             ];
         });
+        $products2CarModel = CarModel::where('car_manufacture', 'like', '%' . $request->keyword . '%')
+                ->orWhere('model_name', 'like', '%' . $request->keyword . '%')
+                ->orWhere('car_year', '=', $request->keyword)
+        ->get();
+        $products2 = [];
+        foreach ($products2CarModel as $carModel) {
+            foreach ($carModel->products as $product) {
+                $products2[] = [
+                    'id'=> $product->id,
+                    'name'=> $product->name,
+                    'image'=> $product->image,
+                    'offer_percentage'=> $product->offer_percentage,
+                    'rate'=> $product->rate,
+                ];
+            }
+        }
+        $products = $products1->merge($products2)->all();
 //        if($products!=null && $products->count()>=1) {
             return $this->returnData('products', $products, 'Products have been returned successfully');
 //        } else {
