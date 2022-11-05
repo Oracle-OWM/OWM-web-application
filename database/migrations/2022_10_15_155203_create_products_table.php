@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name', 50)->unique();
             $table->string('image');
-            $table->json('gallery');
+            $table->json('gallery')->nullable();
             $table->foreignId('category_id')
                 ->nullable()
                 ->constrained('categories')
