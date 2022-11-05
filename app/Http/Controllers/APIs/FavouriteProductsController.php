@@ -35,8 +35,10 @@ class FavouriteProductsController extends Controller
             return $this->returnError($e->getCode(), $e->getMessage());
         }
     }
-    
+
     public function getUserFavouriteProductsIDs(AddDeleteFavouriteProductRequest $request) {
+        $request->validated();
+        
         try {
             $favouriteProductsIDs = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', $request->is_seller)->get()->map(function ($favouriteProduct) {
                 return $favouriteProduct->product_id;
