@@ -59,16 +59,17 @@ class ProductsController extends Controller
         $password = password_hash($request->password, PASSWORD_DEFAULT);
 
 //             return $this->returnData('product', var_dump($request->gallery), 'Product has been returned successfully');
-        $gallery = [];
-        if($request->gallery!=null) {
-            foreach($request->gallery as $image) {
-                if($image) {
-                    $gallery[] = $this->saveFile($image, 'public/images/products');
-                }
-            }
-        }
         
         try {
+            $gallery = [];
+            if($request->gallery!=null) {
+                foreach($request->gallery as $image) {
+//                     if($image) {
+                        $gallery[] = $this->saveFile($image, 'public/images/products');
+//                     }
+                }
+            }
+            
             if($request->hasFile('image')) {
                 $imgPath = $this->saveFile($request->image, 'public/images/products');
             } else {
