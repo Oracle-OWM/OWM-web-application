@@ -25,6 +25,7 @@ class ProductsController extends Controller
     {
         $products = Product::all()->map(function($product){
             return [
+                'id'=> $product->id,
                 'name'=> $product->name,
                 'image'=> $product->image,
                 'offer_percentage'=> $product->offer_percentage,
@@ -165,6 +166,7 @@ class ProductsController extends Controller
         }
         $products = $products1->merge($products2)->all()->map(function($product){
             return [
+                'id'=> $product->id,
                 'name'=> $product->name,
                 'image'=> $product->image,
                 'offer_percentage'=> $product->offer_percentage,
