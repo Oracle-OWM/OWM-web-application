@@ -43,12 +43,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
 
     Route::group(['prefix'=>'admin', 'middleware'=>'auth.guard:admin-api'], function() {
-        Route::get('/', [AdminsController::class, 'getAllAdmins']);
-        Route::get('/{id}', [AdminsController::class, 'getAdmin']);
-        Route::post('/', [AdminsController::class, 'addAdmin']);
-        Route::put('/{id}', [AdminsController::class, 'updateAdmin']);
-        Route::delete('/{id}', [AdminsController::class, 'deleteAdmin']);
-
         Route::group(['prefix'=>'banner'], function () {
             Route::get('/', [BannersController::class, 'getAllBanners']);
             Route::get('/{id}', [BannersController::class, 'getBanner']);
@@ -96,19 +90,16 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::put('/{id}', [UsersController::class, 'updateUser']);
             Route::delete('/{id}', [UsersController::class, 'deleteUser']);
         });
+
+        Route::get('/', [AdminsController::class, 'getAllAdmins']);
+        Route::get('/{id}', [AdminsController::class, 'getAdmin']);
+        Route::post('/', [AdminsController::class, 'addAdmin']);
+        Route::put('/{id}', [AdminsController::class, 'updateAdmin']);
+        Route::delete('/{id}', [AdminsController::class, 'deleteAdmin']);
     });
 
     Route::group(['prefix'=>'user', ], function() {
-        Route::get('/banner', [BannersController::class, 'getAllBanners']);
-        Route::get('/category', [CategoriesController::class, 'getAllCategories']);
-        Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
-        Route::get('/product', [ProductsController::class, 'getAllProducts']);
-        Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
-
         Route::group(['middleware'=>'auth.guard:user-api'], function () {
-            Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-            Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
             Route::get('/{id}', [UsersController::class, 'getUser']);
 
             Route::group(['prefix'=>'banner'], function () {
@@ -132,17 +123,18 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::group(['prefix'=>'product'], function() {
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
             });
-        });
-    });
 
-    Route::group(['prefix'=>'service-provider'], function() {
+        });
+
         Route::get('/banner', [BannersController::class, 'getAllBanners']);
         Route::get('/category', [CategoriesController::class, 'getAllCategories']);
         Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
         Route::get('/product', [ProductsController::class, 'getAllProducts']);
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
         Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
+    });
 
+    Route::group(['prefix'=>'service-provider'], function() {
         Route::group(['middleware'=>'auth.guard:service-provider-api'], function() {
             Route::group(['prefix'=>'banner'], function () {
                 Route::get('/{id}', [BannersController::class, 'getBanner']);
@@ -181,6 +173,14 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 //            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
 //            Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);
         });
+
+        Route::get('/banner', [BannersController::class, 'getAllBanners']);
+        Route::get('/category', [CategoriesController::class, 'getAllCategories']);
+        Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
+        Route::get('/product', [ProductsController::class, 'getAllProducts']);
+        Route::post('/products-search', [ProductsController::class, 'productsSearch']);
+        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
+
     });
 
 });
