@@ -24,9 +24,12 @@ class ProductsController extends Controller
     public function getAllProducts()
     {
         $products = Product::all()->map(function($product){
-            $product->category;
-            $product->carModel;
-            return $product;
+            return [
+                'name'=> $product->name,
+                'image'=> $product->image,
+                'offer_percentage'=> $product->offer_percentage,
+                'rate'=> $product->rate,
+            ];
         });
         if ($products->count()>= 1) {
             return $this->returnData('products', $products, 'All products has been returned successfully');
@@ -160,8 +163,14 @@ class ProductsController extends Controller
                 $products2[] = $product;
             }
         }
-        $products = $products1->merge($products2)->all();
-
+        $products = $products1->merge($products2)->all()->map(function($product){
+            return [
+                'name'=> $product->name,
+                'image'=> $product->image,
+                'offer_percentage'=> $product->offer_percentage,
+                'rate'=> $product->rate,
+            ];
+        });
 //        if($products!=null && $products->count()>=1) {
             return $this->returnData('products', $products, 'Products have been returned successfully');
 //        } else {
