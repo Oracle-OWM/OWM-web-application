@@ -64,7 +64,7 @@ class ProductsController extends Controller
                 $imgPath = null;
             }
             
-            dd($request->gallery);
+            ddd($request->gallery);
             $gallery = [];
             if($request->gallery!=null && $request->gallery->count()>=1) {
                 foreach($request->gallery as $image) {
