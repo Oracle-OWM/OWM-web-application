@@ -15,7 +15,7 @@ use App\Models\CarModel;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Image;
+
 class ProductsController extends Controller
 {
     use GeneralTrait;
@@ -62,12 +62,10 @@ class ProductsController extends Controller
 //         return [$request->name,$request->gallery];
         try {
             if($request->gallery!=null) {
+                $gallery = [];
                 foreach ($request->file('gallery') as $imagefile) {
-                    $image = new Image;
                     $path = $imagefile->store('/public/images/products', ['disk' =>   'my_files']);
-                    $image->url = $path;
-                    $image->product_id = $product->id;
-                    $image->save();
+                    $gallery[] = $path;
                 }
             }
             
