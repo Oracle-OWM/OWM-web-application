@@ -35,6 +35,8 @@ class UpdateProductRequest extends FormRequest
             'desc'                          => [ 'required', 'string', Rule::unique('products', 'desc')->ignore($this->id, 'id'),],
             'rate'                          => [ 'required', 'integer', ],
             'image'                         => [ 'nullable', ],
+            'gallery'                       => [ 'nullable', ],
+
         ];
     }
 
