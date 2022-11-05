@@ -27,9 +27,10 @@ class ProductsController extends Controller
             return [
                 'id'=> $product->id,
                 'name'=> $product->name,
-                'image'=> $product->image,
+                'price'=> $product->price,
                 'offer_percentage'=> $product->offer_percentage,
                 'rate'=> $product->rate,
+                'image'=> $product->image,
             ];
         });
         if ($products->count()>= 1) {
@@ -157,9 +158,10 @@ class ProductsController extends Controller
             return [
                 'id'=> $product->id,
                 'name'=> $product->name,
-                'image'=> $product->image,
                 'offer_percentage'=> $product->offer_percentage,
+                'price'=> $product->price,
                 'rate'=> $product->rate,
+                'image'=> $product->image,
             ];
         });
         $products2CarModel = CarModel::where('car_manufacture', 'like', '%' . $request->keyword . '%')
@@ -172,9 +174,10 @@ class ProductsController extends Controller
                 $products2[] = [
                     'id'=> $product->id,
                     'name'=> $product->name,
-                    'image'=> $product->image,
+                    'price'=> $product->price,
                     'offer_percentage'=> $product->offer_percentage,
                     'rate'=> $product->rate,
+                    'image'=> $product->image,
                 ];
             }
         }
