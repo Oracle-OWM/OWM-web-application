@@ -57,22 +57,23 @@ class ProductsController extends Controller
         $request->validated();
         $password = password_hash($request->password, PASSWORD_DEFAULT);
 
+        ddd($request);
+        $gallery = [];
+        if($request->gallery!=null && $request->gallery->count()>=1) {
+            foreach($request->gallery as $image) {
+                if($image) {
+                    $gallery[] = $this->saveFile($image, 'public/images/products');
+                }
+            }
+        }
+        
         try {
             if($request->hasFile('image')) {
                 $imgPath = $this->saveFile($request->image, 'public/images/products');
             } else {
                 $imgPath = null;
             }
-            
-            ddd($request->gallery);
-            $gallery = [];
-            if($request->gallery!=null && $request->gallery->count()>=1) {
-                foreach($request->gallery as $image) {
-                    if($image) {
-                        $gallery[] = $this->saveFile($image, 'public/images/products');
-                    }
-                }
-            }
+           
 
             $product = Product::create([
                 'name' => $request->name,
