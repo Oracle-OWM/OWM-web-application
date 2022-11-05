@@ -58,7 +58,7 @@ class ProductsController extends Controller
         $request->validated();
         $password = password_hash($request->password, PASSWORD_DEFAULT);
 
-//             return $this->returnData('product', var_dump($request->gallery), 'Product has been returned successfully');
+            return $this->returnData('product', var_dump($_FILES), 'Product has been returned successfully');
 //         return [$request->name,$request->gallery];
         try {
             $gallery = [];
