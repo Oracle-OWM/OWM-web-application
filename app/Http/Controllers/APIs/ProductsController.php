@@ -65,7 +65,7 @@ class ProductsController extends Controller
             if($request->gallery!=null) {
                 foreach($_FILES['gallery'] as $image) {
 //                     if($image) {
-//                         return $image;
+                        return [$_FILES['gallery'], $image];
                         $gallery[] = $this->saveFile($image, 'public/images/products');
 //                     }
                 }
