@@ -178,7 +178,7 @@ class ProductsController extends Controller
                 ];
             }
         }
-        $products = $products1->merge($products2)->all();
+        $products = collect($products1)->merge($products2)->all();
 //        if($products!=null && $products->count()>=1) {
             return $this->returnData('products', $products, 'Products have been returned successfully');
 //        } else {
