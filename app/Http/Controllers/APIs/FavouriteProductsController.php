@@ -22,7 +22,7 @@ class FavouriteProductsController extends Controller
     public function getUserFavouriteProducts(GetUserSellerFavouriteProductsRequest $request) {
         $request->validated();
         try {
-            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', true)->get()->map(function ($favouriteProduct) {
+            $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', $request->is_seller)->get()->map(function ($favouriteProduct) {
                 return Product::find($favouriteProduct->product_id);
             });
 
