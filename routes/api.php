@@ -120,7 +120,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
             });
 
-            Route::post('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
+            Route::get('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
             Route::group(['prefix'=>'favourite-product'], function() {
                 Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
                 Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
