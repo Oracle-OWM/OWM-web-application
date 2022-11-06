@@ -131,7 +131,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
             });
             
-            Route::get('/{id}', [UsersController::class, 'getUser']);
+            Route::get('/get-user/{id}', [UsersController::class, 'getUser']);
             
 
         });
