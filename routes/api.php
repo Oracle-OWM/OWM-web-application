@@ -107,7 +107,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
         Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
 
         Route::group(['middleware'=>'auth.guard:user-api'], function () {
-            Route::get('/{id}', [UsersController::class, 'getUser']);
 
             Route::group(['prefix'=>'banner'], function () {
                 Route::get('/{id}', [BannersController::class, 'getBanner']);
@@ -121,8 +120,8 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
             });
 
-            Route::get('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
             Route::group(['prefix'=>'favourite-product'], function() {
+                Route::get('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
                 Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
                 Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
                 Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
@@ -131,6 +130,9 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::group(['prefix'=>'product'], function() {
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
             });
+            
+            Route::get('/{id}', [UsersController::class, 'getUser']);
+            
 
         });
     });
@@ -162,8 +164,8 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::delete('/{id}', [CarModelsController::class, 'deleteCarModel']);
             });
 
-            Route::get('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
             Route::group(['prefix'=>'favourite-product'], function() {
+                Route::get('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
                 Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
                 Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
                 Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
