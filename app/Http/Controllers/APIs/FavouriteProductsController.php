@@ -38,14 +38,13 @@ class FavouriteProductsController extends Controller
 
     public function getUserFavouriteProductsIDs(GetUserSellerFavouriteProductsRequest $request) {
         $request->validated();
-        return 'done';
         try {
             $favouriteProductsIDs = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', $request->is_seller)->get()->map(function ($favouriteProduct) {
                 return $favouriteProduct->product_id;
             });
 
             if($favouriteProductsIDs && $favouriteProductsIDs->count()>=1) {
-                return $this->returnData('favourite_products_IDs', $favouriteProductsIDs, 'Favourite Products IDs successfully returned');
+                return $this->returnData('favourite_products_IDs', array_unique(array($favouriteProductsIDs)), 'Favourite Products IDs successfully returned');
             } else {
                 return $this-> returnError('There is no products', 'S003');
             }
@@ -59,6 +58,14 @@ class FavouriteProductsController extends Controller
         $request->validated();
 
         try {
+            $favProducts = UserSellerFavouriteProduct::all()->map->only(['is_seller', 'user_id', 'product_id']);
+            if($favProducts && $favProducts->count()>=1) {
+                foreach ($favProducts as $product) {
+                    if($product['is_seller']==$request->is_seller && $product['user_id']==$request->user_id && $product['product_id']==$request->product_id) {
+                        return $this->returnError('This product has been already added', 'S004');
+                    }
+                }
+            }
             if($request->is_seller) {
                 $user_or_seller = ServiceProvider::find($request->user_id);
             } else {

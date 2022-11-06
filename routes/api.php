@@ -120,9 +120,9 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
             });
 
-            Route::get('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
-            Route::group(['prefix'=>'favourite-product'], function() {
-                Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
+            Route::group(['prefix'=>'favourite-products'], function() {
+                Route::get('/all', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
+                Route::get('/IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
                 Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
                 Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
             });
@@ -130,9 +130,9 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::group(['prefix'=>'product'], function() {
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
             });
-            
-            Route::get('/get-user/{id}', [UsersController::class, 'getUser']);
-            
+
+            Route::get('/{id}', [UsersController::class, 'getUser']);
+
 
         });
     });
