@@ -36,7 +36,7 @@ class FavouriteProductsController extends Controller
         }
     }
 
-    public function getUserFavouriteProductsIDs(AddDeleteFavouriteProductRequest $request) {
+    public function getUserFavouriteProductsIDs(GetUserSellerFavouriteProductsRequest $request) {
         $request->validated();
         
         try {
