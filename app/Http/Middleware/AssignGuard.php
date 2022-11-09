@@ -3,11 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Http\Traits\APIsTrait;
-use App\Models\Admin;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
@@ -31,7 +29,7 @@ class AssignGuard extends BaseMiddleware
 
            $admin = null;
            try {
-               //    auth()->shouldUse($guard); //shoud you admin guard / table
+               auth()->shouldUse($guard); //shoud you admin guard / table
                $admin = JWTAuth::parseToken()->authenticate();
            } catch (\Exception $e) {
                if ($e instanceof TokenInvalidException) {
@@ -50,9 +48,9 @@ class AssignGuard extends BaseMiddleware
                    return $this->returnError('Unauthenticated', 'E3001');
                }
            }
-           if (!$admin) {
-               return $this->returnError( 'Unauthenticated', '402');
-           }
+//           if (!$admin) {
+//               return $this->returnError( 'Unauthenticated', '402');
+//           }
            return $next($request);
        }
     }

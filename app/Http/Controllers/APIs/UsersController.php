@@ -59,7 +59,7 @@ class UsersController extends Controller
                 // update user firebase token
 
 
-                $credentials = ['email'=>$user->email, 'password'=>$user->password];
+                $credentials = ['email'=>$user->email, 'password'=>$request->password];
                 $token = auth()->guard('user-api')->attempt($credentials);
 //                $token = JWTAuth::fromUser($user);
                 if (!$token) {
@@ -84,17 +84,11 @@ class UsersController extends Controller
             } else if($serviceProvider != null && password_verify($request->password, $serviceProvider->password)) { // check password
 //            } else if(Hash::check($request->password, $user->password)) { // check password
                 // update serviceProvider firebase token
-                if($request->firebase_token) {
-                    $serviceProvider->update([
-                        'firebase_token'=> $request->firebase_token,
-                    ]);
-                }
 
-                $credentials = ['email'=>$serviceProvider->email, 'password'=>$serviceProvider->password];
-                $s = auth()->guard('service-provider-api');
-                return $this->returnData('s', $s, 's')->attempt($credentials);
+                $credentials = ['email'=>$serviceProvider->email, 'password'=>$request->password];
                 $token = auth()->guard('service-provider-api')->attempt($credentials);
 //                $token = JWTAuth::fromUser($serviceProvider);
+                return $this->returnData('s', $token, 's');
                 if (!$token) {
                     return $this->returnError('Unauthorized', 'E3001');
                 }
