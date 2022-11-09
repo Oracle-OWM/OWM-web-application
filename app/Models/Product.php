@@ -30,4 +30,8 @@ class Product extends Model
     public function carModel() {
         return $this->belongsTo(CarModel::class, 'car_model_id');
     }
+
+    public function serviceProvider() {
+        return $this->belongsTo(ServiceProvider::class, 'service_provider_id');
+    }
 }

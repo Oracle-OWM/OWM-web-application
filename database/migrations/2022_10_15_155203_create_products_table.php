@@ -18,6 +18,10 @@ class CreateProductsTable extends Migration
             $table->string('name', 50)->unique();
             $table->string('image');
             $table->json('gallery')->nullable();
+            $table->foreignId('service_provider_id')
+                ->nullable()
+                ->constrained('service_providers')
+                ->onDelete('cascade');
             $table->foreignId('category_id')
                 ->nullable()
                 ->constrained('categories')
