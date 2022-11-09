@@ -13,6 +13,7 @@ class Product extends Model
         'name',
         'image',
         'gallery',
+        'service_provider_id',
         'category_id',
         'car_model_id',
         'store_name',

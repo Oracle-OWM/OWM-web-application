@@ -23,16 +23,7 @@ class ProductsController extends Controller
 
     public function getAllProducts()
     {
-        $products = Product::all()->map(function($product){
-            return [
-                'id'=> $product->id,
-                'name'=> $product->name,
-                'price'=> $product->price,
-                'offer_percentage'=> $product->offer_percentage,
-                'rate'=> $product->rate,
-                'image'=> $product->image,
-            ];
-        });
+        $products = Product::all()->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'image']);
         if ($products->count()>= 1) {
             return $this->returnData('products', $products, 'All products has been returned successfully');
         } else {
@@ -45,9 +36,27 @@ class ProductsController extends Controller
         $product = Product::find($request->id);
         if ($product) {
             $product->gallery = json_decode($product->gallery);
-            $product->category;
-            $product->carModel;
-            return $this->returnData('product', $product, 'Product has been returned successfully');
+            $data = [
+                'name'=>$product->name,
+                'image'=>$product->image,
+                'gallery'=>$product->gallery,
+                'price'=>$product->price,
+                'city'=>$product->city,
+                'offer_percentage'=>$product->offer_percentage,
+                'desc'=>$product->desc,
+                'rate'=>$product->rate,
+                'store_name'=>$product->store_name,
+                'seller_details'=> [
+                    'store_location'=> $product->serviceProvider->store_location,
+                    'store_phone_number'=> $product->serviceProvider->store_phone_number,
+                    'store_address'=> $product->serviceProvider->store_address,
+                    'store_image'=> $product->serviceProvider->store_image,
+                ],
+                'category'=>$product->category,
+                'car_model'=>$product->carModel,
+                'service_provider'=>$product->serviceProvider,
+            ];
+            return $this->returnData('product', $data, 'Product has been returned successfully');
         } else {
             return $this->returnError('This product is not exist', "S004");
         }
@@ -68,16 +77,17 @@ class ProductsController extends Controller
                     $gallery[] = $path;
                 }
             }
-            
+
             if($request->hasFile('image')) {
                 $imgPath = $this->saveFile($request->image, 'public/images/products');
             } else {
                 $imgPath = null;
             }
-           
+
 
             $product = Product::create([
                 'name' => $request->name,
+                'service_provider_id' => $request->service_provider_id,
                 'category_id' => $request->category_id,
                 'car_model_id' => $request->car_model_id,
                 'store_name' => $request->store_name,
@@ -167,16 +177,7 @@ class ProductsController extends Controller
                 ->orWhere('price', '=', $request->keyword)
                 ->orWhere('city', 'like', '%' . $request->keyword . '%')
                 ->orWhere('rate', '=', $request->keyword)
-        ->get()->map(function($product){
-            return [
-                'id'=> $product->id,
-                'name'=> $product->name,
-                'offer_percentage'=> $product->offer_percentage,
-                'price'=> $product->price,
-                'rate'=> $product->rate,
-                'image'=> $product->image,
-            ];
-        });
+        ->get()->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'image']);
         $products2CarModel = CarModel::where('car_manufacture', 'like', '%' . $request->keyword . '%')
                 ->orWhere('model_name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('car_year', '=', $request->keyword)

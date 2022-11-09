@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->json('gallery')->nullable();
             $table->foreignId('service_provider_id')
-                ->nullable()
                 ->constrained('service_providers')
                 ->onDelete('cascade');
             $table->foreignId('category_id')

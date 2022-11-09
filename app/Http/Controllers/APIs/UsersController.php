@@ -58,7 +58,10 @@ class UsersController extends Controller
 //            } else if(Hash::check($request->password, $user->password)) { // check password
                 // update user firebase token
 
-                $token = JWTAuth::fromUser($user);
+
+                $credentials = ['email'=>$user->email, 'password'=>$user->password];
+                $token = auth()->guard('user-api')->attempt($credentials);
+//                $token = JWTAuth::fromUser($user);
                 if (!$token) {
                     return $this->returnError('Unauthorized', 'E3001');
                 }
@@ -87,7 +90,11 @@ class UsersController extends Controller
                     ]);
                 }
 
-                $token = JWTAuth::fromUser($serviceProvider);
+                $credentials = ['email'=>$serviceProvider->email, 'password'=>$serviceProvider->password];
+                $s = auth()->guard('service-provider-api');
+                return $this->returnData('s', $s, 's')->attempt($credentials);
+                $token = auth()->guard('service-provider-api')->attempt($credentials);
+//                $token = JWTAuth::fromUser($serviceProvider);
                 if (!$token) {
                     return $this->returnError('Unauthorized', 'E3001');
                 }

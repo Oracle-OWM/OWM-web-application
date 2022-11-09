@@ -26,6 +26,7 @@ class AddProductRequest extends FormRequest
     public function rules()
     {
         return [
+            'service_provider_id'           => [ 'required', 'exists:service_providers,id', ],
             'category_id'                   => [ 'required', 'exists:categories,id', ],
             'car_model_id'                  => [ 'required', 'exists:car_models,id', ],
             'city'                          => [ 'required', 'string', ],
@@ -43,14 +44,17 @@ class AddProductRequest extends FormRequest
     public function messages()
     {
         return [
+            'service_provider_id.required'       => 'Field is required',
+            'service_provider_id.exist'          => 'This service provider doesn\'t exist',
+
             'category_id.required'               => 'Field is required',
             'category_id.exist'                  => 'This category doesn\'t exist',
 
             'car_model_id.required'              => 'Field is required',
             'car_model_id.exist'                 => 'This category doesn\'t exist',
 
-            'city.required'               => 'Field is required',
-            'city.string'                 => 'Field must be string',
+            'city.required'                     => 'Field is required',
+            'city.string'                       => 'Field must be string',
 
             'store_name.required'               => 'Field is required',
             'store_name.string'                 => 'Field must be string',
