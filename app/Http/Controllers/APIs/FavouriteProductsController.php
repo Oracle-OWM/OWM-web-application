@@ -23,7 +23,15 @@ class FavouriteProductsController extends Controller
         $request->validated();
         try {
             $favouriteProducts = UserSellerFavouriteProduct::where('user_id', '=', $request->user_id)->where('is_seller', '=', $request->is_seller)->get()->map(function ($favouriteProduct) {
-                return Product::find($favouriteProduct->product_id);
+                $product = Product::find($favouriteProduct->product_id);
+                return [
+                    'id'=>$product->id,
+                    'name'=>$product->name,
+                    'price'=>$product->price,
+                    'offer_percentage'=>$product->offer_percentage,
+                    'rate'=>$product->rate,
+                    'image'=>$product->image
+                ];
             });
 
             if($favouriteProducts && $favouriteProducts->count()>=1) {
