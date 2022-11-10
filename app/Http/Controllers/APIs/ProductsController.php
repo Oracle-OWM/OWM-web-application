@@ -54,7 +54,6 @@ class ProductsController extends Controller
                 ],
                 'category'=>$product->category,
                 'car_model'=>$product->carModel,
-                'service_provider'=>$product->serviceProvider,
             ];
             return $this->returnData('product', $data, 'Product has been returned successfully');
         } else {
