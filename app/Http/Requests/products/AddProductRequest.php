@@ -30,7 +30,6 @@ class AddProductRequest extends FormRequest
             'category_id'                   => [ 'required', 'exists:categories,id', ],
             'car_model_id'                  => [ 'required', 'exists:car_models,id', ],
             'city'                          => [ 'required', 'string', ],
-            'store_name'                    => [ 'required', 'string', ],
             'price'                         => [ 'required', 'numeric', ],
             'offer_percentage'              => [ 'required', 'integer', ],
             'desc'                          => [ 'required', 'string', Rule::unique('products', 'desc'), ],
@@ -55,9 +54,6 @@ class AddProductRequest extends FormRequest
 
             'city.required'                     => 'Field is required',
             'city.string'                       => 'Field must be string',
-
-            'store_name.required'               => 'Field is required',
-            'store_name.string'                 => 'Field must be string',
 
             'price.required'                    => 'Field is required',
             'price.numeric'                     => 'Field must be numeric',

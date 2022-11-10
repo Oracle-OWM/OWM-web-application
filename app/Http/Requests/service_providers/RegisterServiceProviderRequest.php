@@ -37,6 +37,7 @@ class RegisterServiceProviderRequest extends FormRequest
             'street'                    => [ 'required', 'string', ],
             'phone'                     => [ 'required', 'digits:11', ],
             'image'                     => [ 'nullable', ],
+            'store_name'                => [ 'required', 'string', ],
             'store_location'            => [ 'required', 'string', ],
             'store_phone_number'        => [ 'required', 'digits:11', ],
             'store_address'             => [ 'required', 'string', ],
@@ -77,6 +78,9 @@ class RegisterServiceProviderRequest extends FormRequest
 
             'street.required'                   => 'Field is required',
             'street.string'                     => 'Field must be string',
+
+            'store_name.required'               => 'Field is required',
+            'store_name.string'                 => 'Field must be string',
 
             'store_phone_number.required'       => 'Field is required',
             'store_phone_number.digits'         => 'Field must be 11 digits',

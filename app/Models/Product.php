@@ -16,7 +16,6 @@ class Product extends Model
         'service_provider_id',
         'category_id',
         'car_model_id',
-        'store_name',
         'price',
         'city',
         'offer_percentage',

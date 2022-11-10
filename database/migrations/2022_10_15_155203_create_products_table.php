@@ -25,7 +25,6 @@ class CreateProductsTable extends Migration
                 ->nullable()
                 ->constrained('categories')
                 ->onDelete('set null');
-            $table->string('store_name', 50);
             $table->double('price');
             $table->string('city', 50);
             $table->integer('offer_percentage');

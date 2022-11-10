@@ -26,6 +26,7 @@ class CreateServiceProvidersTable extends Migration
             $table->string('street', 50);
             $table->string('phone', 50);
             $table->string('image')->nullable();
+            $table->string('store_name', 50);
             $table->string('store_location', 50);
             $table->string('store_phone_number', 50);
             $table->string('store_address', 50);

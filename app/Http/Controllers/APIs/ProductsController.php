@@ -45,8 +45,8 @@ class ProductsController extends Controller
                 'offer_percentage'=>$product->offer_percentage,
                 'desc'=>$product->desc,
                 'rate'=>$product->rate,
-                'store_name'=>$product->store_name,
                 'seller_details'=> [
+                    'store_name'=>$product->serviceProvider->store_name,
                     'store_location'=> $product->serviceProvider->store_location,
                     'store_phone_number'=> $product->serviceProvider->store_phone_number,
                     'store_address'=> $product->serviceProvider->store_address,
@@ -89,7 +89,6 @@ class ProductsController extends Controller
                 'service_provider_id' => $request->service_provider_id,
                 'category_id' => $request->category_id,
                 'car_model_id' => $request->car_model_id,
-                'store_name' => $request->store_name,
                 'price' => $request->price,
                 'city' => $request->city,
                 'offer_percentage' => $request->offer_percentage,
@@ -128,7 +127,6 @@ class ProductsController extends Controller
                 'name' => $request->name,
                 'category_id' => $request->category_id,
                 'car_model_id' => $request->car_model_id,
-                'store_name' => $request->store_name,
                 'price' => $request->price,
                 'city' => $request->city,
                 'offer_percentage' => $request->offer_percentage,
@@ -172,7 +170,6 @@ class ProductsController extends Controller
 
     public function productsSearch(ProductsSearchRequest $request) {
         $products1 = Product::where('name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('store_name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('price', '=', $request->keyword)
                 ->orWhere('city', 'like', '%' . $request->keyword . '%')
                 ->orWhere('rate', '=', $request->keyword)
