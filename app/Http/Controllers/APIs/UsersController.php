@@ -88,7 +88,6 @@ class UsersController extends Controller
                 $credentials = ['email'=>$serviceProvider->email, 'password'=>$request->password];
                 $token = auth()->guard('service-provider-api')->attempt($credentials);
 //                $token = JWTAuth::fromUser($serviceProvider);
-                return $this->returnData('s', $token, 's');
                 if (!$token) {
                     return $this->returnError('Unauthorized', 'E3001');
                 }
