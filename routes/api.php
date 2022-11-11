@@ -75,14 +75,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);
         });
 
-        Route::group(['prefix'=>'product'], function() {
-            Route::get('/', [ProductsController::class, 'getAllProducts']);
-            Route::get('/{id}', [ProductsController::class, 'getProduct']);
-            Route::post('/', [ProductsController::class, 'addProduct']);
-            Route::put('/{id}', [ProductsController::class, 'updateProduct']);
-            Route::delete('/{id}', [ProductsController::class, 'deleteProduct']);
-        });
-
         Route::group(['prefix'=>'user'], function() {
             Route::get('/', [UsersController::class, 'getAllUsers']);
             Route::get('/{id}', [UsersController::class, 'getUser']);
@@ -104,7 +96,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
         Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
         Route::get('/product', [ProductsController::class, 'getAllProducts']);
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
+        Route::get('/category-products/{category_id}', [ProductsController::class, 'getCategoryProducts']);
 
         Route::group(['middleware'=>'auth.guard:user-api'], function () {
 
@@ -133,7 +125,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
             Route::get('/{id}', [UsersController::class, 'getUser']);
 
-
         });
     });
 
@@ -143,7 +134,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
         Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
         Route::get('/product', [ProductsController::class, 'getAllProducts']);
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-        Route::post('/category-products', [ProductsController::class, 'getCategoryProducts']);
+        Route::get('/category-products/{category_id}', [ProductsController::class, 'getCategoryProducts']);
 
         Route::group(['middleware'=>'auth.guard:service-provider-api'], function() {
             Route::group(['prefix'=>'banner'], function () {

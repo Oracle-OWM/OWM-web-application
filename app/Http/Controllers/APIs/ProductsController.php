@@ -52,8 +52,18 @@ class ProductsController extends Controller
                     'store_address'=> $product->serviceProvider->store_address,
                     'store_image'=> $product->serviceProvider->store_image,
                 ],
-                'category'=>$product->category,
-                'car_model'=>$product->carModel,
+                'category'=>[
+                    'id'=>$product->category->id,
+                    'name'=>$product->category->name,
+                    'image'=>$product->category->image,
+                ],
+                'car_model'=>[
+                    'id'=>$product->carModel->id,
+                    'car_manufacture'=>$product->carModel->car_manufacture,
+                    'model_name'=>$product->carModel->model_name,
+                    'car_year'=>$product->carModel->car_year,
+                    'image'=>$product->carModel->image,
+                ],
             ];
             return $this->returnData('product', $data, 'Product has been returned successfully');
         } else {
@@ -158,10 +168,8 @@ class ProductsController extends Controller
             return $this->returnError('This product can\'t be deleted', 'S003');
     }
 
-    public function getCategoryProducts(GetCategoryProductsRequest $request) {
-        $request->validated();
-
-        $category_products = Category::find($request->category_id)->products;
+    public function getCategoryProducts($category_id) {
+        $category_products = Category::find($category_id)->products->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'image']);
 
         if (!$category_products || $category_products->count()<1)
             return $this->returnError('There are no products exist', 'S004');
