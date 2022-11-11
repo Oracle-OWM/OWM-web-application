@@ -54,7 +54,7 @@ class FavouriteProductsController extends Controller
             if($favouriteProductsIDs && $favouriteProductsIDs->count()>=1) {
                 return $this->returnData('favourite_products_IDs', array_unique(array($favouriteProductsIDs))[0], 'Favourite Products IDs successfully returned');
             } else {
-                return $this->returnData('favourite_products_IDs', null, 'Favourite Products IDs successfully returned');
+                return $this->returnData('favourite_products_IDs', null, 'There is no favourite products');
             }
         } catch (\Exception $e) {
             return $this->returnError($e->getCode(), $e->getMessage());
