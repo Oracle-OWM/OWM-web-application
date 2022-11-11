@@ -51,7 +51,7 @@ class FavouriteProductsController extends Controller
                 return $favouriteProduct->product_id;
             });
 
-            if($favouriteProductsIDs && $favouriteProductsIDs[0]->count()>=1) {
+            if($favouriteProductsIDs && $favouriteProductsIDs->count()>=1) {
                 return $this->returnData('favourite_products_IDs', array_unique(array($favouriteProductsIDs))[0], 'Favourite Products IDs successfully returned');
             } else {
                 return $this->returnData('favourite_products_IDs', null, 'Favourite Products IDs successfully returned');
