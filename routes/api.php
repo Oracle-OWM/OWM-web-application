@@ -98,7 +98,41 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
         Route::post('/products-search', [ProductsController::class, 'productsSearch']);
         Route::get('/category-products/{category_id}', [ProductsController::class, 'getCategoryProducts']);
 
-        Route::group(['middleware'=>'auth.guard:user-api'], function () {
+            Route::group(['middleware'=>'auth.guard:service-provider-api'], function() {
+                Route::group(['prefix' => 'banner'], function () {
+                    Route::get('/{id}', [BannersController::class, 'getBanner']);
+                    Route::post('/', [BannersController::class, 'addBanner']);
+                    Route::put('/{id}', [BannersController::class, 'updateBanner']);
+                    Route::delete('/{id}', [BannersController::class, 'deleteBanner']);
+                });
+
+                Route::group(['prefix'=>'category'], function() {
+                    Route::get('/{id}', [CategoriesController::class, 'getCategory']);
+                });
+
+                Route::group(['prefix'=>'car-model'], function() {
+                    Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
+                    Route::post('/', [CarModelsController::class, 'addCarModel']);
+                    Route::put('/{id}', [CarModelsController::class, 'updateCarModel']);
+                    Route::delete('/{id}', [CarModelsController::class, 'deleteCarModel']);
+                });
+
+                Route::post('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
+                Route::group(['prefix'=>'favourite-product'], function() {
+                    Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
+                    Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
+                    Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
+                });
+
+                Route::group(['prefix'=>'product'], function() {
+                    Route::get('/{id}', [ProductsController::class, 'getProduct']);
+                });
+
+                Route::get('/{id}', [UsersController::class, 'getProfileData']);
+
+            });
+
+            Route::group(['middleware'=>'auth.guard:user-api'], function () {
 
             Route::group(['prefix'=>'banner'], function () {
                 Route::get('/{id}', [BannersController::class, 'getBanner']);
@@ -123,7 +157,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
             });
 
-            Route::get('/{id}', [UsersController::class, 'getUser']);
+            Route::get('/{id}', [UsersController::class, 'getProfileData']);
 
         });
     });
@@ -137,43 +171,11 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
         Route::get('/category-products/{category_id}', [ProductsController::class, 'getCategoryProducts']);
 
         Route::group(['middleware'=>'auth.guard:service-provider-api'], function() {
-            Route::group(['prefix'=>'banner'], function () {
-                Route::get('/{id}', [BannersController::class, 'getBanner']);
-                Route::post('/', [BannersController::class, 'addBanner']);
-                Route::put('/{id}', [BannersController::class, 'updateBanner']);
-                Route::delete('/{id}', [BannersController::class, 'deleteBanner']);
-            });
-
-            Route::group(['prefix'=>'category'], function() {
-                Route::get('/{id}', [CategoriesController::class, 'getCategory']);
-            });
-
-            Route::group(['prefix'=>'car-model'], function() {
-                Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
-                Route::post('/', [CarModelsController::class, 'addCarModel']);
-                Route::put('/{id}', [CarModelsController::class, 'updateCarModel']);
-                Route::delete('/{id}', [CarModelsController::class, 'deleteCarModel']);
-            });
-
-            Route::post('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
-            Route::group(['prefix'=>'favourite-product'], function() {
-                Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
-                Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
-                Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
-            });
-
             Route::group(['prefix'=>'product'], function() {
-                Route::get('/{id}', [ProductsController::class, 'getProduct']);
                 Route::post('/', [ProductsController::class, 'addProduct']);
                 Route::put('/{id}', [ProductsController::class, 'updateProduct']);
                 Route::delete('/{id}', [ProductsController::class, 'deleteProduct']);
             });
-
-
-
-            Route::get('/{id}', [ServiceProvidersController::class, 'getServiceProvider']);
-//            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
-//            Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);
         });
     });
 
