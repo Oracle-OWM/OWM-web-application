@@ -171,6 +171,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             });
 
             Route::get('/car-model-data', [CarModelsController::class, 'getCarManufactureData']);
+            Route::get('/car-manufactures', [CarModelsController::class, 'getAllCarManufactures']);
 
             Route::get('/products/{id}', [ProductsController::class, 'getAllServiceProviderProducts']);
 

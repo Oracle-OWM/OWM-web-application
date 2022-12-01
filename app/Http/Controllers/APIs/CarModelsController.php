@@ -33,19 +33,24 @@ class CarModelsController extends Controller
     {
         $request->validated();
 
-        $carManufactureModels = [];
-        $carManufactureYears = [];
-        $carModels = CarModel::where('car_manufacture', 'like', '%'.$request->car_manufacture.'%')->get()->map->only(['model_name', 'car_year']);
-        foreach($carModels as $carModel) {
-            $carManufactureModels[] = $carModel['model_name'];
-            $carManufactureYears[] = $carModel['car_year'];
-        }
+        $carManufactureModels = CarModel::where('car_manufacture', 'like', '%'.$request->car_manufacture.'%')->get()->pluck('model_name');
+        $carManufactureYears = CarModel::where('car_manufacture', 'like', '%'.$request->car_manufacture.'%')->get()->pluck('car_year');
         $carManufactureData = [
             'models'=>$carManufactureModels,
             'years'=>$carManufactureYears,
         ];
-        if (count($carManufactureData)>= 1) {
+        if (count($carManufactureModels)>= 1) {
             return $this->returnData('car_manufacture_data', $carManufactureData, 'All car models has been returned successfully');
+        } else {
+            return $this->returnError('There is not any car model', 'S004');
+        }
+    }
+
+    public function getAllCarManufactures()
+    {
+        $carManufactures = CarModel::all()->pluck('car_manufacture');
+        if (count($carManufactures)>= 1) {
+            return $this->returnData('car_manufacture_data', $carManufactures, 'All car models has been returned successfully');
         } else {
             return $this->returnError('There is not any car model', 'S004');
         }
