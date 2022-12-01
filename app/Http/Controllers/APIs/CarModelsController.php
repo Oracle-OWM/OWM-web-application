@@ -33,8 +33,18 @@ class CarModelsController extends Controller
     {
         $request->validated();
 
-        $carManufactureData = CarModel::where('car_manufacture', 'like', '%'.$request->car_manufacture.'%')->get()->map->only(['model_name', 'car_year']);
-        if ($carManufactureData->count()>= 1) {
+        $carManufactureModels = [];
+        $carManufactureYears = [];
+        $carModels = CarModel::where('car_manufacture', 'like', '%'.$request->car_manufacture.'%')->get()->map->only(['model_name', 'car_year']);
+        foreach($carModels as $carModel) {
+            $carManufactureModels[] = $carModel['model_name'];
+            $carManufactureYears[] = $carModel['car_year'];
+        }
+        $carManufactureData = [
+            'models'=>$carManufactureModels,
+            'years'=>$carManufactureYears,
+        ];
+        if (count($carManufactureData)>= 1) {
             return $this->returnData('car_manufacture_data', $carManufactureData, 'All car models has been returned successfully');
         } else {
             return $this->returnError('There is not any car model', 'S004');
