@@ -24,7 +24,7 @@ class ProductsController extends Controller
 
     public function getAllProducts()
     {
-        $products = Product::all()->map->only(['id', 'name', 'price', 'state', 'offer_percentage', 'rate', 'image']);
+        $products = Product::where('state', '=', 'approved')->get()->map->only(['id', 'name', 'price', 'state', 'offer_percentage', 'rate', 'image']);
         if ($products->count()>= 1) {
             return $this->returnData('products', $products, 'All products has been returned successfully');
         } else {
