@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->string('city', 50);
             $table->integer('offer_percentage');
             $table->string('desc', 50)->unique();
+            $table->enum('state', ['approved', 'pending', 'cancelled'])->default('pending');
             $table->foreignId('car_model_id')
                 ->nullable()
                 ->constrained('car_models')

@@ -156,6 +156,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             });
 
             Route::post('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
+
             Route::group(['prefix'=>'favourite-product'], function() {
                 Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
                 Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
@@ -168,7 +169,11 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::put('/{id}', [ProductsController::class, 'updateProduct']);
                 Route::delete('/{id}', [ProductsController::class, 'deleteProduct']);
             });
-            
+
+            Route::get('/car-model-data', [CarModelsController::class, 'getCarManufactureData']);
+
+            Route::get('/products/{id}', [ProductsController::class, 'getAllServiceProviderProducts']);
+
             Route::get('/{id}', [ServiceProvidersController::class, 'getServiceProvider']);
 //            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
 //            Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);

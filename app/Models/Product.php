@@ -20,6 +20,7 @@ class Product extends Model
         'city',
         'offer_percentage',
         'desc',
+        'state',
         'rate',
     ];
 

@@ -14,6 +14,7 @@ use App\Http\Traits\GeneralTrait;
 use App\Models\CarModel;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ServiceProvider;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -23,7 +24,7 @@ class ProductsController extends Controller
 
     public function getAllProducts()
     {
-        $products = Product::all()->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'image']);
+        $products = Product::all()->map->only(['id', 'name', 'price', 'state', 'offer_percentage', 'rate', 'image']);
         if ($products->count()>= 1) {
             return $this->returnData('products', $products, 'All products has been returned successfully');
         } else {
@@ -45,6 +46,7 @@ class ProductsController extends Controller
                 'offer_percentage'=>$product->offer_percentage,
                 'desc'=>$product->desc,
                 'rate'=>$product->rate,
+                'state'=>$product->state,
                 'seller_details'=> [
                     'store_name'=>$product->serviceProvider->store_name,
                     'store_location'=> $product->serviceProvider->store_location,
@@ -169,11 +171,21 @@ class ProductsController extends Controller
     }
 
     public function getCategoryProducts($category_id) {
-        $category_products = Category::find($category_id)->products->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'image']);
+        $category_products = Category::find($category_id)->products->map->only(['id', 'name', 'price', 'state', 'offer_percentage', 'rate', 'image']);
 
         if (!$category_products || $category_products->count()<1)
             return $this->returnError('There are no products exist', 'S004');
         return $this->returnData('category_products', $category_products, 'Products have been returned successfully');
+    }
+
+    public function getAllServiceProviderProducts($service_provider_id)
+    {
+        $serviceProviderProducts = ServiceProvider::find($service_provider_id)->products->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'state', 'image']);
+        if ($serviceProviderProducts->count()>= 1) {
+            return $this->returnData('service_provider_products', $serviceProviderProducts, 'All service providers has been returned successfully');
+        } else {
+            return $this->returnError('There is no any product for this service provider', 'S004');
+        }
     }
 
     public function productsSearch(ProductsSearchRequest $request) {

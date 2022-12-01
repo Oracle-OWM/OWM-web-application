@@ -4,6 +4,7 @@ namespace App\Http\Controllers\APIs;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\car_models\AddCarModelRequest;
+use App\Http\Requests\car_models\GetCarManufactureDataRequest;
 use App\Http\Requests\car_models\UpdateCarModelRequest;
 use App\Http\Traits\APIsTrait;
 use App\Http\Traits\GeneralTrait;
@@ -23,6 +24,18 @@ class CarModelsController extends Controller
         });
         if ($car_models->count()>= 1) {
             return $this->returnData('car_models', $car_models, 'All car models has been returned successfully');
+        } else {
+            return $this->returnError('There is not any car model', 'S004');
+        }
+    }
+
+    public function getCarManufactureData(GetCarManufactureDataRequest $request)
+    {
+        $request->validated();
+
+        $carManufactureData = CarModel::where('car_manufacture', 'like', '%'.$request->car_manufacture.'%')->get()->map->only(['model_name', 'car_year']);
+        if ($carManufactureData->count()>= 1) {
+            return $this->returnData('car_manufacture_data', $carManufactureData, 'All car models has been returned successfully');
         } else {
             return $this->returnError('There is not any car model', 'S004');
         }
