@@ -190,10 +190,16 @@ class ProductsController extends Controller
 
     public function productsSearch(ProductsSearchRequest $request) {
         $products1 = Product::where('name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('price', '=', $request->keyword)
-                ->orWhere('city', 'like', '%' . $request->keyword . '%')
-                ->orWhere('rate', '=', $request->keyword)
-        ->get()->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'image']);
+            ->orWhere('price', '=', $request->keyword)
+            ->orWhere('city', 'like', '%' . $request->keyword . '%')
+            ->orWhere('rate', '=', $request->keyword)
+            ->get()->filter(function($product) {
+                if($product->state==='approved') {
+                    return $product;
+                }
+            })
+        ->map->only(['id', 'name', 'price', 'offer_percentage', 'rate', 'state', 'image']);
+        
         $products2CarModel = CarModel::where('car_manufacture', 'like', '%' . $request->keyword . '%')
                 ->orWhere('model_name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('car_year', '=', $request->keyword)
@@ -201,14 +207,17 @@ class ProductsController extends Controller
         $products2 = [];
         foreach ($products2CarModel as $carModel) {
             foreach ($carModel->products as $product) {
-                $products2[] = [
-                    'id'=> $product->id,
-                    'name'=> $product->name,
-                    'price'=> $product->price,
-                    'offer_percentage'=> $product->offer_percentage,
-                    'rate'=> $product->rate,
-                    'image'=> $product->image,
-                ];
+                if($product->state==='approved'){
+                    $products2[] = [
+                        'id'=> $product->id,
+                        'name'=> $product->name,
+                        'price'=> $product->price,
+                        'offer_percentage'=> $product->offer_percentage,
+                        'rate'=> $product->rate,
+                        'state'=> $product->state,
+                        'image'=> $product->image,
+                    ];
+                }
             }
         }
         $products = collect($products1)->merge($products2)->all();
