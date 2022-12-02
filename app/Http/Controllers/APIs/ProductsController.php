@@ -189,10 +189,9 @@ class ProductsController extends Controller
     }
 
     public function productsSearch(ProductsSearchRequest $request) {
-        $products1 = Product::where('name', 'like', '%' . $request->keyword . '%')
-            ->orWhere('price', '=', $request->keyword)
+        $products1 = Product::where('price', '=', $request->keyword)
             ->orWhere('city', 'like', '%' . $request->keyword . '%')
-            ->orWhere('rate', '=', $request->keyword)
+            ->orWhere('name', 'like', '%' .$request->keyword .'%')
             ->get()->filter(function($product) {
                 if($product->state==='approved') {
                     return $product;
@@ -221,11 +220,11 @@ class ProductsController extends Controller
             }
         }
         $products = collect($products1)->merge($products2)->all();
-//        if($products!=null && $products->count()>=1) {
+       if($products!=null && count($products)>=1) {
             return $this->returnData('products', $products, 'Products have been returned successfully');
-//        } else {
-//            return $this->returnError('There are no products exist', 'S004');
-//        }
+       } else {
+           return $this->returnError('There are no products exist', 'S004');
+       }
     }
 
 }
