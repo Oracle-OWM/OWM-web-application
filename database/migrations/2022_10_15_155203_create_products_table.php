@@ -34,7 +34,6 @@ class CreateProductsTable extends Migration
                 ->nullable()
                 ->constrained('car_models')
                 ->onDelete('set null');
-            $table->integer('rate');
             $table->timestamps();
         });
     }

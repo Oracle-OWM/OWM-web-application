@@ -33,7 +33,6 @@ class AddProductRequest extends FormRequest
             'price'                         => [ 'required', 'numeric', ],
             'offer_percentage'              => [ 'required', 'integer', ],
             'desc'                          => [ 'required', 'string', Rule::unique('products', 'desc'), ],
-            'rate'                          => [ 'required', 'integer', ],
             'image'                         => [ 'required', ],
             'gallery'                       => [ 'nullable', ],
         ];
@@ -63,9 +62,6 @@ class AddProductRequest extends FormRequest
 
             'desc.required'                     => 'Field is required',
             'desc.string'                       => 'Field must be string',
-
-            'rate.required'                     => 'Field is required',
-            'rate.integer'                      => 'Field must be integer',
 
             'image.required'                     => 'Field is required',
 //            'image.image'                   =>'Choose a correct file according to image extensions',

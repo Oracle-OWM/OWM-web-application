@@ -35,4 +35,12 @@ class Product extends Model
     public function serviceProvider() {
         return $this->belongsTo(ServiceProvider::class, 'service_provider_id');
     }
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'users', 'user_id');
+    }
+
+    public function usersOrSellerRates() {
+        return $this->hasMany(UserProductRate::class, 'product_id');
+    }
 }

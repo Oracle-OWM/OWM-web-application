@@ -8,11 +8,17 @@ use App\Http\Controllers\APIs\AdminsController;
 use App\Http\Controllers\APIs\UsersController;
 use App\Http\Controllers\APIs\AuthController;
 use App\Http\Controllers\APIs\ServiceProvidersController;
-use App\Http\Controllers\APIs\CategoriesController;
-use App\Http\Controllers\APIs\CarModelsController;
-use App\Http\Controllers\APIs\ProductsController;
-use App\Http\Controllers\APIs\BannersController;
-use App\Http\Controllers\APIs\FavouriteProductsController;
+use App\Http\Controllers\APIs\SellerUser\CategoriesController;
+use App\Http\Controllers\APIs\SellerUser\CarModelsController;
+use App\Http\Controllers\APIs\SellerUser\ProductsController;
+use App\Http\Controllers\APIs\SellerUser\BannersController;
+use App\Http\Controllers\APIs\SellerUser\FavouriteProductsController;
+
+use App\Http\Controllers\APIs\Admin\AdminCategoriesController;
+use App\Http\Controllers\APIs\Admin\AdminCarModelsController;
+use App\Http\Controllers\APIs\Admin\AdminProductsController;
+use App\Http\Controllers\APIs\Admin\AdminBannersController;
+use App\Http\Controllers\APIs\Admin\AdminFavouriteProductsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,7 +48,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
     Route::post('/send-notification', [NotificationsController::class, 'sendNotificationToMobile']);
 
 
-    Route::group(['prefix'=>'admin', 'middleware'=>'auth.guard:admin-api'], function() {
+    Route::group(['prefix'=>'admin', ], function() {
         Route::group(['prefix'=>'banner'], function () {
             Route::get('/', [BannersController::class, 'getAllBanners']);
             Route::get('/{id}', [BannersController::class, 'getBanner']);
@@ -83,6 +89,12 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::delete('/{id}', [UsersController::class, 'deleteUser']);
         });
 
+        Route::group(['prefix'=>'product'], function() {
+            Route::get('/', [AdminProductsController::class, 'getAllProducts']);
+            Route::post('/rate-product', [AdminProductsController::class, 'addProductRate']);
+            Route::get('/{id}', [AdminProductsController::class, 'getProduct']);
+        });
+
         Route::get('/', [AdminsController::class, 'getAllAdmins']);
         Route::get('/{id}', [AdminsController::class, 'getAdmin']);
         Route::post('/', [AdminsController::class, 'addAdmin']);
@@ -120,6 +132,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             });
 
             Route::group(['prefix'=>'product'], function() {
+                Route::post('/rate-product', [ProductsController::class, 'addProductRate']);
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
             });
 
@@ -164,6 +177,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             });
 
             Route::group(['prefix'=>'product'], function() {
+                Route::post('/rate-product', [ProductsController::class, 'addProductRate']);
                 Route::get('/{id}', [ProductsController::class, 'getProduct']);
                 Route::post('/', [ProductsController::class, 'addProduct']);
                 Route::put('/{id}', [ProductsController::class, 'updateProduct']);
