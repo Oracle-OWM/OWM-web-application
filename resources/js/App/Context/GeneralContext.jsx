@@ -57,7 +57,7 @@ const GeneralState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await API.get(`/get-supported-locales`, {
-      // headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+      // headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
     }).then(async(response)=> {
       console.log("get supportedLocales");
       console.log(response);
@@ -71,7 +71,7 @@ const GeneralState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -108,7 +108,7 @@ const GeneralState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await API.get(`/cms/get-content`, {
-      // headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+      // headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
     }).then(async(response)=> {
       console.log("get content");
       console.log(response);
@@ -122,7 +122,7 @@ const GeneralState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -159,7 +159,7 @@ const GeneralState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await SettingsAPI.get(`/get-settings`, {
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
     }).then(async(response)=> {
       console.log("all settings");
       console.log(response);
@@ -172,7 +172,7 @@ const GeneralState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -218,7 +218,7 @@ const GeneralState = (props) => {
         dispatch({ type: TYPES.SET_LOADING });
 
         const resp = await SettingsAPI.post(`/save-settings`, formData, {
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}`, 'Content-Type': "multipart/form-data" },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}`, 'Content-Type': "multipart/form-data" },
         }).then(async (response) => {
           console.log("Update settings");
           console.log(response);
@@ -238,7 +238,7 @@ const GeneralState = (props) => {
             })
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+            history.replace(`/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -280,7 +280,7 @@ const GeneralState = (props) => {
               icon: "error",
               button: "OK",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/settings`);
+              history.replace(`/settings`);
             })
           }
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Psy\Util\Str;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 
@@ -63,7 +64,7 @@ trait GeneralTrait {
         for($i=0; $i<$kh_length;$i++) {
             $khmer.='0';
         }
-        return $prefix.'-'.$khmer.$last_number;
+        return $prefix.'-'.\Illuminate\Support\Str::uuid();
     }
 
     public function search($model, $cols, $keyword) {

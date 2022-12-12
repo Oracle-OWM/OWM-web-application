@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'login_form_title'                                => 'sign in to your account',
-    'login_form_identifier'                           => 'email address / username',
-    'login_form_password'                             => 'password',
-    'login_form_submit'                               => 'Sign in',
+    'admin_login_form_title'                                => 'sign in to your account',
+    'admin_login_form_identifier'                           => 'email address / username',
+    'admin_login_form_password'                             => 'password',
+    'admin_login_form_submit'                               => 'Sign in',
     'dashboard_title'                                 => 'Dashboard',
     'quarantine_status_normal'                        => 'normal',
     'quarantine_status_outdoor'                       => 'outdoor',

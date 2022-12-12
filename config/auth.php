@@ -45,9 +45,9 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
-        'service-provider-api' => [
+        'observer-api' => [
             'driver' => 'jwt',
-            'provider' => 'service_providers',
+            'provider' => 'observers',
         ],
         'admin-api' => [
             'driver' => 'jwt',
@@ -78,9 +78,9 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        'service_providers' => [
+        'observers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\ServiceProvider::class,
+            'model' => App\Models\Observer::class,
         ],
 
         'users' => [

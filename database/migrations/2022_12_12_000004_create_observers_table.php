@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateObserversTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('observers', function (Blueprint $table) {
             $table->id();
             $table->string('first_name', 50);
             $table->string('last_name', 50);
@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('city_area', 50);
             $table->string('street', 50);
             $table->string('phone', 50);
+            $table->enum('status', ['approved', 'cancelled', 'pending'])->default('pending');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -38,6 +42,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('observers');
     }
 }

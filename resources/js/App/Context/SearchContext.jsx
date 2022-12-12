@@ -27,7 +27,7 @@ const SearchState = (props) => {
         searchResult: array,
       }})
     } else {
-      const excludeColumns  = ['id', 'created_at', 'updated_at', 'violations_count',];
+      const excludeColumns  = ['id', 'created_at', 'updated_at', ];
       const lowerCaseValue = FilterSearch.trim();
       if(lowerCaseValue) {
         let data = [...array];

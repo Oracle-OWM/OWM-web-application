@@ -7,18 +7,9 @@ use App\Http\Controllers\APIs\Admin\NotificationsController;
 use App\Http\Controllers\APIs\AdminsController;
 use App\Http\Controllers\APIs\UsersController;
 use App\Http\Controllers\APIs\AuthController;
-use App\Http\Controllers\APIs\ServiceProvidersController;
-use App\Http\Controllers\APIs\SellerUser\CategoriesController;
-use App\Http\Controllers\APIs\SellerUser\CarModelsController;
-use App\Http\Controllers\APIs\SellerUser\ProductsController;
-use App\Http\Controllers\APIs\SellerUser\BannersController;
-use App\Http\Controllers\APIs\SellerUser\FavouriteProductsController;
-
-use App\Http\Controllers\APIs\Admin\AdminCategoriesController;
-use App\Http\Controllers\APIs\Admin\AdminCarModelsController;
-use App\Http\Controllers\APIs\Admin\AdminProductsController;
-use App\Http\Controllers\APIs\Admin\AdminBannersController;
-use App\Http\Controllers\APIs\Admin\AdminFavouriteProductsController;
+use App\Http\Controllers\APIs\IoTDevicesController;
+use App\Http\Controllers\APIs\ObserversController;
+use App\Http\Controllers\CMSController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,11 +26,10 @@ use App\Http\Controllers\APIs\Admin\AdminFavouriteProductsController;
 //});
 
 Route::group( ['prefix'=>'auth'] , function ($router) {
-    Route::post('/admin/login', [AdminsController::class, 'login']);
-    Route::post('/user/login', [UsersController::class, 'login']);
-    Route::post('/user/register', [UsersController::class, 'register']);
-    Route::post('/service-provider/login', [ServiceProvidersController::class, 'login']);
-    Route::post('/service-provider/register', [ServiceProvidersController::class, 'register']);
+    Route::get('/send-new-reading', [IoTDevicesController::class, 'sendNewReading']);
+    Route::get('/start-read/{token}', [IoTDevicesController::class, 'confirmStartReading']);
+
+
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/me', [AuthController::class, 'me']);
@@ -47,152 +37,63 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
     Route::post('/reset-password', [NewPasswordController::class, 'reset']);
     Route::post('/send-notification', [NotificationsController::class, 'sendNotificationToMobile']);
 
+    Route::group(['prefix'=>'cms', ], function() {
+        Route::get('/get-content', [CMSController::class, 'getContent']);
+    });
 
     Route::group(['prefix'=>'admin', ], function() {
-        Route::group(['prefix'=>'banner'], function () {
-            Route::get('/', [BannersController::class, 'getAllBanners']);
-            Route::get('/{id}', [BannersController::class, 'getBanner']);
-            Route::post('/', [BannersController::class, 'addBanner']);
-            Route::put('/{id}', [BannersController::class, 'updateBanner']);
-            Route::delete('/{id}', [BannersController::class, 'deleteBanner']);
-        });
+        Route::post('/login', [AdminsController::class, 'login']);
 
-        Route::group(['prefix'=>'category'], function() {
-            Route::get('/', [CategoriesController::class, 'getAllCategories']);
-            Route::get('/{id}', [CategoriesController::class, 'getCategory']);
-            Route::post('/', [CategoriesController::class, 'addCategory']);
-            Route::put('/{id}', [CategoriesController::class, 'updateCategory']);
-            Route::delete('/{id}', [CategoriesController::class, 'deleteCategory']);
-        });
+        Route::group(['middleware'=>'auth.guard:admin-api'], function () {
+            Route::group(['prefix'=>'IoT-devices'], function() {
+                Route::get('/', [IoTDevicesController::class, 'getAllIoTDevices']);
+                Route::get('/{id}', [IoTDevicesController::class, 'getIoTDevice']);
+                Route::post('/', [IoTDevicesController::class, 'addIoTDevice']);
+                Route::put('/{id}', [IoTDevicesController::class, 'updateIoTDevice']);
+                Route::delete('/{id}', [IoTDevicesController::class, 'deleteIoTDevice']);
+            });
 
-        Route::group(['prefix'=>'car-model'], function() {
-            Route::get('/', [CarModelsController::class, 'getAllCarModels']);
-            Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
-            Route::post('/', [CarModelsController::class, 'addCarModel']);
-            Route::put('/{id}', [CarModelsController::class, 'updateCarModel']);
-            Route::delete('/{id}', [CarModelsController::class, 'deleteCarModel']);
-        });
+            Route::group(['prefix'=>'user'], function() {
+                Route::get('/', [UsersController::class, 'getAllUsers']);
+                Route::get('/{id}', [UsersController::class, 'getUser']);
+                Route::post('/', [UsersController::class, 'register']);
+                Route::put('/{id}', [UsersController::class, 'updateUser']);
+                Route::delete('/{id}', [UsersController::class, 'deleteUser']);
+            });
 
-        Route::group(['prefix'=>'service-provider'], function() {
-            Route::get('/', [ServiceProvidersController::class, 'getAllServiceProviders']);
-            Route::get('/{id}', [ServiceProvidersController::class, 'getServiceProvider']);
-            Route::post('/', [ServiceProvidersController::class, 'register']);
-            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
-            Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);
-        });
+            Route::group(['prefix'=>'observer'], function() {
+//                Route::group(['prefix'=>'observer'], function() {
+                Route::get('/', [ObserversController::class, 'getAllObservers']);
+                Route::get('/{id}', [ObserversController::class, 'getObserver']);
+                Route::post('/', [ObserversController::class, 'register']);
+                Route::put('/{id}', [ObserversController::class, 'updateObserver']);
+                Route::delete('/{id}', [ObserversController::class, 'deleteObserver']);
+            });
 
-        Route::group(['prefix'=>'user'], function() {
-            Route::get('/', [UsersController::class, 'getAllUsers']);
-            Route::get('/{id}', [UsersController::class, 'getUser']);
-            Route::post('/', [UsersController::class, 'register']);
-            Route::put('/{id}', [UsersController::class, 'updateUser']);
-            Route::delete('/{id}', [UsersController::class, 'deleteUser']);
+            Route::get('/', [AdminsController::class, 'getAllAdmins']);
+            Route::get('/{id}', [AdminsController::class, 'getAdmin']);
+            Route::post('/', [AdminsController::class, 'addAdmin']);
+            Route::put('/{id}', [AdminsController::class, 'updateAdmin']);
+            Route::delete('/{id}', [AdminsController::class, 'deleteAdmin']);
         });
-
-        Route::group(['prefix'=>'product'], function() {
-            Route::get('/', [AdminProductsController::class, 'getAllProducts']);
-            Route::post('/rate-product', [AdminProductsController::class, 'addProductRate']);
-            Route::get('/{id}', [AdminProductsController::class, 'getProduct']);
-        });
-
-        Route::get('/', [AdminsController::class, 'getAllAdmins']);
-        Route::get('/{id}', [AdminsController::class, 'getAdmin']);
-        Route::post('/', [AdminsController::class, 'addAdmin']);
-        Route::put('/{id}', [AdminsController::class, 'updateAdmin']);
-        Route::delete('/{id}', [AdminsController::class, 'deleteAdmin']);
     });
 
     Route::group(['prefix'=>'user', ], function() {
-        Route::get('/banner', [BannersController::class, 'getAllBanners']);
-        Route::get('/category', [CategoriesController::class, 'getAllCategories']);
-        Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
-        Route::get('/product', [ProductsController::class, 'getAllProducts']);
-        Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-        Route::get('/category-products/{category_id}', [ProductsController::class, 'getCategoryProducts']);
+        Route::post('/login', [UsersController::class, 'login']);
+        Route::post('/register', [UsersController::class, 'register']);
 
         Route::group(['middleware'=>'auth.guard:user-api'], function () {
-
-            Route::group(['prefix'=>'banner'], function () {
-                Route::get('/{id}', [BannersController::class, 'getBanner']);
+            Route::group(['prefix'=>'IoT-devices'], function() {
+                Route::get('/{token}', [IoTDevicesController::class, 'getIoTDeviceHistory']);
+                Route::post('/', [IoTDevicesController::class, 'IoTDeviceStartRead']);
             });
 
-            Route::group(['prefix'=>'category'], function() {
-                Route::get('/{id}', [CategoriesController::class, 'getCategory']);
-            });
-
-            Route::group(['prefix'=>'car-model'], function() {
-                Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
-            });
-
-            Route::group(['prefix'=>'favourite-products'], function() {
-                Route::get('/all', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
-                Route::get('/IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
-                Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
-                Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
-            });
-
-            Route::group(['prefix'=>'product'], function() {
-                Route::post('/rate-product', [ProductsController::class, 'addProductRate']);
-                Route::get('/{id}', [ProductsController::class, 'getProduct']);
-            });
-
-            Route::get('/{id}', [UsersController::class, 'getUser']);
+            Route::get('/show-profile', [UsersController::class, 'getProfile']);
 
         });
     });
-
-    Route::group(['prefix'=>'service-provider'], function() {
-        Route::get('/banner', [BannersController::class, 'getAllBanners']);
-        Route::get('/category', [CategoriesController::class, 'getAllCategories']);
-        Route::get('/car-model', [CarModelsController::class, 'getAllCarModels']);
-        Route::get('/product', [ProductsController::class, 'getAllProducts']);
-        Route::post('/products-search', [ProductsController::class, 'productsSearch']);
-        Route::get('/category-products/{category_id}', [ProductsController::class, 'getCategoryProducts']);
-
-        Route::group(['middleware'=>'auth.guard:service-provider-api'], function() {
-            Route::group(['prefix'=>'banner'], function () {
-                Route::get('/{id}', [BannersController::class, 'getBanner']);
-                Route::post('/', [BannersController::class, 'addBanner']);
-                Route::put('/{id}', [BannersController::class, 'updateBanner']);
-                Route::delete('/{id}', [BannersController::class, 'deleteBanner']);
-            });
-
-            Route::group(['prefix'=>'category'], function() {
-                Route::get('/{id}', [CategoriesController::class, 'getCategory']);
-            });
-
-            Route::group(['prefix'=>'car-model'], function() {
-                Route::get('/{id}', [CarModelsController::class, 'getCarModel']);
-                Route::post('/', [CarModelsController::class, 'addCarModel']);
-                Route::put('/{id}', [CarModelsController::class, 'updateCarModel']);
-                Route::delete('/{id}', [CarModelsController::class, 'deleteCarModel']);
-            });
-
-            Route::post('/get-favourite-products-IDs', [FavouriteProductsController::class, 'getUserFavouriteProductsIDs']);
-
-            Route::group(['prefix'=>'favourite-product'], function() {
-                Route::post('/get-favourite-products', [FavouriteProductsController::class, 'getUserFavouriteProducts']);
-                Route::post('/add-to-favourite', [FavouriteProductsController::class, 'addProductToFavourites']);
-                Route::delete('/', [FavouriteProductsController::class, 'deleteProductFromFavourites']);
-            });
-
-            Route::group(['prefix'=>'product'], function() {
-                Route::post('/rate-product', [ProductsController::class, 'addProductRate']);
-                Route::get('/{id}', [ProductsController::class, 'getProduct']);
-                Route::post('/', [ProductsController::class, 'addProduct']);
-                Route::put('/{id}', [ProductsController::class, 'updateProduct']);
-                Route::delete('/{id}', [ProductsController::class, 'deleteProduct']);
-            });
-
-            Route::get('/car-model-data', [CarModelsController::class, 'getCarManufactureData']);
-            Route::get('/car-manufactures', [CarModelsController::class, 'getAllCarManufactures']);
-
-            Route::get('/products/{id}', [ProductsController::class, 'getAllServiceProviderProducts']);
-
-            Route::get('/{id}', [ServiceProvidersController::class, 'getServiceProvider']);
-//            Route::put('/{id}', [ServiceProvidersController::class, 'updateServiceProvider']);
-//            Route::delete('/{id}', [ServiceProvidersController::class, 'deleteServiceProvider']);
-        });
-    });
-
 });
+
+//if (Auth::guard('doctor')->check()){
+//    $comment->doctor_id = Auth::id(); // Auth::guard('doctor')->id;
+//}

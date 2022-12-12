@@ -19,13 +19,11 @@ class Admin extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'username',
-        'email',
-        'password',
+        'first_name', 'last_name',
+        'username', 'email', 'password', 'remember_token',
+        'country',
+        'phone',
         'image',
-        'remember_token',
     ];
 
     /**
@@ -34,8 +32,8 @@ class Admin extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+//        'password',
+//        'remember_token',
     ];
 
     /**
@@ -48,7 +46,6 @@ class Admin extends Authenticatable implements JWTSubject
     ];
 
 
-
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -57,4 +54,6 @@ class Admin extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
 }

@@ -5,21 +5,21 @@ import UpdateUserPage from './UpdateUserPage';
 import AllUsersPage from './AllUsersPage';
 
 
-const Users = ({ current_lang }) => {
+const Users = () => {
 
   return (
     <Switch>
-      <Route exact path={`/${current_lang}/managementSystem/users/addUser`} >
+      <Route exact path={`/managementSystem/users/addUser`} >
         <AddUserPage />
       </Route>
-      <Route exact path={`/${current_lang}/managementSystem/users/editUser/:id`} >
+      <Route exact path={`/managementSystem/users/editUser/:id`} >
         <UpdateUserPage />
       </Route>
-      <Route exact path={`/${current_lang}/managementSystem/users/all`}  >
+      <Route exact path={`/managementSystem/users/all`}  >
         <AllUsersPage />
       </Route>
       
-      <Redirect to={`/${current_lang}/not-found`} />
+      <Redirect to={`/not-found`} />
 
     </Switch>
   )

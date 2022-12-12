@@ -62,7 +62,7 @@ const UserState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await UserAPI.get(`/`, {
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
     }).then(async(response)=> {
       console.log("all users");
       console.log(response);
@@ -76,7 +76,7 @@ const UserState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -123,7 +123,7 @@ const UserState = (props) => {
         console.log(inputsState);
         dispatch({ type: TYPES.SET_LOADING });
         const resp = await UserAPI.post(`/`, inputsState, {
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
         }).then(async (response) => {
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
             console.log("Add user");
@@ -140,11 +140,11 @@ const UserState = (props) => {
               icon: "success",
               button: "Done!",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/all`);
+              history.replace(`/managementSystem/users/all`);
             });
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+              history.replace(`/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -186,7 +186,7 @@ const UserState = (props) => {
               icon: "error",
               button: "OK",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/addUser`);
+              history.replace(`/managementSystem/users/addUser`);
             })
           }
         });
@@ -200,7 +200,7 @@ const UserState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await UserAPI.get(`/${id}`, {
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
     }).then(async(response)=> {
       console.log("get user");
       console.log(response);
@@ -215,7 +215,7 @@ const UserState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -262,7 +262,7 @@ const UserState = (props) => {
         console.log(inputsState);
         const resp = await UserAPI.post(`/${id}`, inputsState, {
           params: { id: id },
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
         }).then(async (response) => {
           console.log("Update User");
           console.log(response);
@@ -280,11 +280,11 @@ const UserState = (props) => {
               icon: "success",
               button: "Done!",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/all`);
+              history.replace(`/managementSystem/users/all`);
             });
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+            history.replace(`/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -326,7 +326,7 @@ const UserState = (props) => {
               icon: "error",
               button: "OK",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/all`);
+              history.replace(`/managementSystem/users/all`);
             })
           }
         });
@@ -348,7 +348,7 @@ const UserState = (props) => {
         dispatch({ type: TYPES.SET_LOADING });  
         const resp = await UserAPI.delete(`/${id}`, {
           params: { id: id },
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
         }).then(async (response) => {
           console.log("Delete User");
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
@@ -361,7 +361,7 @@ const UserState = (props) => {
             await getAllUsers();
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+            history.replace(`/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -391,7 +391,7 @@ const UserState = (props) => {
               icon: "error",
               button: "OK",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/all`);
+              history.replace(`/managementSystem/users/all`);
             })
           }
         });

@@ -77,7 +77,7 @@ class AdminsController extends Controller
                     'token_data'=> $this->createNewToken($token),
                 ];
 
-                return $this->returnData('data', $data, 'returned token');
+                return $this->returnData('admin', $data, 'returned token');
             } else {
                 return $this->returnError('password doesn\'t match', 'S002');
             }

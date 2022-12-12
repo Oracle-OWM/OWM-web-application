@@ -8,9 +8,10 @@ use App\Http\Requests\users\RegisterUserRequest;
 use App\Http\Requests\users\UpdateUserRequest;
 use App\Http\Traits\APIsTrait;
 use App\Http\Traits\GeneralTrait;
-use App\Models\ServiceProvider;
+use App\Models\Observer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 
 class UsersController extends Controller
@@ -21,7 +22,8 @@ class UsersController extends Controller
     public function getAllUsers()
     {
         $users = User::all()->map(function($user){
-//            $user->department;
+            $user->diseases = json_decode($user->diseases);
+            $user->IoTDevice;
             return $user;
         });
         if ($users->count()>= 1) {
@@ -31,11 +33,22 @@ class UsersController extends Controller
         }
     }
 
-    public function getUser(Request $request, $id)
+    public function getUser($id)
     {
-        $user = User::find($request->id);
+        $user = User::find($id);
         if ($user) {
-//            $user->department;
+            $user->IoTDevice;
+            return $this->returnData('user', $user, 'User has been returned successfully');
+        } else {
+            return $this->returnError('This User is not exist', "S004");
+        }
+    }
+
+    public function getProfile()
+    {
+        $user = User::find(Auth::id());
+        if ($user) {
+            $user->IoTDevice;
             return $this->returnData('user', $user, 'User has been returned successfully');
         } else {
             return $this->returnError('This User is not exist', "S004");
@@ -48,20 +61,15 @@ class UsersController extends Controller
 
             // $user = Auth::guard('user-api')->user();
             $user = User::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
-            $serviceProvider = ServiceProvider::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
+            $observer = Observer::where('username', '=', $request->identifier)->orWhere('email', '=', $request->identifier)->first();
 
 
-//            return $this->returnData('ss', $serviceProvider, 'ss');
-            if(!$user && !$serviceProvider) {
+            if(!$user && !$observer) {
                 return $this->returnError('Email/Username is incorrect', 'S001');
             } else if($user != null && password_verify($request->password, $user->password)) { // check password
-//            } else if(Hash::check($request->password, $user->password)) { // check password
-                // update user firebase token
-
 
                 $credentials = ['email'=>$user->email, 'password'=>$request->password];
                 $token = auth()->guard('user-api')->attempt($credentials);
-//                $token = JWTAuth::fromUser($user);
                 if (!$token) {
                     return $this->returnError('Unauthorized', 'E3001');
                 }
@@ -77,33 +85,33 @@ class UsersController extends Controller
                     'city_area'=> $user->city_area,
                     'street'=> $user->street,
                     'image'=> $user->image,
-                    'is_seller'=> false,
+                    'age'=> $user->age,
+                    'diseases'=> json_decode($user->diseases),
                     'token_data'=> $this->createNewToken($token),
                 ];
                 return $this->returnData('data', $data, 'returned token');
-            } else if($serviceProvider != null && password_verify($request->password, $serviceProvider->password)) { // check password
+            } else if($observer != null && password_verify($request->password, $observer->password)) { // check password
 //            } else if(Hash::check($request->password, $user->password)) { // check password
-                // update serviceProvider firebase token
+                // update observer firebase token
 
-                $credentials = ['email'=>$serviceProvider->email, 'password'=>$request->password];
-                $token = auth()->guard('service-provider-api')->attempt($credentials);
-//                $token = JWTAuth::fromUser($serviceProvider);
+                $credentials = ['email'=>$observer->email, 'password'=>$request->password];
+                $token = auth()->guard('observer-api')->attempt($credentials);
+//                $token = JWTAuth::fromUser($observer);
                 if (!$token) {
                     return $this->returnError('Unauthorized', 'E3001');
                 }
 
                 $data = [
-                    'id'=> $serviceProvider->id,
-                    'username'=> $serviceProvider->username,
-                    'first_name'=> $serviceProvider->first_name,
-                    'last_name'=> $serviceProvider->last_name,
-                    'email'=> $serviceProvider->email,
-                    'phone'=> $serviceProvider->phone,
-                    'country'=> $serviceProvider->country,
-                    'city_area'=> $serviceProvider->city_area,
-                    'street'=> $serviceProvider->street,
-                    'image'=> $serviceProvider->image,
-                    'is_seller'=> true,
+                    'id'=> $observer->id,
+                    'username'=> $observer->username,
+                    'first_name'=> $observer->first_name,
+                    'last_name'=> $observer->last_name,
+                    'email'=> $observer->email,
+                    'phone'=> $observer->phone,
+                    'country'=> $observer->country,
+                    'city_area'=> $observer->city_area,
+                    'street'=> $observer->street,
+                    'image'=> $observer->image,
                     'token_data'=> $this->createNewToken($token),
                 ];
 
@@ -130,13 +138,15 @@ class UsersController extends Controller
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'username' => $request->username,
-                'email' => $request->email,
+                'username' => strtolower($request->username),
+                'email' => strtolower($request->email),
                 'password' => $password,
                 'country' => $request->country,
                 'city_area' => $request->city_area,
                 'street' => $request->street,
                 'phone' => $request->phone,
+                'age'=> $request->age,
+                'diseases'=> json_encode($request->diseases),
                 'image' => $imgPath,
             ]);
 
@@ -168,12 +178,14 @@ class UsersController extends Controller
             $updated = $user->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'username' => $request->username,
-                'email' => $request->email,
+                'username' => strtolower($request->username),
+                'email' => strtolower($request->email),
                 'country' => $request->country,
                 'city_area' => $request->city_area,
                 'street' => $request->street,
                 'phone' => $request->phone,
+                'age'=> $request->age,
+                'diseases'=> json_encode($request->diseases),
                 'image' => $imgPath,
             ]);
 

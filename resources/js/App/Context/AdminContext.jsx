@@ -74,6 +74,10 @@ const AdminState = (props) => {
       // console.log(response);
       if (response.data.errorNum === 'S000') {
         Cookies.set('admin', JSON.stringify(response.data.admin));
+        console.log('admin', JSON.stringify(response.data.admin));
+        console.log('admin', JSON.stringify(response.data.admin));
+        console.log('admin', JSON.stringify(response.data.admin));
+        console.log('admin', JSON.stringify(response.data.admin));
         dispatch({
           type: TYPES.LOGIN, payload: {
             auth: true,
@@ -82,7 +86,7 @@ const AdminState = (props) => {
             status: response.data.status,
           }
         });
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/all`);
+        history.replace(`/managementSystem/users/all`);
       } else if(response.data.errorNum === 'S001') {
         dispatch({ 
           type: TYPES.VALIDATION_ERRORS, payload: { 
@@ -131,7 +135,7 @@ const AdminState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await API.post(`/logout`, {}, {
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` }
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` }
     })
     .then(async(response)=> {
       console.log("logout");
@@ -144,7 +148,7 @@ const AdminState = (props) => {
         status: response.data.status, 
         auth: false,
       }});
-      history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`)
+      history.replace(`/login`)
     }).catch((error)=> {
       if(error.hasOwnProperty('response')) {
         dispatch({ 

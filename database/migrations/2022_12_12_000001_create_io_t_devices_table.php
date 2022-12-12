@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBannersTable extends Migration
+class CreateIoTDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateBannersTable extends Migration
      */
     public function up()
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::create('io_t_devices', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
+            $table->string('name', 50)->unique();
+            $table->string('token')->unique();
+            $table->boolean('start_read')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateBannersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('io_t_devices');
     }
 }

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router'
 import Cookies from 'js-cookie'
 import { AdminContext } from '../Context/AdminContext';
 
-const Protected = ({children, current_lang}) => {
+const Protected = ({children}) => {
   const {getAdmin, setAuth,} = useContext(AdminContext);
 
   const history = useHistory();
@@ -14,7 +14,7 @@ const Protected = ({children, current_lang}) => {
       console.log('protected');
       console.log(JSON.parse(Cookies.get('admin')).email);
     } else {
-      history.replace(`/${current_lang}/login`);
+      history.replace(`/login`);
     }
   }, [])
 

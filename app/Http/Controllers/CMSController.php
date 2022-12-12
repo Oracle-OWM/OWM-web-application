@@ -27,12 +27,10 @@ class CMSController extends Controller
 
     public function getContent() {
         $data = [
-            'login_form_title'=> Lang::get('content.login_form_title'),
-            'login_form_identifier'=> trans('content.login_form_identifier'),
-            'login_form_password'=> __('content.login_form_password'),
-            'login_form_submit'=> __('content.login_form_submit'),
-
-
+            'admin_login_form_title'=> Lang::get('content.admin_login_form_title'),
+            'admin_login_form_identifier'=> trans('content.admin_login_form_identifier'),
+            'admin_login_form_password'=> __('content.admin_login_form_password'),
+            'admin_login_form_submit'=> __('content.admin_login_form_submit'),
         ];
         if($data) {
             return $this->returnData('content', $data, 'content has been returned successfully');

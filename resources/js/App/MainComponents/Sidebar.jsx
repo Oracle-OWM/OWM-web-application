@@ -8,7 +8,7 @@ import { useMediaQuery } from 'react-responsive';
 import { CogIcon, LibraryIcon, PlusCircleIcon, TableIcon, UserAddIcon } from '@heroicons/react/solid';
 import Cookies from 'js-cookie';
 
-function Sidebar({ current_lang }) {
+function Sidebar() {
   const { loading, logout, } = useContext(AdminContext);
   const admin = Cookies.get('admin') && JSON.parse(Cookies.get('admin'));
 
@@ -19,15 +19,15 @@ function Sidebar({ current_lang }) {
 
   const menus = [
     {
-      btn:'categories',
+      btn:'IoTDevices',
       items: [
         {
-          label:'all categories',
-          url:`/${current_lang}/managementSystem/categories/all`,
+          label:'all IoT Devices',
+          url:`/managementSystem/IoTDevices/all`,
         },
         {
-          label:'add category',
-          url:`/${current_lang}/managementSystem/categories/addCategory`,
+          label:'add IoT Device',
+          url:`/managementSystem/IoTDevices/addIoTDevice`,
         },
       ]
     },
@@ -35,12 +35,25 @@ function Sidebar({ current_lang }) {
       btn:'users',
       items: [
         {
-          label:'all users',
-          url:`/${current_lang}/managementSystem/users/all`,
+          label:'All users',
+          url:`/managementSystem/users/all`,
         },
         {
-          label:'add user',
-          url:`/${current_lang}/managementSystem/users/addUser`,
+          label:'Add user',
+          url:`/managementSystem/users/addUser`,
+        },
+      ]
+    },
+    {
+      btn:'observers',
+      items: [
+        {
+          label:'All observers',
+          url:`/managementSystem/observers/all`,
+        },
+        {
+          label:'Add observer',
+          url:`/managementSystem/observers/addObserver`,
         },
       ]
     },
@@ -48,12 +61,12 @@ function Sidebar({ current_lang }) {
       btn:'admins',
       items: [
         {
-          label:'all admins',
-          url:`/${current_lang}/managementSystem/accounts/all`,
+          label:'All admins',
+          url:`/managementSystem/accounts/all`,
         },
         {
-          label:'add admin',
-          url:`/${current_lang}/managementSystem/accounts/addAccount`,
+          label:'Add admin',
+          url:`/managementSystem/accounts/addAccount`,
         },
       ]
     },
@@ -82,7 +95,7 @@ function Sidebar({ current_lang }) {
               >
                 <Disclosure.Panel className={''}  static>
                   <aside className={`  `}>
-                    <h1 className='md:text-4xl sm:text-2xl text-xl text-center mt-12 mb-4 font-extrabold'>FEHU</h1>
+                    <h1 className='md:text-4xl sm:text-2xl text-xl text-blue-300 text-center mt-12 mb-4 font-extrabold'>Pixels Egypt</h1>
                     <div className="text-center">
                       {admin.image ? (
                         <img src={`../../../../${admin.image}`} className="h-20 w-1/4 mx-auto rounded-full block" alt="admin" />

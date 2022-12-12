@@ -22,7 +22,8 @@ Route::group(['prefix'=>'/cms'], function (){
     Route::post('/section/update/{id}',[CMSController::class,'updateSection'])->name('cms.sectionUpdate');
 });
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function() {
+//Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function() {
+    Route::group([], function() {
 //    Route::get('/reset-password/{token}', [\App\Http\Controllers\APIs\NewPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 //    Route::post('/update-password', [\App\Http\Controllers\APIs\NewPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
     Route::get('/{mainPath?}', [CMSController::class, 'returnViewWithLang']);

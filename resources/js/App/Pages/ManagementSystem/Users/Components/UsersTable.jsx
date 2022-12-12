@@ -7,7 +7,7 @@ import Alert from '../../../../MainComponents/Alert';
 
 
 const UsersTable = () => {  
-  const cols = ["User", "Email", "Batch", "Actions"];
+  const cols = ['Observer', 'Location', 'Phone Number', 'Age', 'Actions'];
   const {  users, deleteUser  } = useContext(UserContext);
   const { searchResult, search } = useContext(SearchContext);
 
@@ -45,28 +45,48 @@ const UsersTable = () => {
                     <tbody className=" divide-y divide-gray-200">
                       {currentUsers.map((user, index) => (
                         <tr key={index}>
-                          {/* Username */}
-                          <td className="py-4 whitespace-nowrap">
-                            <div className="flex flex-row justify-center items-center text-left">
+                          {/* Name */}
+                          <td className="py-4 pl-3 whitespace-nowrap">
+                            <div className="flex flex-row items-left text-left">
+                              <div className="flex-shrink-0 h-10 w-10">
+                                {user.image ? (<img className="h-10 w-10 rounded-full" src={user.image ? `../../../../../../../${user.image}` : '-'} alt="" />) : ('-')}
+                              </div>
                               <div className="ml-4">
-                                <p className="text-sm text-gray-500">{user.username ? user.username : '-'}</p>
+                                <p className="text-sm text-gray-500">{user.first_name && user.last_name ? user.first_name+' '+user.last_name : '-'}</p>
                               </div>
                             </div>
                           </td>
-                          
-                          {/* Email */}
-                          <td className="py-4 whitespace-nowrap">
-                            <p className="text-sm text-gray-900">{user.email ? user.email : '-'}</p>
+
+                          {/* Location */}
+                          <td className="py-4 pl-3 whitespace-nowrap">
+                            <div className="flex flex-row items-left text-left">
+                              <div className="ml-4">
+                                <p className="text-sm text-gray-500">{user.country && user.city_area ? user.city_area+' - '+user.country : '-'}</p>
+                              </div>
+                            </div>
                           </td>
 
-                          {/* Batch */}
-                          <td className="py-4 whitespace-nowrap">
-                            <p className="text-sm text-gray-900">{user.batch ? user.batch.number : '-'}</p>
+                          {/* Phone Number */}
+                          <td className="py-4 pl-3 whitespace-nowrap">
+                            <div className="flex flex-row items-left text-left">
+                              <div className="ml-4">
+                                <p className="text-sm text-gray-500">{user.phone ? user.phone : '-'}</p>
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* Age */}
+                          <td className="py-4 pl-3 whitespace-nowrap">
+                            <div className="flex flex-row items-left text-left">
+                              <div className="ml-4">
+                                <p className="text-sm text-gray-500">{user.age ? user.age : '-'}</p>
+                              </div>
+                            </div>
                           </td>
 
                           {/* Actions */}
                           <td className="py-4 pl-3 whitespace-nowrap flex justify-center flex-nowrap text-sm font-medium">
-                            <Link to={`/${JSON.parse($supportedLocales).current_lang}/managementSystem/users/editUser/${user.id}`} className="bg-yellow-light text-gray-common hover:opacity-80 p-3 rounded-full hover:no-underline"><PencilAltIcon className='w-6 h-6'/></Link>
+                            <Link to={`/managementSystem/users/editUser/${user.id}`} className="bg-yellow-light text-gray-common hover:opacity-80 p-3 rounded-full hover:no-underline"><PencilAltIcon className='w-6 h-6'/></Link>
                             <button onClick={()=>deleteHandler(user.id)} className="ml-2 bg-red-light text-gray-common hover:opacity-80 p-3 rounded-full hover:no-underline"><TrashIcon className='w-6 h-6'/></button>
                           </td> 
                         </tr>

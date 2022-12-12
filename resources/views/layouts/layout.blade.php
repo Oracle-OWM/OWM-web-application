@@ -8,7 +8,7 @@
     <meta http-equiv="Access-Control-Allow-Origin" content="*" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <title>@yield('title', 'FEHU')</title>
+    <title>@yield('title', 'Pixels Egypt')</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">

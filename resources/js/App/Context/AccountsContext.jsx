@@ -61,7 +61,7 @@ const AccountsState = (props) => {
     dispatch({ type: TYPES.SET_LOADING });
 
     const resp = await AccountsAPI.get(`/`, {
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` }
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` }
     }).then(async (response) => {
       console.log("all accounts");
       console.log(response);
@@ -74,7 +74,7 @@ const AccountsState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -121,7 +121,7 @@ const AccountsState = (props) => {
         dispatch({ type: TYPES.SET_LOADING });
 
         const resp = await API.post(`/admin/register`, inputsState, {
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
         }).then(async (response) => {
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
             console.log("Add account");
@@ -137,11 +137,11 @@ const AccountsState = (props) => {
               icon: "success",
               button: "Done!",
             }).then(async(value)=> {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/accounts/all`);
+              history.replace(`/managementSystem/accounts/all`);
             });
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+            history.replace(`/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -189,7 +189,7 @@ const AccountsState = (props) => {
               icon: "error",
               button: "OK",
             }).then(async (value) => {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/accounts/addaccount`);
+              history.replace(`/managementSystem/accounts/addaccount`);
             });
           }
         });
@@ -204,7 +204,7 @@ const AccountsState = (props) => {
 
     const resp = await AccountsAPI.get(`/${id}`, {
       params: { id: id },
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
     }).then(async (response) => {
       console.log("get account");
       console.log(response.data);
@@ -218,7 +218,7 @@ const AccountsState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+        history.replace(`/login`);
 
         swal({
           title: "Sorry!",
@@ -267,7 +267,7 @@ const AccountsState = (props) => {
         console.log('aaa', inputsState);
         const resp = await AccountsAPI.post(`/update/${id}`, inputsState, {
           params: { id: id },
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
         }).then(async(response) => {
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
             console.log("Update admin");
@@ -284,11 +284,11 @@ const AccountsState = (props) => {
               icon: "success",
               button: "Done!",
             }).then(async (value) => {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/accounts/all`);
+              history.replace(`/managementSystem/accounts/all`);
             });
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/${JSON.parse($supportedLocales).current_lang}/login`);
+            history.replace(`/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -336,7 +336,7 @@ const AccountsState = (props) => {
               icon: "error",
               button: "OK",
             }).then(async (value) => {
-              history.replace(`/${JSON.parse($supportedLocales).current_lang}/managementSystem/accounts/editAccount/${id}`);
+              history.replace(`/managementSystem/accounts/editAccount/${id}`);
             });
           }
         });
@@ -358,7 +358,7 @@ const AccountsState = (props) => {
         dispatch({ type: TYPES.SET_LOADING });
         const resp = await AccountsAPI.delete(`/delete/${id}`, {
           params: { id: id },
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).api_token.access_token}` },
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
         }).then(async (response) => {
           console.log("Delete Account");
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
