@@ -15,6 +15,8 @@ class CheckupsHandler extends BaseSocketHandler implements MessageComponentInter
         // TODO: Implement onMessage() method.
         broadcast(new \App\Events\NewMessage('Hello Websockets'));
 
+        dump('on Message');
+
     }
 
 }

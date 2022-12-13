@@ -42,7 +42,7 @@ const ShowIoTDeviceReadings = ({match}) => {
 
       {(!loading && content && (<>
         <div className="flex flex-col w-8/12 mx-auto rounded items-center bg-white">
-          <h1 className="bg-blue-light p-3 w-9/12 rounded text-white z-10 -mt-5 md:text-2xl text-base">Start Checkup</h1>
+          {/*<h1 className="bg-blue-light p-3 w-9/12 rounded text-white z-10 -mt-5 md:text-2xl text-base">Start Checkup</h1>*/}
             {/* Submit   */}
             <div>
               <button onClick={()=>changeCheckupStatus(true)} className="group btn-outline bg-blue-400 text-white relative w-full flex justify-center py-3 px-4 md:text-xl text-xs text-blue-dark font-medium rounded-md border-blue-dark border-2 hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

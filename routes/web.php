@@ -13,6 +13,28 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Symfony\Component\Console\Output\NullOutput;
+use BeyondCode\LaravelWebSockets\Server\Logger\WebsocketsLogger;
+
+app()->singleton(WebsocketsLogger::class, function () {
+    return (new WebsocketsLogger(new NullOutput()))->enable(false);
+});
+
+
+use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
+use App\Websockets\SocketHandler\CheckupsHandler;
+
+Route::get('/send-message', function () {
+    event(new \App\Events\NewMessage('Hello Websockets'));
+//    event(new \App\Events\NewMessage($request->message));
+    broadcast(new \App\Events\NewMessage('Hello Websockets'));
+    return 'done';
+});
+
+
+WebSocketsRouter::webSocket('/laravel-websockets/websocket-channel', CheckupsHandler::class);
+WebSocketsRouter::webSocket('/laravel-websockets', CheckupsHandler::class);
+WebSocketsRouter::webSocket('/', CheckupsHandler::class);
 
 
 // CMS

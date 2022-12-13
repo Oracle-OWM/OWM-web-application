@@ -14,9 +14,10 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "mcamara/laravel-localization": "^1.7",
-        "pusher/pusher-php-server": "^7.0",
+        "pusher/pusher-php-server": "7.0.2",
         "swooletw/laravel-swoole": "^2.12",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+      "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

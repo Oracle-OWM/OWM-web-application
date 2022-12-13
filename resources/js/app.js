@@ -5,25 +5,40 @@
  */
 
 require('./bootstrap');
+window.Pusher = require('pusher-js');
 
-const channel = Echo.channel('websocket-channel');
+// let ws = new WebSocket('wss://'+window.location.hostname+':6001/laravel-websockets/websocket-channel');
+let ws = new WebSocket('wss://'+window.location.hostname+':6001/laravel-websockets');
 
+ws.onopen = function(){
+    //Subscribe to the channel
+    console.log('opened!');
+    ws.send(JSON.stringify({"command": "subscribe","identifier":"{\"channel\":\"websocket-channel\"}"}))
+}
 
-window.Echo.channel('websocket-channel')
-    .listen('.NewMessage', e => {
-        console.log('event',e);
-        console.log('messaage',e.message);
-    });
+ws.onmessage = function(msg) {
+    console.log(JSON.parse(msg.data).message);
+    console.log(msg);
+}
 
-$message = null;
-channel.listen('.NewMessage', e => {
-    console.log(e);
-    console.log('messaage',e.message);
-    console.log('messaage',e);
-    $message = e.message;
-}).subscribed(()=>{
-    console.log('subscribed!')
-});
+// const channel = Echo.channel('websocket-channel');
+//
+//
+// window.Echo.channel('websocket-channel')
+//     .listen('.NewMessage', e => {
+//         console.log('event',e);
+//         console.log('messaage',e.message);
+//     });
+//
+// $message = null;
+// channel.listen('.NewMessage', e => {
+//     console.log(e);
+//     console.log('messaage',e.message);
+//     console.log('messaage',e);
+//     $message = e.message;
+// }).subscribed(()=>{
+//     console.log('subscribed!')
+// });
 
 /**
 * Next, we will create a fresh React component instance and attach it to

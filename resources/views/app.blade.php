@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <script src="https://cdn.tailwindcss.com"></script>
+{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
 
     <div id="root"></div>
 
