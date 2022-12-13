@@ -5,7 +5,7 @@
 ```
 1. duplicate the .env-example file with name .env
 2. run the following command
-bash `composer i`
+`composer i`
 3. `npm i`
 4. `php artisan key:generate`
 5. `php artisan migrate`
