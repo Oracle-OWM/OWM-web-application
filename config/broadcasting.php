@@ -40,13 +40,9 @@ return [
                 'encrypted' => false,
                 'useTLS' => false,
 //                'useTLS' => true,
-                'host' => '192.168.8.102', //this is your localhost
+                'host' => '127.0.0.1', //this is your localhost
                 'port' => 6001,
-                'scheme' => 'http',
-                'curl_options' => [
-                    CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_SSL_VERIFYPEER => 0,
-                ]
+                'scheme' => 'http'
             ],
         ],
 

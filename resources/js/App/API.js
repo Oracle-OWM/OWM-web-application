@@ -3,8 +3,9 @@ import axios from 'axios';
 // const baseURL = 'http://fehu.cardi-hu.com/api/auth';
 // const baseURL = 'http://172.20.10.10:8000/api/auth';
 // const baseURL = 'http://192.168.1.7:8000/api/auth';
-const baseURL = 'http://192.168.8.102:8000/api/auth';
-
+// const baseURL = 'http://192.168.8.102:8000/api/auth';
+const baseURL = 'http://127.0.0.1:8000/api/auth';
+//
 export const API = axios.create({
   baseURL: `${baseURL}`,
   data: {

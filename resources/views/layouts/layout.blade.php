@@ -7,6 +7,7 @@
     <!-- <meta http-equiv="refresh" content="60"> -->
     <meta http-equiv="Access-Control-Allow-Origin" content="*" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Pixels Egypt')</title>
 

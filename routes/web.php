@@ -32,9 +32,9 @@ Route::get('/send-message', function () {
 });
 
 
-WebSocketsRouter::webSocket('/laravel-websockets/websocket-channel', CheckupsHandler::class);
+//WebSocketsRouter::webSocket('/laravel-websockets/websocket-channel', CheckupsHandler::class);
 WebSocketsRouter::webSocket('/laravel-websockets', CheckupsHandler::class);
-WebSocketsRouter::webSocket('/', CheckupsHandler::class);
+//WebSocketsRouter::webSocket('/', CheckupsHandler::class);
 
 
 // CMS
