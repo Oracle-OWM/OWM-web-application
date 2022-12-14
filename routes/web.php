@@ -25,7 +25,6 @@ use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 use App\Websockets\SocketHandler\CheckupsHandler;
 
 Route::get('/send-message', function () {
-    event(new \App\Events\NewMessage('Hello Websockets'));
 //    event(new \App\Events\NewMessage($request->message));
     broadcast(new \App\Events\NewMessage('Hello Websockets'));
     return 'done';
@@ -33,8 +32,10 @@ Route::get('/send-message', function () {
 
 
 //WebSocketsRouter::webSocket('/laravel-websockets/websocket-channel', CheckupsHandler::class);
-WebSocketsRouter::webSocket('/laravel-websockets', CheckupsHandler::class);
+//WebSocketsRouter::webSocket('/laravel-websockets', CheckupsHandler::class);
 //WebSocketsRouter::webSocket('/', CheckupsHandler::class);
+//WebSocketsRouter::get('/laravel-websockets', CheckupsHandler::class);
+//WebSocketsRouter::get('/', CheckupsHandler::class);
 
 
 // CMS

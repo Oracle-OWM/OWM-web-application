@@ -5,24 +5,46 @@
  */
 
 require('./bootstrap');
-window.Pusher = require('pusher-js');
+// window.Pusher = require('pusher-js');
 
-// let ws = new WebSocket('wss://'+window.location.hostname+':6001/laravel-websockets/websocket-channel');
-// let ws = new WebSocket('wss://'+window.location.hostname+':6001/laravel-websockets');
-let ws = new WebSocket('wss://127.0.0.1:6001/laravel-websockets');
+// let ws = new WebSocket('wss://s'+window.location.hostname+':6001/laravel-websockets/websocket-channel');
+// let ws = new WebSocket('wss:/s/'+window.location.hostname+':6001/laravel-websockets');
 // let ws = new WebSocket('ws://127.0.0.1:6001/laravel-websockets?channel=websocket-channel');
 
-ws.onopen = function() {
+
+let ws = new WebSocket(`ws://${window.location.hostname}:6001/app/livepost_key?protocol=7&client=js&version=7.5.0&flash=false`);
+
+ws.onopen = function(e) {
     //Subscribe to the channel
     console.log('opened!');
-    ws.send(JSON.stringify({"command": "subscribe","identifier":"{\"channel\":\"websocket-channel\"}"}))
+    console.log('open event',e);
+    ws.send(JSON.stringify({"event":"pusher:subscribe","data":{"auth":"","channel":"websocket-channel"}}));
+    // ws.send(JSON.stringify({"event":"pusher:subscribe","data":"{\"auth\":\"\",\"channel\":\"websocket-channel\"}"}));
+    // ws.send(JSON.stringify({"command":"pusher:subscribe","data":"{\"auth\":\"\",\"channel\":\"websocket-channel\"}"}));
+    // ws.send(JSON.stringify({"command": "pusher:subscribe","identifier":"{\"channel\":\"websocket-channel\"}"}));
+    // ws.send(JSON.stringify({"command": "subscribe","identifier":"{\"channel\":\"websocket-channel\"}"}));
+    // console.log('sent!');
+    // ws.send(JSON.stringify({"command": "listen","identifier":"{\"channel\":\"websocket-channel\"}"}));
+    // console.log('sent!');
+    // ws.send(JSON.stringify({"command": "subscribe","identifier":"{\"channel\":\"websocket-channel\", \"event\":\"NewMessage\"}"}));
+    // console.log('sent!');
+    // ws.send(JSON.stringify({"command": "subscribe","identifier":"{\"channel\":\"websocket-channel\", \"event\":\".NewMessage\"}"}));
+    // console.log('sent!');
+    // ws.send(JSON.stringify({"command": "listen","identifier":"{\"channel\":\"websocket-channel\", \"event\":\"NewMessage\"}"}));
+    // console.log('sent!');
+    // ws.send(JSON.stringify({"command": "listen","identifier":"{\"channel\":\"websocket-channel\", \"event\":\"NewMessage\"}"}));
+    // console.log('sent!');
+    // ws.send(JSON.stringify({"channel": "websocket-channel", "event":"NewMessage"}));
+    console.log('sent!');
 }
 
 ws.onmessage = function(msg) {
-    console.log(JSON.parse(msg.data).message);
-    console.log(msg);
+    console.log('msg event',msg);
+    console.log('message',JSON.parse(msg.data).data && JSON.parse(JSON.parse(msg.data).data).message);
 }
 
+// {"event":"pusher:subscribe","data":{"auth":"","channel":"websocket-channel"}}
+//
 // const channel = Echo.channel('websocket-channel');
 //
 //

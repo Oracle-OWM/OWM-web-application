@@ -11,21 +11,21 @@ abstract class BaseSocketHandler implements MessageComponentInterface
     {
         broadcast(new \App\Events\NewMessage('Hello Websockets'));
 
-        dump('onOpend');
+        ddd('onOpend');
     }
 
     function onClose(ConnectionInterface $conn)
     {
         broadcast(new \App\Events\NewMessage('Hello Websockets'));
 
-        dump('closed');
+        ddd('closed');
     }
 
     function onError(ConnectionInterface $conn, \Exception $e)
     {
         broadcast(new \App\Events\NewMessage('Hello Websockets'));
 
-        dump($e);
-        dump('onError');
+        ddd($e);
+        ddd('onError');
     }
 }

@@ -40,7 +40,8 @@ return [
                 'encrypted' => false,
                 'useTLS' => false,
 //                'useTLS' => true,
-                'host' => '127.0.0.1', //this is your localhost
+//                'host' => '127.0.0.1', //this is your localhost
+                'host' => '192.168.8.101', //this is your localhost
                 'port' => 6001,
                 'scheme' => 'http'
             ],
