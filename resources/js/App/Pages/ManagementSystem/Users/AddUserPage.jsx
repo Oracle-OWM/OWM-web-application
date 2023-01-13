@@ -3,7 +3,6 @@ import { GeneralContext } from '../../../Context/GeneralContext';
 import { IoTDeviceContext } from '../../../Context/IoTDeviceContext';
 import { UserContext } from '../../../Context/UserContext';
 import Spinner from '../../../MainComponents/Spinner';
-import DropdownSingleSearchList from './../../../MainComponents/DropdownSingleSearchList';
 
 const AddUserPage = () => {
   const { loading, addUser, errors, setInput, inputsState, resetAllInputs, resetAllErrors } = useContext(UserContext);
@@ -24,14 +23,7 @@ const AddUserPage = () => {
     formData.append("last_name", inputsState.last_name);
     formData.append("username", inputsState.username);
     formData.append("email", inputsState.email);
-    formData.append("password", inputsState.password);
-    formData.append("country", inputsState.country);
-    formData.append("city_area", inputsState.city_area);
-    formData.append("street", inputsState.street);
     formData.append("phone", inputsState.phone);
-    formData.append("age", inputsState.age);
-    formData.append("diseases", inputsState.diseases);
-    formData.append("device_id", inputsState.device_id);
     formData.append("image", inputsState.image);
     await addUser(formData);    
   };
@@ -109,20 +101,7 @@ const AddUserPage = () => {
                 />
                 {errors && (<span className="text-red-common p-3">{errors.email}</span>)}
               </div>
-            </div>
-
-            {/* Password   */}
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mt-4">
-                <label htmlFor="password" className="capitalize md:text-lg text-xs">
-                  Password <span className='text-red'>*</span>: 
-                </label>
-                <input onChange={(e)=>setInput(e)} value={inputsState.password  ? inputsState.password: "" }  id={`password`} name="password" type="password" placeholder="Password must be 8 charachters at least"
-                  className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-                />
-                {errors && (<span className="text-red-common p-3">{errors.password}</span>)}
-              </div>
-            </div>             
+            </div>         
 
             {/* phone */}
             <div className="rounded-md shadow-sm -space-y-px">
@@ -134,19 +113,6 @@ const AddUserPage = () => {
                   className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                 />
                 {errors && (<span className="text-red-common p-3">{errors.phone}</span>)}
-              </div>
-            </div>
-
-            {/* IoT Device   */}
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mt-4">
-                <label htmlFor="device_id" className="capitalize md:text-lg text-xs">
-                  IoT Device <span className='text-red-common'>*</span>:
-                </label>
-
-                <DropdownSingleSearchList defaultArray={inputsState.device_id ? [IoTDevices.map((device)=>{return {id: device.id, name: device.title}}).find((device.id===Number(inputsState.device_id)))] : []} name='device_id' array={IoTDevices.map((device)=>{return {id: device.id, name: device.title}})} setInput={setInput} />
-
-                {errors && (<span className="text-red-common p-3">{errors.device_id}</span>)}
               </div>
             </div>
 

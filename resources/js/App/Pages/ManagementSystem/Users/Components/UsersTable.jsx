@@ -1,13 +1,13 @@
 import React, {useEffect, useContext} from 'react'
 import { Link, } from "react-router-dom";
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+import { PencilAltIcon, TrashIcon, UserCircleIcon } from '@heroicons/react/solid';
 import { UserContext, } from '../../../../Context/UserContext';
 import { SearchContext, } from '../../../../Context/SearchContext';
 import Alert from '../../../../MainComponents/Alert';
 
 
 const UsersTable = () => {  
-  const cols = ['Observer', 'Location', 'Phone Number', 'Age', 'Actions'];
+  const cols = ['User', 'Phone Number', 'Actions'];
   const {  users, deleteUser  } = useContext(UserContext);
   const { searchResult, search } = useContext(SearchContext);
 
@@ -48,20 +48,11 @@ const UsersTable = () => {
                           {/* Name */}
                           <td className="py-4 pl-3 whitespace-nowrap">
                             <div className="flex flex-row items-left text-left">
-                              <div className="flex-shrink-0 h-10 w-10">
-                                {user.image ? (<img className="h-10 w-10 rounded-full" src={user.image ? `../../../../../../../${user.image}` : '-'} alt="" />) : ('-')}
+                              <div className="flex-shrink-0 h-10 w-10 items-center">
+                                {user.image ? (<img className="h-10 w-10 rounded-full" src={user.image ? `../../../../../../../${user.image}` : '-'} alt="" />) : (<UserCircleIcon />)}
                               </div>
                               <div className="ml-4">
                                 <p className="text-sm text-gray-500">{user.first_name && user.last_name ? user.first_name+' '+user.last_name : '-'}</p>
-                              </div>
-                            </div>
-                          </td>
-
-                          {/* Location */}
-                          <td className="py-4 pl-3 whitespace-nowrap">
-                            <div className="flex flex-row items-left text-left">
-                              <div className="ml-4">
-                                <p className="text-sm text-gray-500">{user.country && user.city_area ? user.city_area+' - '+user.country : '-'}</p>
                               </div>
                             </div>
                           </td>
@@ -71,15 +62,6 @@ const UsersTable = () => {
                             <div className="flex flex-row items-left text-left">
                               <div className="ml-4">
                                 <p className="text-sm text-gray-500">{user.phone ? user.phone : '-'}</p>
-                              </div>
-                            </div>
-                          </td>
-
-                          {/* Age */}
-                          <td className="py-4 pl-3 whitespace-nowrap">
-                            <div className="flex flex-row items-left text-left">
-                              <div className="ml-4">
-                                <p className="text-sm text-gray-500">{user.age ? user.age : '-'}</p>
                               </div>
                             </div>
                           </td>

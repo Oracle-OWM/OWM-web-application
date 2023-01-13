@@ -19,6 +19,15 @@ function Sidebar() {
 
   const menus = [
     {
+      btn:'Dashboard',
+      items: [
+        {
+          label:'all IoT Devices',
+          url:`/dashboard/IoTDevices/all`,
+        },
+      ]
+    },
+    {
       btn:'IoTDevices',
       items: [
         {
@@ -41,19 +50,6 @@ function Sidebar() {
         {
           label:'Add user',
           url:`/managementSystem/users/addUser`,
-        },
-      ]
-    },
-    {
-      btn:'observers',
-      items: [
-        {
-          label:'All observers',
-          url:`/managementSystem/observers/all`,
-        },
-        {
-          label:'Add observer',
-          url:`/managementSystem/observers/addObserver`,
         },
       ]
     },
@@ -95,7 +91,7 @@ function Sidebar() {
               >
                 <Disclosure.Panel className={''}  static>
                   <aside className={`  `}>
-                    <h1 className='md:text-4xl sm:text-2xl text-xl text-blue-300 text-center mt-12 mb-4 font-extrabold'>Pixels Egypt</h1>
+                    <h1 className='md:text-4xl sm:text-2xl text-xl text-blue-300 text-center mt-12 mb-4 font-extrabold'>OWM</h1>
                     <div className="text-center">
                       {admin.image ? (
                         <img src={`../../../../${admin.image}`} className="h-20 w-1/4 mx-auto rounded-full block" alt="admin" />

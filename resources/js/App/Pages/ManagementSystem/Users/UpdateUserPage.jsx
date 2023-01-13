@@ -20,13 +20,11 @@ const UpdateUserPage = ({match}) => {
   async function updateHandler(e) {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("full_name", inputsState.full_name);
+    formData.append("first_name", inputsState.first_name);
+    formData.append("last_name", inputsState.last_name);
     formData.append("username", inputsState.username);
     formData.append("email", inputsState.email);
     formData.append("phone", inputsState.phone);
-    formData.append("batch_id", inputsState.batch_id);
-    formData.append("group", inputsState.group);
-    formData.append("section", inputsState.section);
     formData.append("image", inputsState.image);
     formData.append("_method", 'PUT');
     await updateUser(match.params.id, formData);
@@ -55,16 +53,31 @@ const UpdateUserPage = ({match}) => {
             <input type="hidden" name="_method" value="POST" />
             <input type="hidden" name="remember" defaultValue="true" />
 
-            {/* Full Name   */}
+
+            {/* First Name   */}
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mt-4">
-                <label htmlFor="full_name" className="capitalize md:text-lg text-xs">
-                  Full Name <span className='text-red-common'>*</span>:
+                <label htmlFor="first_name" className="capitalize md:text-lg text-xs">
+                  First Name <span className='text-red'>*</span>:
                 </label>
-                <input onChange={(e)=>setInput(e)} value={inputsState.full_name  ? inputsState.full_name: "" } id={`full_name`} name="full_name" type="text" placeholder="Enter The Full Name" 
+                <input onChange={(e)=>setInput(e)} value={inputsState.first_name  ? inputsState.first_name: "" } id={`first_name`} name="first_name" type="text" placeholder="Enter The Full Name" 
                   className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                 />
-                {errors && (<span className="text-red-common p-3">{errors.full_name}</span>)}
+                {errors && (<span className="text-red-common p-3">{errors.first_name}</span>)}
+              </div>
+            </div>
+
+            {/* Last Name   */}
+
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div className="mt-4">
+                <label htmlFor="last_name" className="capitalize md:text-lg text-xs">
+                  First Name <span className='text-red'>*</span>:
+                </label>
+                <input onChange={(e)=>setInput(e)} value={inputsState.last_name  ? inputsState.last_name: "" } id={`last_name`} name="last_name" type="text" placeholder="Enter The Full Name" 
+                  className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                />
+                {errors && (<span className="text-red-common p-3">{errors.last_name}</span>)}
               </div>
             </div>
 
@@ -72,7 +85,7 @@ const UpdateUserPage = ({match}) => {
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mt-4">
                 <label htmlFor="username" className="capitalize md:text-lg text-xs">
-                  Username <span className='text-red-common'>*</span>: 
+                  Username <span className='text-red'>*</span>: 
                 </label>
                 <input onChange={(e)=>setInput(e)} value={inputsState.username  ? inputsState.username: "" }  id={`username`} name="username" type="text" placeholder="Enter username" 
                   className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
@@ -85,77 +98,25 @@ const UpdateUserPage = ({match}) => {
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mt-4">
                 <label htmlFor="email" className="capitalize md:text-lg text-xs">
-                  Email Address <span className='text-red-common'>*</span>: 
+                  Email Address <span className='text-red'>*</span>: 
                 </label>
                 <input onChange={(e)=>setInput(e)} value={inputsState.email  ? inputsState.email: "" }  id={`email`} name="email" type="email" placeholder="Enter Email Address"
                   className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                 />
                 {errors && (<span className="text-red-common p-3">{errors.email}</span>)}
               </div>
-            </div>
+            </div>         
 
             {/* phone */}
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mt-4">
                 <label htmlFor="phone" className="capitalize md:text-lg text-xs">
-                  Phone Number <span className='text-red-common'>*</span>: 
+                  Phone Number <span className='text-red'>*</span>: 
                 </label>
                 <input onChange={(e)=>setInput(e)} value={inputsState.phone  ? inputsState.phone: "" }  id={`phone`} name="phone" type="phone" placeholder="Enter Your Phone Number"
                   className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                 />
                 {errors && (<span className="text-red-common p-3">{errors.phone}</span>)}
-              </div>
-            </div>
-
-            {/* Department   */}
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mt-4">
-                <label htmlFor="department_id" className="capitalize md:text-lg text-xs">
-                  Department <span className='text-red-common'>*</span>:
-                </label>
-
-                <DropdownSingleSearchList defaultArray={inputsState.department_id ? [departments.map((department)=>{return {id: department.id, name: department.title}}).find((department)=>department.id===Number(inputsState.department_id))] : []} name='department_id' array={departments.map((department)=>{return {id: department.id, name: department.title}})} setInput={setInput} />
-
-                {errors && (<span className="text-red-common p-3">{errors.department_id}</span>)}
-              </div>
-            </div>
-
-            {/* batch_id   */}
-            {inputsState.department_id && (<>
-              <div className="rounded-md shadow-sm -space-y-px">
-                <div className="mt-4">
-                  <label htmlFor="batch_id" className="capitalize md:text-lg text-xs">
-                    Batch <span className='text-red-common'>*</span>: 
-                  </label>
-                  <DropdownSingleSearchList defaultArray={inputsState.batch_id ? [{id:inputsState.batch_id, name: batches.find(batch=>batch.id==Number(inputsState.batch_id)).number}] : []} name='batch_id' array={batches.filter((batch)=>batch.department_id===Number(inputsState.department_id)).map((batch)=>{return {id:batch.id, name:batch.number}})} setInput={setInput} />
-                  {errors && (<span className="text-red-common p-3">{errors.batch_id}</span>)}
-                </div>
-              </div>
-            </>)}
-
-            {/* group */}
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mt-4">
-                <label htmlFor="group" className="capitalize md:text-lg text-xs">
-                  group: 
-                </label>
-                <input onChange={(e)=>setInput(e)} value={inputsState.group  ? inputsState.group: "" }  id={`group`} name="group" type="text" placeholder="Enter Your Group" 
-                  className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-                />
-                {errors && (<span className="text-red-common p-3">{errors.group}</span>)}
-              </div>
-            </div>
-
-            {/* Section */}
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mt-4">
-                <label htmlFor="section" className="capitalize md:text-lg text-xs">
-                  Section <span className='text-red-common'>*</span>: 
-                </label>
-                <input onChange={(e)=>setInput(e)} value={inputsState.section  ? inputsState.section: "" }  id={`section`} name="section" type="number" placeholder="Enter Your Section"
-                  className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-                />
-                {errors && (<span className="text-red-common p-3">{errors.section}</span>)}
               </div>
             </div>
 
@@ -172,8 +133,7 @@ const UpdateUserPage = ({match}) => {
                 {errors && (<span className="text-red-common p-3">{errors.image}</span>)}
               </div>
             </div>
-
-
+            
             {/* Submit */}
             <div>
               <button type="submit"

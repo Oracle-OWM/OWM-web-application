@@ -28,7 +28,7 @@ const GeneralState = (props) => {
 // let ws = new WebSocket('wss:/s/'+window.location.hostname+':6001/laravel-websockets');
 // let ws = new WebSocket('ws://127.0.0.1:6001/laravel-websockets?channel=websocket-channel');
 
-  function subscribeWSChannel(e) {
+  function subscribeWSChannel(channel) {
       //Websocket server connection
       let ws = new WebSocket(WSbaseURL);
 
@@ -37,14 +37,15 @@ const GeneralState = (props) => {
           console.log('opened!');
           console.log('open event',e);
           //Subscribe to the channel
-          ws.send(JSON.stringify({"event":"pusher:subscribe","data":{"auth":"","channel":e.target.value}}));
+          ws.send(JSON.stringify({"event":"pusher:subscribe","data":{"auth":"","channel":channel}}));
           console.log('sent!');
       }
 
       ws.onmessage = function(msg) {
+          const message = JSON.parse(msg.data).data && JSON.parse(JSON.parse(msg.data).data).message;
           console.log('message event',msg);
-          console.log('message',JSON.parse(msg.data).data && JSON.parse(JSON.parse(msg.data).data).message);
-          return msg;
+          console.log('message',message);
+          return message;
       }
   }
 

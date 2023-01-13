@@ -1,11 +1,8 @@
 import axios from 'axios';
 
-// const baseURL = 'http://fehu.cardi-hu.com/api/auth';
-// const baseURL = 'http://172.20.10.10:8000/api/auth';
 // const baseURL = 'http://192.168.1.7:8000/api/auth';
-const baseURL = `http://${window.location.hostname}:8001/api/auth`;
-const WSbaseURL = `ws://${window.location.hostname}:6001/app/livepost_key?protocol=7&client=js&version=7.5.0&flash=false`;
-// const baseURL = 'http://127.0.0.1:8000/api/auth';
+const baseURL = `http://${window.location.hostname}:8000/api/auth`;
+export const WSbaseURL = `ws://${window.location.hostname}:6001/app/livepost_key?protocol=7&client=js&version=7.5.0&flash=false`;
 //
 export const API = axios.create({
   baseURL: `${baseURL}`,
@@ -20,15 +17,6 @@ export const IoTDeviceAPI = axios.create({
     // "api_password":"145",
   }
 });
-
-
-export const ObserverAPI = axios.create({
-  baseURL: `${baseURL}/admin/observers`,
-  data: {
-    // "api_password":"145",
-  }
-});
-
 
 export const UserAPI = axios.create({
   baseURL: `${baseURL}/admin/user`,

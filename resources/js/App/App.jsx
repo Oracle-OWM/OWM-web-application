@@ -8,6 +8,7 @@ import Protected from './MainComponents/Protected';
 import NotFound from './MainComponents/NotFound';
 import LoginPage from './Pages/Login/LoginPage';
 import ManagementSystem from './Pages/ManagementSystem/ManagementSystem';
+import Dashboard from './Pages/Dashboard/Dashboard';
 
 import { AlertState } from './Context/AlertContext';
 import { SearchState } from './Context/SearchContext';
@@ -16,7 +17,6 @@ import { AdminContext, AdminState } from './Context/AdminContext';
 import { AccountsState } from './Context/AccountsContext';
 import { IoTDeviceState } from './Context/IoTDeviceContext';
 import { UserState } from './Context/UserContext';
-import { ObserverState } from './Context/ObserverContext';
 
 
 function App() {
@@ -35,6 +35,10 @@ function App() {
 
             <Route path={`/login`} >
               <LoginPage />
+            </Route>
+
+            <Route path={`/dashboard`} >
+              <Protected > <Dashboard /> </Protected>
             </Route>
 
             <Route path={`/managementSystem`} >
@@ -61,11 +65,9 @@ if(document.getElementById('root')) {
               <SearchState>
                 <AccountsState>
                   <UserState>
-                    <ObserverState>
-                      <IoTDeviceState>
-                        <App />
-                      </IoTDeviceState>
-                    </ObserverState>
+                    <IoTDeviceState>
+                      <App />
+                    </IoTDeviceState>
                   </UserState>
                 </AccountsState>
               </SearchState>
