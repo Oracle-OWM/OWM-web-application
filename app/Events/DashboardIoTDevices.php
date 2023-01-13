@@ -23,10 +23,21 @@ class DashboardIoTDevices implements ShouldBroadcast
     public function __construct()
     {
         $this->title = 'dashboard_ToTDevices';
-        $this->message = IoTDevice::all()->map(function($IoTDevice) {
-            $IoTDevice->users;
-            $IoTDevice->readings;
+        $IoTDevices = IoTDevice::all()->map(function($IoTDevice) {
+            return [
+                'id'=> $IoTDevice->id,
+                'name'=> $IoTDevice->name,
+                'connection_status'=> $IoTDevice->connection_status,
+                'flow_status'=> $IoTDevice->flow_status,
+                'start_read'=> $IoTDevice->start_read,
+                'token'=> $IoTDevice->token,
+                'users'=> $IoTDevice->users,
+                'readings'=> $IoTDevice->readings,
+                'created_at'=> $IoTDevice->created_at,
+                'updated_at'=> $IoTDevice->updated_at,
+            ];
         });
+        $this->message = $IoTDevices;
     }
 
     /**
@@ -44,3 +55,4 @@ class DashboardIoTDevices implements ShouldBroadcast
         return 'DashboardIoTDevices';
     }
 }
+//event(new \App\Events\DashboardIoTDevices())

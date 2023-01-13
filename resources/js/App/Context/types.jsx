@@ -6,6 +6,9 @@ export const ADD_OBJECT = "ADD_OBJECT";
 export const UPDATE_OBJECT = "UPDATE_OBJECT";
 export const DELETE_OBJECT = "DELETE_OBJECT";
 
+
+export const GET_MESSAGE = "GET_MESSAGE"; 
+
 export const SET_DRIVE_LINKS_NUMBER = "SET_DRIVE_LINKS_NUMBER";
 
 export const RESET_ALL_ERRORS = "RESET_ALL_ERRORS";

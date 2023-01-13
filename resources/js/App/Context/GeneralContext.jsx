@@ -16,6 +16,7 @@ const GeneralState = (props) => {
     status: 0,
     message: '',
     errors: {},
+    channelMessage: null,
     inputsState: {},
     supportedLocales: {},
     content: {},
@@ -43,9 +44,12 @@ const GeneralState = (props) => {
 
       ws.onmessage = function(msg) {
           const message = JSON.parse(msg.data).data && JSON.parse(JSON.parse(msg.data).data).message;
-          console.log('message event',msg);
+          // console.log('message event',msg);
           console.log('message',message);
-          return message;
+          Cookies.set('channelMessage', message);
+          dispatch({type:TYPES.GET_MESSAGE, payload: {
+            channelMessage: message,
+          }});
       }
   }
 
@@ -331,6 +335,7 @@ const GeneralState = (props) => {
         saveSettings,
         setSettings,
 
+        channelMessage: state.channelMessage,
         subscribeWSChannel,
 
         supportedLocales: state.supportedLocales,
@@ -397,6 +402,15 @@ const generalReducer = (state, action) => {
       return {
         ...state,
         inputsState: action.payload.inputsState ? action.payload.inputsState : [],
+        status: action.payload.status,
+        message: action.payload.message,
+        loading: false,
+      };
+
+    case TYPES.GET_MESSAGE:
+      return {
+        ...state,
+        channelMessage: action.payload.channelMessage ? action.payload.channelMessage : null,
         status: action.payload.status,
         message: action.payload.message,
         loading: false,
