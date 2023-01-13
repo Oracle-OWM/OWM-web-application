@@ -9,7 +9,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Pixels Egypt')</title>
+    <title>@yield('title', 'OWM')</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
     </style>
 
 
-    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+{{--    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>--}}
 
     {{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script> --}}
 </head>

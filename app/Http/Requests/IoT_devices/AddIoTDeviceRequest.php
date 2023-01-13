@@ -27,7 +27,6 @@ class AddIoTDeviceRequest extends FormRequest
     {
         return [
             'name'                              => [ 'required', 'string', Rule::unique('io_t_devices', 'name')],
-//            'token'                             => [ 'required', 'string', Rule::unique('io_t_devices', 'token')],
         ];
     }
 
@@ -38,9 +37,6 @@ class AddIoTDeviceRequest extends FormRequest
             'name.required'                 => 'Field is required',
             'name.string'                   => 'Field must be string',
             'name.unique'                   => 'Field must be unique',
-
-//            'token.required'                => 'Field is required',
-//            'token.string'                  => 'Field must be string',
         ];
     }
 }

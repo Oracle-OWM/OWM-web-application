@@ -21,16 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('country', 50);
-            $table->string('city_area', 50);
-            $table->string('street', 50);
             $table->string('phone', 50);
-            $table->integer('age');
-            $table->json('diseases');
-            $table->foreignId('device_id')
-                ->nullable()
-                ->constrained('io_t_devices')
-                ->onDelete('cascade');
             $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();

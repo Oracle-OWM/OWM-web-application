@@ -25,33 +25,29 @@ class AssignGuard extends BaseMiddleware
      */
     public function handle(Request $request, Closure $next, $guard = null)
     {
-       if($guard != null) {
-
-           $admin = null;
-           try {
-               auth()->shouldUse($guard); //shoud you admin guard / table
-               $admin = JWTAuth::parseToken()->authenticate();
-           } catch (\Exception $e) {
-               if ($e instanceof TokenInvalidException) {
-                   return $this->returnError('INVALID_TOKEN', 'E3001');
-               } elseif ($e instanceof TokenExpiredException) {
-                   return $this->returnError('EXPIRED_TOKEN', 'E3001');
-               } else {
-                   return $this->returnError('Unauthenticated', 'E3001');
-               }
-           } catch (\Throwable $e) {
-               if ($e instanceof TokenInvalidException) {
-                   return $this->returnError('INVALID_TOKEN', 'E3001');
-               } elseif ($e instanceof TokenExpiredException) {
-                   return $this->returnError('EXPIRED_TOKEN', 'E3001');
-               } else {
-                   return $this->returnError('Unauthenticated', 'E3001');
-               }
-           }
-//           if (!$admin) {
-//               return $this->returnError( 'Unauthenticated', '402');
-//           }
-           return $next($request);
-       }
+        if($guard != null) {
+            $admin = null;
+            try {
+                auth()->shouldUse($guard); //shoud you admin guard / table
+                $admin = JWTAuth::parseToken()->authenticate();
+            } catch (\Exception $e) {
+                if ($e instanceof TokenInvalidException) {
+                    return $this->returnError('INVALID_TOKEN', 'E3001');
+                } elseif ($e instanceof TokenExpiredException) {
+                    return $this->returnError('EXPIRED_TOKEN', 'E3001');
+                } else {
+                    return $this->returnError('Unauthenticated', 'E3001');
+                }
+            } catch (\Throwable $e) {
+                if ($e instanceof TokenInvalidException) {
+                    return $this->returnError('INVALID_TOKEN', 'E3001');
+                } elseif ($e instanceof TokenExpiredException) {
+                    return $this->returnError('EXPIRED_TOKEN', 'E3001');
+                } else {
+                    return $this->returnError('Unauthenticated', 'E3001');
+                }
+            }
+        }
+        return $next($request);
     }
 }

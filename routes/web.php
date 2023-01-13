@@ -24,26 +24,18 @@ app()->singleton(WebsocketsLogger::class, function () {
 use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 use App\Websockets\SocketHandler\CheckupsHandler;
 
-Route::get('/send-message', function () {
-//    event(new \App\Events\NewMessage($request->message));
-    broadcast(new \App\Events\NewMessage('Hello Websockets'));
+Route::get('/send-message', function (\Illuminate\Http\Request $request) {
+    broadcast(new \App\Events\NewMessage($request->message));
+//    broadcast(new \App\Events\NewMessage('Hello Websockets'));
     return 'done';
 });
 
-
-//WebSocketsRouter::webSocket('/laravel-websockets/websocket-channel', CheckupsHandler::class);
-//WebSocketsRouter::webSocket('/laravel-websockets', CheckupsHandler::class);
-//WebSocketsRouter::webSocket('/', CheckupsHandler::class);
-//WebSocketsRouter::get('/laravel-websockets', CheckupsHandler::class);
-//WebSocketsRouter::get('/', CheckupsHandler::class);
-
-
 // CMS
-Route::group(['prefix'=>'/cms'], function (){
-    Route::get('/',[CMSController::class, 'showSections'])->name('cms.sections');
-    Route::get('/section/{id}',[CMSController::class,'showSectionForm'])->name('cms.sectionForm');
-    Route::post('/section/update/{id}',[CMSController::class,'updateSection'])->name('cms.sectionUpdate');
-});
+//Route::group(['prefix'=>'/cms'], function (){
+//    Route::get('/',[CMSController::class, 'showSections'])->name('cms.sections');
+//    Route::get('/section/{id}',[CMSController::class,'showSectionForm'])->name('cms.sectionForm');
+//    Route::post('/section/update/{id}',[CMSController::class,'updateSection'])->name('cms.sectionUpdate');
+//});
 
 //Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function() {
     Route::group([], function() {

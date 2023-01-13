@@ -29,9 +29,6 @@ class UpdateUserRequest extends FormRequest
             'last_name'                 => [ 'required', 'string', ],
             'username'                  => [ 'required', 'string', Rule::unique('users', 'username')->ignore($this->id, 'id'), ],
             'email'                     => [ 'required', 'email', Rule::unique('users', 'email')->ignore($this->id, 'id'), ],
-            'country'                   => [ 'required', 'string' ],
-            'city_area'                 => [ 'required', 'string' ],
-            'street'                    => [ 'required', 'string', ],
             'phone'                     => [ 'required', 'digits:11' ],
             'image'                     => [ 'nullable', ],
         ];
@@ -57,15 +54,6 @@ class UpdateUserRequest extends FormRequest
 
             'phone.required'                    => 'Field is required',
             'phone.digits'                      => 'Field must be 11 digits',
-
-            'country.required'                  => 'Field is required',
-            'country.string'                    => 'Field must be string',
-
-            'city_area.required'                => 'Field is required',
-            'city_area.string'                  => 'Field must be string',
-
-            'street.required'                   => 'Field is required',
-            'street.string'                     => 'Field must be string',
 
 //            'image.image'                   =>'Choose a correct file according to image extensions',
         ];

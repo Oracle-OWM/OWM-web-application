@@ -19,11 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'device_id',
-        'first_name', 'last_name',
-        'username', 'email', 'password', 'remember_token',
-        'country', 'city_area', 'street',
-        'age', 'diseases',
+        'first_name', 'last_name', 'username', 'email', 'password', 'remember_token',
         'phone',
         'image',
     ];
@@ -47,7 +43,6 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -57,11 +52,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function IoTDevice() {
-        return $this->belongsTo(IoTDevice::class, 'device_id');
-    }
-
-    public function observer() {
-        return $this->hasOne(Observer::class, 'user_id');
+    public function IoTDevices() {
+        return $this->belongsToMany(IoTDevice::class, 'users_devices', 'user_id', 'device_id');
     }
 }

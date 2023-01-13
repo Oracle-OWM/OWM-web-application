@@ -9,8 +9,12 @@ class IoTDeviceReadingHistory extends Model
 {
     protected $fillable = [
         'device_id',
-        'pressure', 'sugar', 'pulse_rate', 'oxygen',
+        'liters_consumed', 'flow_rate',
         'created_at', 'updated_at'
     ];
     use HasFactory;
+
+    public function readings() {
+        return $this->belongsTo(IoTDevice::class, 'device_id');
+    }
 }

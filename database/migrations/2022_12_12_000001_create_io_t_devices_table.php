@@ -18,6 +18,8 @@ class CreateIoTDevicesTable extends Migration
             $table->string('name', 50)->unique();
             $table->string('token')->unique();
             $table->boolean('start_read')->default(0);
+            $table->enum('connection_status', ['online', 'offline'])->default('offline');
+            $table->enum('flow_status', ['normal', 'leakage'])->default('normal');
             $table->timestamps();
         });
     }

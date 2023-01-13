@@ -27,7 +27,6 @@ class UpdateIoTDeviceRequest extends FormRequest
     {
         return [
             'name'                              => [ 'string', Rule::unique('io_t_devices', 'name')->ignore($this->id, 'id')],
-            'start_read'                        => [ 'boolean', ],
         ];
     }
 
@@ -35,7 +34,6 @@ class UpdateIoTDeviceRequest extends FormRequest
     public function messages()
     {
         return [
-            'start_read.boolean'            => 'Field must be boolean',
             'name.string'                   => 'Field must be string',
             'name.unique'                   => 'Field must be unique',
         ];

@@ -17,11 +17,9 @@ class CreateIoTDeviceReadingHistoriesTable extends Migration
             $table->id();
             $table->foreignId('device_id')
                 ->constrained('io_t_devices')
-                ->onDelete('cascade');
-            $table->string('pressure', 30)->nullable();
-            $table->string('sugar', 30)->nullable();
-            $table->string('pulse_rate', 30)->nullable();
-            $table->string('oxygen', 30)->nullable();
+                ->cascadeOnDelete();
+            $table->double('liters_consumed');
+            $table->double('flow_rate');
             $table->timestamps();
         });
     }

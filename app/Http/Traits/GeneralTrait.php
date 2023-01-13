@@ -81,7 +81,7 @@ trait GeneralTrait {
     }
 
     public function sendNotificationToMobile ($tokens, $title, $message) {
-        $SERVER_API_KEY = 'AAAA_nMvO8o:APA91bFenOCMhQHZ-VG8RPDnfMx9LjhLXXgl0uUZ2xwneXLNd02dRb_J4-tau31TqkhmP3BSGy1yS_0mxWcRqAp5SyR75DCZAl63D4ciFX7Hxt_HBNXbsIRHda_wKw2Y3l8XHSrIGra9';
+        $SERVER_API_KEY = env(FIREBASE_SERVER_API_KEY, 'AAAA_nMvO8o:APA91bFenOCMhQHZ-VG8RPDnfMx9LjhLXXgl0uUZ2xwneXLNd02dRb_J4-tau31TqkhmP3BSGy1yS_0mxWcRqAp5SyR75DCZAl63D4ciFX7Hxt_HBNXbsIRHda_wKw2Y3l8XHSrIGra9');
 //        $token_1 = 'Test Token';
         $data = [
             "registration_ids" => $tokens,

@@ -10,14 +10,17 @@ class IoTDevice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'token',
-        'start_read',
+        'name', 'token',
+        'start_read', 'connection_status', 'flow_status',
         'created_at', 'updated_at',
     ];
 
-    public function user() {
-        return $this->hasOne(User::class, 'device_id');
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'users_devices', 'device_id', 'user_id');
     }
 
     public function readings() {
