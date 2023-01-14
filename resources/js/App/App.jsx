@@ -17,6 +17,7 @@ import { AdminContext, AdminState } from './Context/AdminContext';
 import { AccountsState } from './Context/AccountsContext';
 import { IoTDeviceState } from './Context/IoTDeviceContext';
 import { UserState } from './Context/UserContext';
+import LandingPage from './Pages/UserInterface/LandingPage';
 
 
 function App() {
@@ -33,19 +34,22 @@ function App() {
               <NotFound />
             </Route>
 
-            <Route path={`/login`} >
+            <Route path={`/admin/login`} >
               <LoginPage />
             </Route>
 
-            <Route path={`/dashboard`} >
+            <Route path={`/admin/dashboard`} >
               <Protected > <Dashboard /> </Protected>
             </Route>
 
-            <Route path={`/managementSystem`} >
+            <Route path={`/admin/managementSystem`} >
               <Protected > <ManagementSystem /> </Protected>
             </Route>
 
-            <Redirect path='/' to={`/login`} />
+            <Route exact path={`/`} >
+              <LandingPage />
+            </Route>
+
             <Redirect to={`/not-found`} />
           </Switch>
         </div>

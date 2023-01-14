@@ -23,7 +23,7 @@ function Sidebar() {
       items: [
         {
           label:'all IoT Devices',
-          url:`/dashboard/IoTDevices/all`,
+          url:`/admin/dashboard/IoTDevices/all`,
         },
       ]
     },
@@ -32,11 +32,11 @@ function Sidebar() {
       items: [
         {
           label:'all IoT Devices',
-          url:`/managementSystem/IoTDevices/all`,
+          url:`/admin/managementSystem/IoTDevices/all`,
         },
         {
           label:'add IoT Device',
-          url:`/managementSystem/IoTDevices/addIoTDevice`,
+          url:`/admin/managementSystem/IoTDevices/addIoTDevice`,
         },
       ]
     },
@@ -45,11 +45,11 @@ function Sidebar() {
       items: [
         {
           label:'All users',
-          url:`/managementSystem/users/all`,
+          url:`/admin/managementSystem/users/all`,
         },
         {
           label:'Add user',
-          url:`/managementSystem/users/addUser`,
+          url:`/admin/managementSystem/users/addUser`,
         },
       ]
     },
@@ -58,11 +58,11 @@ function Sidebar() {
       items: [
         {
           label:'All admins',
-          url:`/managementSystem/accounts/all`,
+          url:`/admin/managementSystem/accounts/all`,
         },
         {
           label:'Add admin',
-          url:`/managementSystem/accounts/addAccount`,
+          url:`/admin/managementSystem/accounts/addAccount`,
         },
       ]
     },

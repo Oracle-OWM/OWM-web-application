@@ -9,13 +9,13 @@ const Users = () => {
 
   return (
     <Switch>
-      <Route exact path={`/managementSystem/users/addUser`} >
+      <Route exact path={`/admin/managementSystem/users/addUser`} >
         <AddUserPage />
       </Route>
-      <Route exact path={`/managementSystem/users/editUser/:id`} >
+      <Route exact path={`/admin/managementSystem/users/editUser/:id`} >
         <UpdateUserPage />
       </Route>
-      <Route exact path={`/managementSystem/users/all`}  >
+      <Route exact path={`/admin/managementSystem/users/all`}  >
         <AllUsersPage />
       </Route>
       

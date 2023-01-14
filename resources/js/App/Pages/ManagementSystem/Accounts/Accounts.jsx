@@ -9,13 +9,13 @@ const Accounts = () => {
   
   return (
     <Switch>
-      <Route exact path={`/managementSystem/accounts/addAccount`} >
+      <Route exact path={`/admin/managementSystem/accounts/addAccount`} >
         <AddAccountPage />
       </Route>
-      <Route exact path={`/managementSystem/accounts/editAccount/:id`} >
+      <Route exact path={`/admin/managementSystem/accounts/editAccount/:id`} >
         <UpdateAccountPage />
       </Route>
-      <Route exact path={`/managementSystem/accounts/all`}  >
+      <Route exact path={`/admin/managementSystem/accounts/all`}  >
         <AllAccountsPage />
       </Route>
       

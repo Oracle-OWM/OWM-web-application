@@ -148,7 +148,7 @@ const AdminState = (props) => {
         status: response.data.status, 
         auth: false,
       }});
-      history.replace(`/login`)
+      history.replace(`/admin/login`)
     }).catch((error)=> {
       if(error.hasOwnProperty('response')) {
         dispatch({ 

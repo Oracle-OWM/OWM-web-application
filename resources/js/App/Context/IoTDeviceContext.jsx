@@ -72,7 +72,7 @@ const IoTDeviceState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/login`);
+        history.replace(`/admin/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -126,7 +126,7 @@ const IoTDeviceState = (props) => {
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
         await logout();
-        history.replace(`/login`);
+        history.replace(`/admin/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,
@@ -194,7 +194,7 @@ const IoTDeviceState = (props) => {
             });
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/login`);
+            history.replace(`/admin/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -290,7 +290,7 @@ const IoTDeviceState = (props) => {
             });
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/login`);
+            history.replace(`/admin/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,
@@ -374,7 +374,7 @@ const IoTDeviceState = (props) => {
 
           } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
             await logout();
-            history.replace(`/login`);
+            history.replace(`/admin/login`);
             swal({
               title: "Sorry!",
               text: error.response.data.message,

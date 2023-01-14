@@ -9,15 +9,15 @@ const IoTDevices = () => {
 
   return (
     <Switch>
-      <Route exact path={`/managementSystem/IoTDevices/all`}  >
+      <Route exact path={`/admin/managementSystem/IoTDevices/all`}  >
         <AllIoTDevicesPage />
       </Route>
 
-      <Route path={`/managementSystem/IoTDevices/addIoTDevice`} >
+      <Route path={`/admin/managementSystem/IoTDevices/addIoTDevice`} >
         <AddIoTDevicePage />
       </Route>
 
-      <Route exact path={`/managementSystem/IoTDevices/editIoTDevice/:id`} >
+      <Route exact path={`/admin/managementSystem/IoTDevices/editIoTDevice/:id`} >
         <UpdateIoTDevicePage />
       </Route>
 

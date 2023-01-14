@@ -18,15 +18,15 @@ const ManagementSystem = () => {
           </div>
           <div className='clear-both'></div>
         <Switch>
-          <Route path={`/managementSystem/IoTDevices`} >
+          <Route path={`/admin/managementSystem/IoTDevices`} >
             <IoTDevices  />
           </Route>
 
-          <Route path={`/managementSystem/users`} >
+          <Route path={`/admin/managementSystem/users`} >
             <Users  />
           </Route>
 
-          <Route path={`/managementSystem/accounts`} >
+          <Route path={`/admin/managementSystem/accounts`} >
             <Accounts  />
           </Route>
 

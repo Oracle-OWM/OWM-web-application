@@ -14,7 +14,7 @@ const Protected = ({children}) => {
       console.log('protected');
       console.log(JSON.parse(Cookies.get('admin')).email);
     } else {
-      history.replace(`/login`);
+      history.replace(`/admin/login`);
     }
   }, [])
 

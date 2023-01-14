@@ -48,9 +48,9 @@ const IoTDevicesPage = () => {
       </>) : !loading && IoTDevices && IoTDevices.length>=1 ? (<>
         <Search array={IoTDevices.map((IoTDevice, index) => { return { ...IoTDevice, };})} />
         
-        {/* <div className='flex flex-row flex-wrap mt-5 gap-y-5 lg:justify-between justify-start -mx-2'>
+        <div className='flex flex-row flex-wrap mt-5 gap-y-5 lg:justify-between justify-start -mx-2'>
           <IoTDevicesList IoTDevices={IoTDevices} />  
-        </div>  */}
+        </div> 
       </>) : (
         <div className="flex flex-col justify-center items-center h-screen">
           <h1 className="text-center font-extrabold text-2xl">{`There is not any device`}</h1>
