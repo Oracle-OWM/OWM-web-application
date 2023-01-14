@@ -110,19 +110,6 @@ const LoginRegistrationPage = () => {
                         <input type="hidden" name="_method" value="POST" />
                         <input type="hidden" name="remember" defaultValue="true" />
                         <h3 style={{lineHeight: 1.2}} className="lg:text-start lg:w-auto w-full text-center font-semibold text-5xl text-blue-dark">Create Account</h3>
-
-                        {/* username */}
-                        <div className="rounded-md shadow-sm -space-y-px">
-                            <div className="mt-4">
-                            <label htmlFor="username" className="capitalize md:text-lg text-xs">
-                                Username :
-                            </label>
-                            <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.username : ''} id={`username`} name="username" type="text" placeholder="Enter Your Username"
-                                className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-                            />
-                            {errors && (<span className="text-red-common p-3">{errors.username}</span>)}
-                            </div>
-                        </div>
                         
                         {/* first_name */}
                         <div className="rounded-md shadow-sm -space-y-px">

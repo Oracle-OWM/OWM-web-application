@@ -19,7 +19,7 @@ class DeviceFlowStatus implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($status)
+    public function __construct($token, $status)
     {
         $this->title = 'flow_status';
         $this->message = $status;
