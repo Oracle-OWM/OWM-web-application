@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import { UserContext } from '../../Context/UserContext';
 import Navbar from '../../MainComponents/Navbar';
 
 const LoginRegistrationPage = () => {
-    const { loading, errors, errorNum, setInput, inputsState, resetAllInputs, resetAllErrors, login } = useContext(UserContext);
+    const { loading, errors, errorNum, login, register, setInput, inputsState, resetAllInputs, resetAllErrors, } = useContext(UserContext);
 
     useEffect(async() => {
       await resetAllInputs();
@@ -15,7 +15,19 @@ const LoginRegistrationPage = () => {
         await login(inputsState);
     };
 
+    async function RegisterHandler(e) {
+        e.preventDefault();
+        let formData = new FormData();
+        formData.append("first_name", inputsState.first_name);
+        formData.append("last_name", inputsState.last_name);
+        formData.append("username", inputsState.username);
+        formData.append("email", inputsState.email);
+        formData.append("password", inputsState.password);
+        formData.append("image", inputsState.image);
+        
+        await register(inputsState);
 
+    };
 
     return (<>
         <Navbar />
@@ -46,7 +58,6 @@ const LoginRegistrationPage = () => {
             
         <main className="relative flex flex-col items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div className="container px-5 py-24 mx-auto">
-
                 <div className="w-full mx-auto flex flex-wrap md:flex-row flex-col justify-center items-start">
                     <form  method="POST"  action={(e)=>loginHandler(e)} className="mx-auto  my-8 w-8/12 md:w-4/12" encType="multipart/form-data">
                         <h3 style="line-height: 1.2" className="lg:text-start lg:w-auto w-full text-center font-semibold text-5xl text-blue-800">إنشاء حساب جديد</h3>
@@ -55,7 +66,7 @@ const LoginRegistrationPage = () => {
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mt-4">
                             <label htmlFor="identifier" className="capitalize md:text-lg text-xs">
-                                {content.admin_login_form_identifier} :
+                                Username / Email :
                             </label>
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.identifier : ''} id={`identifier`} name="identifier" type="text" placeholder="Enter Your Email Address"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
@@ -68,7 +79,7 @@ const LoginRegistrationPage = () => {
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mt-4">
                             <label htmlFor="password" className="capitalize md:text-lg text-xs">
-                                {content.admin_login_form_password} :
+                            password :
                             </label>
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="password" placeholder="Enter Your Password"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
@@ -86,39 +97,114 @@ const LoginRegistrationPage = () => {
                             <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                                 <LockClosedIcon className="h-5 w-5 group:hover:text-indigo-700" aria-hidden="true" />
                             </span>
-                            {content.admin_login_form_submit}
+                            Login
                             </button>
                         </div>
                     </form>
 
-                    <span style="border-radius: 50%;" className="bg-blue-900 opacity-60 text-white d-inline-block border-1 p-10 text-center mt-32">أو</span>
+                    <span style="border-radius: 50%;" className="bg-blue-900 opacity-60 text-white d-inline-block border-1 p-10 text-center mt-32">OR</span>
 
-                    <form  method="POST" action="{{route('login')}}" className="mx-auto  my-8 w-8/12 md:w-4/12" encType="multipart/form-data">
-                        <h3 style="line-height: 1.2" className="lg:text-start lg:w-auto w-full text-center font-semibold text-5xl text-blue-800">تسجيل دخول</h3>
+                    <form  method="POST" action={(e)=>RegisterHandler(e)} className="mx-auto  my-8 w-8/12 md:w-4/12" encType="multipart/form-data">
+                        <h3 style="line-height: 1.2" className="lg:text-start lg:w-auto w-full text-center font-semibold text-5xl text-blue-800">Create Account</h3>
 
+                        {/* username */}
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mt-4">
-                                <label for="identifier" className="capitalize md:text-lg text-xs">
-                                    Email Address <span className='text-red-600'>*</span>:
-                                </label>
-                                
+                            <label htmlFor="username" className="capitalize md:text-lg text-xs">
+                                Username :
+                            </label>
+                            <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.username : ''} id={`username`} name="username" type="text" placeholder="Enter Your Email Address"
+                                className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            />
+                            {errors && (<span className="text-red-common p-3">{errors.username}</span>)}
+                            </div>
+                        </div>
+                        
+                        {/* first_name */}
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="mt-4">
+                            <label htmlFor="first_name" className="capitalize md:text-lg text-xs">
+                                First Name :
+                            </label>
+                            <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.first_name : ''} id={`first_name`} name="first_name" type="text" placeholder="Enter Your Email Address"
+                                className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            />
+                            {errors && (<span className="text-red-common p-3">{errors.first_name}</span>)}
                             </div>
                         </div>
 
+                        {/* last_name */}
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="mt-4">
+                            <label htmlFor="last_name" className="capitalize md:text-lg text-xs">
+                                First Name :
+                            </label>
+                            <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.last_name : ''} id={`last_name`} name="last_name" type="text" placeholder="Enter Your Email Address"
+                                className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            />
+                            {errors && (<span className="text-red-common p-3">{errors.last_name}</span>)}
+                            </div>
+                        </div>
+
+                        {/* username */}
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="mt-4">
+                            <label htmlFor="username" className="capitalize md:text-lg text-xs">
+                                Username :
+                            </label>
+                            <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.username : ''} id={`username`} name="username" type="text" placeholder="Enter Your Email Address"
+                                className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            />
+                            {errors && (<span className="text-red-common p-3">{errors.username}</span>)}
+                            </div>
+                        </div>
+
+                        {/* email */}
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="mt-4">
+                                <label for="email" className="capitalize md:text-lg text-xs">
+                                    Email Address <span className='text-red-600'>*</span>:
+                                </label>
+                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.email : ''} id={`email`} name="email" type="text" placeholder="Enter Your Email Address"
+                                    className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                />
+                                {errors && (<span className="text-red-common p-3">{errors.email}</span>)}
+                            </div>
+                        </div>
+
+                        {/* password */}
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mt-4">
                                 <label for="password" className="capitalize md:text-lg text-xs">
                                     Password <span className='text-red-600'>*</span>:
                                 </label>
-
+                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="text" placeholder="Enter Your Email Address"
+                                    className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                />
+                                {errors && (<span className="text-red-common p-3">{errors.password}</span>)}
                             </div>
                         </div>
 
+                        {/* image   */}
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="mt-4">
+                            <label htmlFor="image" className="capitalize md:text-lg text-xs">
+                                Upload Your Image : 
+                            </label>
+                            <input id={`image`} onChange={(e)=>setInput(e)} 
+                                name="image" type="file" placeholder="Upload Image" 
+                                className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                            />
+                            {errors && (<span className="text-red-common p-3">{errors.image}</span>)}
+                            </div>
+                        </div>
+
+                        {/* Submit */}
                         <div>
                             <button type="submit"
                                     className="group btn-outline relative w-full flex justify-center py-3 px-4 md:text-xl text-xs text-blue-dark font-medium rounded-md border-blue-dark border-2 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Login
+                                Submit
                             </button>
                         </div>
                     </form>
