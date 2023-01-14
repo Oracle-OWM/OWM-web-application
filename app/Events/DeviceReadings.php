@@ -21,10 +21,10 @@ class DeviceReadings implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($id)
     {
         $this->title = 'readings';
-        $this->message = IoTDeviceReadingHistory::where('device_token', '=', $token)->get();
+        $this->message = IoTDeviceReadingHistory::where('device_id', '=', $id)->get();
     }
 
     /**

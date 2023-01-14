@@ -86,7 +86,7 @@ const AdminState = (props) => {
             status: response.data.status,
           }
         });
-        history.replace(`/managementSystem/users/all`);
+        history.replace(`/admin/dashboard/IoTDevices/all`);
       } else if(response.data.errorNum === 'S001') {
         dispatch({ 
           type: TYPES.VALIDATION_ERRORS, payload: { 

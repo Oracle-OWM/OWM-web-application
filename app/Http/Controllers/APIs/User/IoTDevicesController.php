@@ -130,7 +130,7 @@ class IoTDevicesController extends Controller
 
                 if($IoTDeviceReadingHistory) {
                     // push data in WS readings channel
-                    broadcast(new \App\Events\DeviceReadings($request->token));
+                    broadcast(new \App\Events\DeviceReadings($IoTDevice->id));
                     return $this->returnSuccessMessage('Read has been stored returned successfully');
                 } else {
                     return $this->returnError('Something went wrong', "S002");
