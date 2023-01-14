@@ -19,6 +19,8 @@ import { IoTDeviceState } from './Context/IoTDeviceContext';
 import { UserState } from './Context/UserContext';
 import LandingPage from './Pages/UserInterface/LandingPage';
 import LoginRegistrationPage from './Pages/UserInterface/LoginRegistrationPage';
+import UserProtected from './MainComponents/UserProtected';
+import UserDashboard from './Pages/UserInterface/Dashboard/UserDashboard';
 
 
 function App() {
@@ -49,6 +51,10 @@ function App() {
 
             <Route exact path={`/`} >
               <LandingPage />
+            </Route>
+
+            <Route path={`/user/dashboard`} >
+              <UserProtected > <UserDashboard /> </UserProtected>
             </Route>
 
             <Route path={`/login`} >

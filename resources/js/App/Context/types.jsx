@@ -31,6 +31,7 @@ export const GET_FOOTER_CONTENT = "GET_FOOTER_CONTENT";
 // Accounts
 export const SET_AUTH = "SET_AUTH";
 export const GET_ADMIN = "GET_ADMIN";
+export const GET_USER = "GET_USER";
 export const GET_CURRENT_LANG = "GET_CURRENT_LANG";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";

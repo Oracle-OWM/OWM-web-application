@@ -334,7 +334,7 @@ const GeneralState = (props) => {
         getSettings,
         saveSettings,
         setSettings,
-
+        
         channelMessage: state.channelMessage,
         subscribeWSChannel,
 

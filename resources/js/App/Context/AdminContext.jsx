@@ -242,7 +242,6 @@ const adminReducer = (state, action) => {
         status: action.payload.status,
         message: action.payload.message,
         loading: false,
-
       };  
     case TYPES.LOGIN:
       return {

@@ -72,6 +72,7 @@ const UserState = (props) => {
           type: TYPES.GET_ALL_OBJECTS, payload: { 
           users: response.data.users, 
           message: response.data.message,
+          errorNum: response.data.errorNum,
           status: response.data.status, 
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
@@ -87,6 +88,7 @@ const UserState = (props) => {
         dispatch({ 
           type: TYPES.GENERAL_ERRORS, payload: { 
           message: response.data.message,
+          errorNum: response.data.errorNum,
           status: response.data.status, 
           }
         });
@@ -130,6 +132,7 @@ const UserState = (props) => {
             dispatch({ 
               type: TYPES.ADD_OBJECT, payload: { 
               message: response.data.message,
+              errorNum: response.data.errorNum,
               status: response.data.status, 
               errors: {},
               }
@@ -167,6 +170,7 @@ const UserState = (props) => {
             dispatch({ 
               type: TYPES.GENERAL_ERRORS, payload: { 
               message: response.data.message,
+              errorNum: response.data.errorNum,
               status: response.data.status, 
               }
             });
@@ -196,6 +200,14 @@ const UserState = (props) => {
     });
   };
 
+  function getUser() {
+    // console.log(user);
+    dispatch({type:TYPES.GET_USER, payload: {
+      user: JSON.parse(Cookies.get('user')),
+    }});
+    // console.log(JSON.parse(Cookies.get('user')));
+  }
+
   const getUserById = async (id) => {
     dispatch({ type: TYPES.SET_LOADING });
     
@@ -211,6 +223,7 @@ const UserState = (props) => {
           user: response.data.user,
           inputsState: { ...response.data.user, ['batch_id']: response.data.user.batch.id, ['batch_number']: response.data.user.batch.number},
           message: response.data.message,
+          errorNum: response.data.errorNum,
           status: response.data.status, 
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
@@ -226,6 +239,7 @@ const UserState = (props) => {
         dispatch({ 
           type: TYPES.GENERAL_ERRORS, payload: { 
           message: response.data.message,
+          errorNum: response.data.errorNum,
           status: response.data.status, 
           }
         });
@@ -270,6 +284,7 @@ const UserState = (props) => {
             dispatch({ 
               type: TYPES.UPDATE_OBJECT, payload: { 
               message: response.data.message,
+              errorNum: response.data.errorNum,
               status: response.data.status, 
               errors: {},
               }
@@ -307,6 +322,7 @@ const UserState = (props) => {
             dispatch({ 
               type: TYPES.GENERAL_ERRORS, payload: { 
               message: response.data.message,
+              errorNum: response.data.errorNum,
               status: response.data.status, 
               }
             });
@@ -354,7 +370,8 @@ const UserState = (props) => {
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
             dispatch({
               type: TYPES.DELETE_OBJECT, payload: { 
-              message: response.data.message, 
+              message: response.data.message,
+              errorNum: response.data.errorNum, 
               status: response.data.status ,
             }});
             await setAlert('pink', 'User has been deleted successfully');
@@ -372,6 +389,7 @@ const UserState = (props) => {
             dispatch({ 
               type: TYPES.GENERAL_ERRORS, payload: { 
               message: response.data.message,
+              errorNum: response.data.errorNum,
               status: response.data.status, 
               }
             });
@@ -401,6 +419,110 @@ const UserState = (props) => {
     });
   };
 
+  const login = async (inputsState) => {
+    dispatch({ type: TYPES.SET_LOADING });
+    
+    const resp = await API.post(`/login`, inputsState)
+    .then((response) => {
+      console.log("login");
+      // console.log(response);
+      if (response.data.errorNum === 'S000') {
+        console.log('user', JSON.stringify(response.data.user));
+        console.log('user', JSON.stringify(response.data.user));
+        console.log('user', JSON.stringify(response.data.user));
+        console.log('user', JSON.stringify(response.data.user));
+        
+        Cookies.set('user', JSON.stringify(response.data.user));
+        dispatch({
+          type: TYPES.LOGIN, payload: {
+            user: response.data.user,
+            message: response.data.message,
+            errorNum: response.data.errorNum,
+            status: response.data.status,
+          }
+        });
+        history.replace(`/user/dashboard/IoTDevices/all`);
+      } else if(response.data.errorNum === 'S001') {
+        dispatch({ 
+          type: TYPES.VALIDATION_ERRORS, payload: { 
+          errors: {identifier: response.data.message},
+          status: response.data.status, 
+        }});
+        swal({
+          title: "Sorry!",
+          text: "The given data was invalid.",
+          icon: "error",
+          button: "OK",
+        });
+      } else if(response.data.errorNum === 'S002') {
+        dispatch({ 
+          type: TYPES.VALIDATION_ERRORS, payload: { 
+          errors: {password: response.data.message},
+          status: response.data.status, 
+        }});
+        swal({
+          title: "Sorry!",
+          text: "The given data was invalid.",
+          icon: "error",
+          button: "OK",
+        });
+      }
+      }).catch((error)=> {
+      if(error.response) {
+        dispatch({ 
+          type: TYPES.VALIDATION_ERRORS, payload: { 
+          message: error.response.data.message,
+          errors: error.response.data.errors,
+          status: error.response.status, 
+        }});
+        console.log(error);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      }
+    });
+  };
+
+  async function userLogout() {
+    dispatch({ type: TYPES.SET_LOADING });
+    
+    const resp = await API.post(`/logout`, {}, {
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` }
+    })
+    .then(async(response)=> {
+      console.log("logout");
+      // console.log(response);
+      Cookies.remove('admin');
+      dispatch({ 
+        type: TYPES.LOGOUT, payload: {
+        admin: {},   
+        message: response.data.message,
+        errorNum: response.data.errorNum,
+        status: response.data.status, 
+      }});
+      history.replace(`/login`)
+    }).catch((error)=> {
+      if(error.hasOwnProperty('response')) {
+        dispatch({ 
+          type: TYPES.VALIDATION_ERRORS, payload: { 
+          message: error.response.data.message,
+          errors: error.response.data.errors,
+          status: error.response.status, 
+        }});
+        console.log(error);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      }
+    });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -414,10 +536,13 @@ const UserState = (props) => {
         totalUsersNo: state.totalUsersNo,
         getAllUsers,
         getUserById,
+        getUser,
         addUser,
         updateUser,
         deleteUser,
-        
+        login,
+        userLogout,
+
         inputsState: state.inputsState,
         setInput,
         resetAllInputs,
@@ -469,7 +594,23 @@ const userReducer = (state, action) => {
         status: action.payload.status,
         loading: false,
       };
-    
+    case TYPES.LOGIN:
+      return {
+        ...state,
+        loading: false,
+        status: action.payload.status,
+        message: action.payload.message,
+        errors: action.payload.errors ? action.payload.errors : {},
+      };
+    case TYPES.LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        status: action.payload.status,
+        message: action.payload.message,
+        admin: action.payload.admin ? action.payload.admin : {},
+      };
+
     case TYPES.GET_ALL_OBJECTS:
       return {
         ...state,
@@ -478,6 +619,14 @@ const userReducer = (state, action) => {
         status: action.payload.status,
         loading: false,
       };
+    case TYPES.GET_USER:
+      return {
+        ...state,
+        user: action.payload.user ? action.payload.user : {},
+        status: action.payload.status,
+        message: action.payload.message,
+        loading: false,
+      }; 
     case TYPES.GET_OBJECT_BY_ID:
       return {
         ...state,
