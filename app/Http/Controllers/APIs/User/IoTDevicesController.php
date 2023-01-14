@@ -83,7 +83,7 @@ class IoTDevicesController extends Controller
         $IoTDevice = IoTDevice::where('token', '=', $request->token)->get()->first();
         if ($IoTDevice) {
             // update power status in the WS channel
-            broadcast(new \App\Events\DevicePowerStatus($request->start_read));
+            broadcast(new \App\Events\DevicePowerStatus($IoTDevice->token,$request->start_read));
 
             // update power status in database
             $IoTDevice->update([
@@ -101,7 +101,7 @@ class IoTDevicesController extends Controller
         $IoTDevice = IoTDevice::where('token', '=', $request->token)->get()->first();
         if ($IoTDevice) {
             // update power status in the WS channel
-            broadcast(new \App\Events\DeviceFlowStatus($request->flow_status));
+            broadcast(new \App\Events\DeviceFlowStatus($IoTDevice->token, $request->flow_status));
 
             // update power status in database
             $IoTDevice->update([

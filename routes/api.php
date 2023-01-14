@@ -34,8 +34,11 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
     Route::post('/reset-password', [NewPasswordController::class, 'reset']);
     Route::post('/send-notification', [NotificationsController::class, 'sendNotificationToMobile']);
 
-    Route::post('/IoT-devices/add-reading', [IoTDevicesController::class, 'addReading']);
-
+    Route::group(['prefix'=>'IoT-devices'], function () {
+        Route::post('/add-reading', [IoTDevicesController::class, 'addReading']);
+        Route::put('/change-power-status', [IoTDevicesController::class, 'changePowerStatus']);
+        Route::put('/change-flow-status', [IoTDevicesController::class, 'changeFlowStatus']);
+    });
 
     Route::group(['prefix'=>'cms', ], function() {
         Route::get('/get-content', [CMSController::class, 'getContent']);
@@ -77,8 +80,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
             Route::group(['prefix'=>'IoT-devices'], function() {
                 Route::get('/{token}', [IoTDevicesController::class, 'getIoTDevice']);
                 Route::post('/associate-user', [IoTDevicesController::class, 'associateDeviceToUser']);
-                Route::put('/change-power-status', [IoTDevicesController::class, 'changePowerStatus']);
-                Route::put('/change-flow-status', [IoTDevicesController::class, 'changeFlowStatus']);
             });
 
             Route::get('/show-profile', [UsersController::class, 'getProfile']);

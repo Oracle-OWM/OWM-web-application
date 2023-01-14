@@ -2,6 +2,7 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import React, {useContext, useEffect} from 'react'
 import { UserContext } from '../../Context/UserContext';
 import Navbar from '../../MainComponents/Navbar';
+import Cookies from 'js-cookie';
 
 const LoginRegistrationPage = () => {
     const { loading, errors, errorNum, login, register, setInput, inputsState, resetAllInputs, resetAllErrors, } = useContext(UserContext);

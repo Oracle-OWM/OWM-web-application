@@ -15,11 +15,11 @@ const UserDashboard = () => {
       </div>
 
       <Switch>
-        <Route path={`/user/dashboard/IoTDevices/IoTDevice/:id`}>
+        <Route path={`/dashboard/IoTDevices/IoTDevice/:id`}>
           <IoTDevicePage />
         </Route>
 
-        <Route path={`/user/dashboard/IoTDevices/all`}>
+        <Route path={`/dashboard/IoTDevices/all`}>
           <IoTDevicesPage />
         </Route>
 

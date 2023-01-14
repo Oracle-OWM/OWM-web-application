@@ -36,7 +36,7 @@ const IoTDevicesList = ({IoTDevices}) => {
         <div className='flex flex-col gap-y-2 mt-4'>
           {IoTDevices.map((IoTDevice, index) => (
             <Link key={index}
-              to={`/dashboard/IoTDevices/IoTDevice/${IoTDevice.id}`}
+              to={`/admin/dashboard/IoTDevices/IoTDevice/${IoTDevice.id}`}
               className={`IoTDevice h-40 p-3 bg-white rounded-xl shadow-md hover:no-underline`}>
               <h4 className="text-center text-dark font-bold md:text-xl text-lg">{IoTDevice.name}</h4>
               <p className="font-weight-bold text-gray-500 md:text-xl text-lg capitalize"><br />Connection: {IoTDevice.connection_status}</p>

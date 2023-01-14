@@ -53,7 +53,7 @@ function App() {
               <LandingPage />
             </Route>
 
-            <Route path={`/user/dashboard`} >
+            <Route path={`/dashboard`} >
               <UserProtected > <UserDashboard /> </UserProtected>
             </Route>
 
