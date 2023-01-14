@@ -12,7 +12,7 @@ const LoginPage = () => {
   useEffect(() => {
     // await getAdmin();
     if(Cookies.get('admin')) {
-      history.replace(`/managementSystem/IoTDevices`);
+      history.replace(`/dashboard/IoTDevices/all`);
     }
   }, [])
 

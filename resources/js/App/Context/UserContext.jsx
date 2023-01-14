@@ -1,7 +1,7 @@
 import React, { useReducer, useContext } from "react";
 import * as TYPES from "./types";
 import swal from 'sweetalert';
-import {UserAPI } from '../API';
+import {UserAPI, API } from '../API';
 import { useHistory } from "react-router";
 import Cookies from 'js-cookie';
 import { AlertContext } from "./AlertContext";
@@ -419,10 +419,98 @@ const UserState = (props) => {
     });
   };
 
+  const register = async (inputsState) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once Clicked, This User will be registered",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then(async(willAdd) => {
+      if (willAdd) {
+        console.log(inputsState);
+        dispatch({ type: TYPES.SET_LOADING });
+        const resp = await API.post(`/user/register`, inputsState, {
+          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
+        }).then(async (response) => {
+          if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
+            console.log("Register user");
+            dispatch({ 
+              type: TYPES.ADD_OBJECT, payload: { 
+              message: response.data.message,
+              errorNum: response.data.errorNum,
+              status: response.data.status, 
+              errors: {},
+              }
+            });
+            swal({
+              title: "Good job!",
+              text: response.data.message,
+              icon: "success",
+              button: "Done!",
+            }).then(async(value)=> {
+              history.replace(`/login`);
+            });
+          } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
+            await logout();
+              history.replace(`/login`);
+            swal({
+              title: "Sorry!",
+              text: error.response.data.message,
+              icon: "error",
+              button: "OK",
+            });
+          } else if (response.hasOwnProperty('data') && (response.data.errorNum === 'S004' || response.data.errorNum === 'S003')) {
+            dispatch({ 
+              type: TYPES.VALIDATION_ERRORS, payload: { 
+              errors: response.data.message,
+              status: response.data.status, 
+            }});
+            swal({
+              title: "Sorry!",
+              text: response.data.message,
+              icon: "error",
+              button: "OK",
+            });
+          } else {
+            dispatch({ 
+              type: TYPES.GENERAL_ERRORS, payload: { 
+              message: response.data.message,
+              errorNum: response.data.errorNum,
+              status: response.data.status, 
+              }
+            });
+          }
+        }).catch((error)=> {
+          if(error.hasOwnProperty('response')) {
+            dispatch({ 
+              type: TYPES.VALIDATION_ERRORS, payload: { 
+              message: error.response.data.message,
+              errors: error.response.data.errors,
+              status: error.response.status, 
+            }});
+            console.log(error);
+            swal({
+              title: "Sorry!",
+              text: error.response.data.message,
+              icon: "error",
+              button: "OK",
+            }).then(async(value)=> {
+              history.replace(`/login`);
+            })
+          }
+        });
+      } else {
+        swal("The user has not been added!");
+      } 
+    });
+  };
+
   const login = async (inputsState) => {
     dispatch({ type: TYPES.SET_LOADING });
     
-    const resp = await API.post(`/login`, inputsState)
+    const resp = await API.post(`/user/login`, inputsState)
     .then((response) => {
       console.log("login");
       // console.log(response);
@@ -541,6 +629,7 @@ const UserState = (props) => {
         updateUser,
         deleteUser,
         login,
+        register,
         userLogout,
 
         inputsState: state.inputsState,
