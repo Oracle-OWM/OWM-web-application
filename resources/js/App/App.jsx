@@ -18,6 +18,7 @@ import { AccountsState } from './Context/AccountsContext';
 import { IoTDeviceState } from './Context/IoTDeviceContext';
 import { UserState } from './Context/UserContext';
 import LandingPage from './Pages/UserInterface/LandingPage';
+import LoginRegistrationPage from './Pages/UserInterface/LoginRegistrationPage';
 
 
 function App() {
@@ -48,6 +49,10 @@ function App() {
 
             <Route exact path={`/`} >
               <LandingPage />
+            </Route>
+
+            <Route path={`/login`} >
+              <LoginRegistrationPage />
             </Route>
 
             <Redirect to={`/not-found`} />
