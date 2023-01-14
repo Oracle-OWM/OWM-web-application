@@ -1,10 +1,12 @@
 import React from 'react'
 import Footer from '../../MainComponents/Footer'
 import { MapPin } from '@heroicons/react/solid';
+import Navbar from '../../MainComponents/Navbar';
 
 const LandingPage = () => {
   return (<>
     <div className='w-full'>
+      <Navbar />
       <main className='w-full'>
         {/* About */}
         <section className='py-44 bg-gray-100'>

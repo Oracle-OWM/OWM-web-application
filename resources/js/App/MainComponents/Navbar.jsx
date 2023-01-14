@@ -15,8 +15,8 @@ const Navbar = () => {
         ]);
     } else {
       await setNavigation([
-          { name: 'Home Quarantine', href: '/dashboard' },
-          { name: 'Contact Us', href: '/contact-us' },
+          { name: 'FAQs', href: '/' },
+          { name: 'Pricing', href: '/' },
           { name: 'Login', href: '/login' },
         ]);
     }
@@ -33,7 +33,7 @@ const Navbar = () => {
 
   return (
   <>
-    <Disclosure as="nav" className="backdrop-blur-2xl bg-gray-800 py-2 position-fixed z-50 w-full">
+    <Disclosure as="nav" className="backdrop-blur-2xl bg-gray-800 py-3 position-fixed z-50 w-full">
     {({ open }) => (<>
       <div className="w-10/12 mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
@@ -48,54 +48,22 @@ const Navbar = () => {
             </Disclosure.Button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">
+            <div className="flex-shrink-0 flex flex-nowrap items-center">
               {/* <img className="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
               <img className="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow"> */}
-              <h1 className="text-light text-2xl font-extrabold">GSCCM</h1>
+              <img src={`./images/owm-logo.png`} className='w-20 h-20 rounded-full'/>
+              <h1 className="text-light text-2xl font-extrabold">Oracle Smart Meter</h1>
             </div>
-            <div className="hidden sm:block sm:mx-auto">
-              <div className="flex space-x-4">
-                {navigation.map((item, index) => (
-                  <NavLink key={index} activeClassName="bg-black text-white" className="text-blue-thin hover:bg-black hover:text-white px-3 py-2 rounded-md text-lg font-medium" to={item.href}>{item.name}</NavLink>
-                ))}
-              </div>
-            </div>
+            
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              type="button" onClick={() => {setNotifications(true);console.log(notifications)}}
-              className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-            >
-              <span className="sr-only">View notifications</span>
-              <BellIcon className="h-7 w-7" aria-hidden="true" />
-            </button>
-
-            {/* Profile dropdown */}
-            <Menu as="div" className="ml-3 relative">
-              <div>
-                <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                  <span className="sr-only">Open admin menu</span>
-                  <UserCircleIcon className="h-8 w-8 text-gray-400 hover:text-white"/>
-                </Menu.Button>
+            <div className="hidden sm:block sm:mx-auto">
+              <div className="flex space-x-4 ">
+                {navigation.map((item, index) => (
+                  <NavLink key={index} activeClassName="bg-blue-middle" className="hover:bg-blue-middle bg-transparent text-white px-3 py-2 rounded-2xl text-lg font-medium" to={item.href}>{item.name}</NavLink>
+                ))}
               </div>
-
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <Menu.Item>
-                    {/* <NavLink activeClassName="bg-gray-100" className="block px-4 py-2 text-sm hover:bg-gray-100" to={admin.href}>{admin.full_name}</NavLink> */}
-                    <NavLink activeClassName="bg-gray-100" className="capitalize block px-4 py-2 text-sm hover:bg-gray-100" to='/logout'>Logout</NavLink>
-                  </Menu.Item>
-                </Menu.Items>
-              </Transition>
-            </Menu>
+            </div>  
           </div>
         </div>
       </div>
