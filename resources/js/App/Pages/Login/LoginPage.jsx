@@ -20,7 +20,7 @@ const LoginPage = () => {
     <>
       <div className='w-full'>
         <div className='flex flex-nowrap md:flex-row flex-col h-screen mr-5'>
-          <img src='../../../../../images/login-background.jpeg' className='md:w-3/5 w-full min-vh-100 my-auto block' />
+          <img src='../../../../../images/login-background.PNG' className='md:w-3/5 lg:w-7/12 min-vh-100 my-auto block' />
           <LoginForm />
         </div>
       </div>

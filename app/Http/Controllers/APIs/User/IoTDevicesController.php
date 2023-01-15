@@ -87,9 +87,10 @@ class IoTDevicesController extends Controller
             // update power status in the WS channel
             broadcast(new \App\Events\DevicePowerStatus($IoTDevice->token,$request->start_read));
 
-            // update power status in database
+            // update power status & connection status in database
             $IoTDevice->update([
                 'start_read'=> $request->start_read,
+                'connection_status'=> 'online',
             ]);
 
             broadcast(new \App\Events\DashboardIoTDevices());
@@ -103,17 +104,16 @@ class IoTDevicesController extends Controller
 
     public function changeFlowStatus(ChangeFlowStatusRequest $request)
     {
-
         $IoTDevice = IoTDevice::where('token', '=', $request->token)->get()->first();
         if ($IoTDevice) {
-            // update power status in the WS channel
-            broadcast(new \App\Events\DeviceFlowStatus($IoTDevice->token, $request->flow_status));
-
-            // update power status in database
+            // update flow status in database
             $IoTDevice->update([
                 'flow_status'=> $request->flow_status,
+                'connection_status'=> 'online',
             ]);
 
+            // update flow status in the WS channel
+            broadcast(new \App\Events\DeviceFlowStatus($IoTDevice->token, $request->flow_status));
             broadcast(new \App\Events\DashboardIoTDevices());
             broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
 
@@ -139,6 +139,10 @@ class IoTDevicesController extends Controller
                 ]);
 
                 if($IoTDeviceReadingHistory) {
+                    $IoTDevice->update([
+                        'connection_status'=> 'online',
+                    ]);
+                    
                     // push data in WS readings channel
                     broadcast(new \App\Events\DeviceReadings($IoTDevice->id));
                     broadcast(new \App\Events\DashboardIoTDevices());

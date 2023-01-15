@@ -53,7 +53,7 @@ const IoTDevicePage = ({match,}) => {
             <XAxis dataKey="time"/>
             <YAxis />
             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="monotone" dataKey="liters_consumed" stroke="#8884d8" />
+            <Line type="monotone" dataKey="liters_consumed" stroke="#07BDED" />
           </LineChart>
         </div>
       </div>

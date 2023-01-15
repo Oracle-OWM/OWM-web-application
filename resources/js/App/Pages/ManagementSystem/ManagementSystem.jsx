@@ -13,8 +13,9 @@ const ManagementSystem = () => {
     <div className="row flex-nowrap w-full mx-0">
       <Sidebar />
       <main className="bg-gray-light col px-0">
-          <div className='float-right mr-14 w-40 h-44 pt-10 d-inline-block'>
-            <img src={`../../../../../public/images/owm-logo.jpeg`} className="rounded-2xl d-block" />
+          <div className='logos flex flex-row justify-between flex-nowrap w-full'>
+            <img className='w-28 h-28 m-4 rounded-tl-xl rounded-br-xl' src={`../../../../../images/helwan-logo.jpg`} alt='Hewlan Logo'/>
+            <img className='w-32 h-32 m-4' src={`../../../../../images/owm-logo.png`} alt='OWM Logo'/>
           </div>
           <div className='clear-both'></div>
         <Switch>
