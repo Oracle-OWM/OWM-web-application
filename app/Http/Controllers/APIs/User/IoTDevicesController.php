@@ -66,6 +66,8 @@ class IoTDevicesController extends Controller
                 ]);
 
                 if($users_device) {
+                    broadcast(new \App\Events\DashboardIoTDevices());
+
                     return $this-> returnData('IoTDevice', $IoTDevice, 'Device has been associated to user successfully');
                 } else {
                     return $this-> returnError('Failed to associate device', 'S003');
@@ -89,6 +91,9 @@ class IoTDevicesController extends Controller
             $IoTDevice->update([
                 'start_read'=> $request->start_read,
             ]);
+
+            broadcast(new \App\Events\DashboardIoTDevices());
+
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
             return $this->returnError('This device is not exist', "S004");
@@ -107,6 +112,9 @@ class IoTDevicesController extends Controller
             $IoTDevice->update([
                 'flow_status'=> $request->flow_status,
             ]);
+
+            broadcast(new \App\Events\DashboardIoTDevices());
+
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
             return $this->returnError('This device is not exist', "S004");
@@ -131,6 +139,7 @@ class IoTDevicesController extends Controller
                 if($IoTDeviceReadingHistory) {
                     // push data in WS readings channel
                     broadcast(new \App\Events\DeviceReadings($IoTDevice->id));
+                    broadcast(new \App\Events\DashboardIoTDevices());
                     return $this->returnSuccessMessage('Read has been stored returned successfully');
                 } else {
                     return $this->returnError('Something went wrong', "S002");
