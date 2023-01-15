@@ -93,6 +93,7 @@ class IoTDevicesController extends Controller
             ]);
 
             broadcast(new \App\Events\DashboardIoTDevices());
+            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
 
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
@@ -114,6 +115,7 @@ class IoTDevicesController extends Controller
             ]);
 
             broadcast(new \App\Events\DashboardIoTDevices());
+            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
 
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
@@ -140,6 +142,8 @@ class IoTDevicesController extends Controller
                     // push data in WS readings channel
                     broadcast(new \App\Events\DeviceReadings($IoTDevice->id));
                     broadcast(new \App\Events\DashboardIoTDevices());
+                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
+
                     return $this->returnSuccessMessage('Read has been stored returned successfully');
                 } else {
                     return $this->returnError('Something went wrong', "S002");

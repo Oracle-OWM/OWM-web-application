@@ -52,7 +52,7 @@ const IoTDeviceReadnigsTable = ({readings}) => {
                           <td className="py-4 pl-3 whitespace-nowrap">
                             <div className="flex flex-row items-left text-left">
                               <div className="ml-4">
-                                <p className="text-sm text-gray-500">{IoTDeviceReadnig.created_at ? IoTDeviceReadnig.created_at +' / min': '-'}</p>
+                                <p className="text-sm text-gray-500">{IoTDeviceReadnig.created_at ? IoTDeviceReadnig.created_at : '-'}</p>
                               </div>
                             </div>
                           </td>
