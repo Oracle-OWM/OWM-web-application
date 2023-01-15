@@ -1,5 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect } from "react-router-dom";
+import Footer from '../../../MainComponents/Footer';
+import Navbar from '../../../MainComponents/Navbar';
 
 import IoTDevicePage from './IoTDevices/IoTDevicePage';
 import IoTDevicesPage from './IoTDevices/IoTDevicesPage';
@@ -7,11 +9,10 @@ import IoTDevicesPage from './IoTDevices/IoTDevicesPage';
 const UserDashboard = () => {
   
   return (<>
-    
-    <main className="bg-gray-light col px-0">
+    <main className="bg-gray-light mt- col px-0">
+      <Navbar />
+
       <div className='logos flex flex-row justify-between flex-nowrap w-full'>
-        <img className='w-24 h-24 m-4' src={`../../../../../images/helwan-logo.png`} alt='Hewlan Logo'/>
-        <img className='w-24 h-24 m-4' src={`../../../../../images/owm-logo.jpg`} alt='OWM Logo'/>
       </div>
 
       <Switch>
@@ -25,6 +26,8 @@ const UserDashboard = () => {
 
         <Redirect to={`/not-found`} />
       </Switch>
+
+      <Footer />
     </main>
   </>)
 }

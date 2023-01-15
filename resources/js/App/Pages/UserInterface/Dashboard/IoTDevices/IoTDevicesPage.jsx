@@ -150,7 +150,7 @@ const IoTDevicesPage = () => {
 
 
   return (<>
-    <section className="w-11/12 mx-auto my-5">      
+    <section className="w-11/12 mx-auto my-5 py-44">      
       <h1 className="text-lg font-bold text-blue-dark mb-5">Dashboard</h1>
       
       {loading && (<>

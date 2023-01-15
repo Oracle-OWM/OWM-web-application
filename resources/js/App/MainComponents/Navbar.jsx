@@ -1,11 +1,14 @@
-import React, {Fragment, useContext, useEffect, useState} from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import React, {Fragment, useContext, useEffect, useState,} from 'react'
+import { NavLink, Link } from 'react-router-dom';
+import { useHistory } from "react-router";
 import { Disclosure, Menu, Dialog, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/outline';
 import { AccountsContext } from '../Context/AccountsContext';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const {loading, admin} = useContext(AccountsContext);
+  const history = useHistory();
   const [navigation, setNavigation] = useState([]);
   useEffect(async() => {
     if(admin && admin.hasOwnProperty('api_token')) {
@@ -17,7 +20,7 @@ const Navbar = () => {
       await setNavigation([
           { name: 'FAQs', href: '/' },
           { name: 'Pricing', href: '/' },
-          { name: 'Login', href: '/login' },
+          { name: Cookies.get('user') ? 'Logout' : 'Login', href: Cookies.get('user') ? '/Logout' : '/login' },
         ]);
     }
   }, [])
@@ -51,7 +54,7 @@ const Navbar = () => {
             <div className="flex-shrink-0 flex flex-nowrap items-center">
               {/* <img className="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
               <img className="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow"> */}
-              <img src={`./images/owm-logo.png`} className='w-20 h-20 rounded-full'/>
+              <img src={`../../../images/owm-logo.png`} className='w-20 h-20 rounded-full'/>
               <h1 className="text-light text-2xl font-extrabold">Oracle Smart Meter</h1>
             </div>
             
@@ -71,7 +74,7 @@ const Navbar = () => {
       <Disclosure.Panel className="sm:hidden">
         <div className="px-2 pt-2 pb-3 space-y-1">
           {navigation.map((item, index) => (
-            <NavLink key={index} activeClassName="bg-black text-white" className="text-blue-thin block hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium" to={item.href}>{item.name}</NavLink>
+            <NavLink key={index} onClick={(e)=> {if(item.name==='logout') {Cookies.remove('user'); history.replace('/login')}}} activeClassName="bg-black text-white" className="text-blue-thin block hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium" to={item.href}>{item.name}</NavLink>
           ))}
         </div>
       </Disclosure.Panel>
