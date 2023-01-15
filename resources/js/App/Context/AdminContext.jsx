@@ -141,6 +141,7 @@ const AdminState = (props) => {
       console.log("logout");
       // console.log(response);
       Cookies.remove('admin');
+      Cookies.remove('channelMessage');
       dispatch({ 
         type: TYPES.LOGOUT, payload: {
         admin: {},   

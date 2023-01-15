@@ -3,15 +3,17 @@ import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie'
 import swal from 'sweetalert';
 import * as TYPES from "./types";
-import { IoTDeviceAPI } from '../API';
+import { API, IoTDeviceAPI } from '../API';
 import { AlertContext } from "./AlertContext";
 import { AdminContext } from "./AdminContext";
+import { UserContext } from "./UserContext";
 
 const IoTDeviceContext = React.createContext();
 const IoTDeviceState = (props) => {
   const history = useHistory();
   const { logout } = useContext(AdminContext);
   const { setAlert } = useContext(AlertContext);
+  const { userLogout } = useContext(UserContext);
 
   const initialState = {
     loading: false,
@@ -106,6 +108,56 @@ const IoTDeviceState = (props) => {
     });
   };
 
+  const getAllUserIoTDevices = async () => {
+    dispatch({ type: TYPES.SET_LOADING });
+
+    const resp = await API.get(`/user/IoT-devices/associated-devices`, {
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('user')).token_data.access_token}` }
+    }).then(async (response) => {
+      console.log("all user IoTDevices");
+      console.log(response);
+      if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
+        dispatch({
+          type: TYPES.GET_ALL_OBJECTS, payload: {
+            IoTDevices: response.data.IoTDevices,
+            message: response.data.message,
+            status: response.data.status,
+        }});
+      } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
+        await userLogout();
+        history.replace(`/login`);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      } else {
+        dispatch({
+          type: TYPES.GENERAL_ERRORS, payload: {
+          message: response.data.message,
+          status: response.data.status,
+          }
+        });
+      }
+    }).catch((error)=> {
+      if(error.hasOwnProperty('response')) {
+        dispatch({
+          type: TYPES.VALIDATION_ERRORS, payload: {
+          message: error.response.data.message,
+          errors: error.response.data.errors,
+          status: error.response.status,
+        }});
+        console.log(error);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      }
+    });
+  };
 
   const getIoTDeviceById = async (id) => {
     dispatch({ type: TYPES.SET_LOADING });
@@ -432,6 +484,7 @@ const IoTDeviceState = (props) => {
         IoTDevice: state.IoTDevice,
         IoTDevices: state.IoTDevices,
         getAllIoTDevices,
+        getAllUserIoTDevices,
         getIoTDeviceById,
         addIoTDevice,
         updateIoTDevice,

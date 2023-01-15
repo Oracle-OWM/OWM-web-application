@@ -5,7 +5,7 @@ import Navbar from '../../MainComponents/Navbar';
 import Cookies from 'js-cookie';
 
 const LoginRegistrationPage = () => {
-    const { loading, errors, errorNum, login, register, setInput, inputsState, resetAllInputs, resetAllErrors, } = useContext(UserContext);
+    const { loading, errors, errorNum, login, register, setInput, inputsState,  resetAllInputs, resetAllErrors, } = useContext(UserContext);
 
     useEffect(async() => {
         if(Cookies.get('user')) {
@@ -28,9 +28,10 @@ const LoginRegistrationPage = () => {
         formData.append("username", inputsState.username);
         formData.append("email", inputsState.email);
         formData.append("password", inputsState.password);
+        formData.append("phone", inputsState.phone);
         formData.append("image", inputsState.image);
         
-        await register(inputsState);
+        await register(formData);
 
     };
 
@@ -157,7 +158,7 @@ const LoginRegistrationPage = () => {
                                 <label htmlFor="email" className="capitalize md:text-lg text-xs">
                                     Email Address <span className='text-red-600'>*</span>:
                                 </label>
-                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.email : ''} id={`email`} name="email" type="text" placeholder="Enter Your Email Address"
+                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.email : ''} id={`email`} name="email" type="email" placeholder="Enter Your Email Address"
                                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 />
                                 {errors && (<span className="text-red-common p-3">{errors.email}</span>)}
@@ -170,10 +171,23 @@ const LoginRegistrationPage = () => {
                                 <label htmlFor="password" className="capitalize md:text-lg text-xs">
                                     Password <span className='text-red-600'>*</span>:
                                 </label>
-                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="text" placeholder="Enter Your Password at least 8 characters"
+                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="password" placeholder="Enter Your Password at least 8 characters"
                                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 />
                                 {errors && (<span className="text-red-common p-3">{errors.password}</span>)}
+                            </div>
+                        </div>
+
+                        {/* phone */}
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="mt-4">
+                                <label htmlFor="phone" className="capitalize md:text-lg text-xs">
+                                    Phone Number <span className='text-red-600'>*</span>:
+                                </label>
+                                <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.phone : ''} id={`phone`} name="phone" type="text" placeholder="Enter Your Password at least 8 characters"
+                                    className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                />
+                                {errors && (<span className="text-red-common p-3">{errors.phone}</span>)}
                             </div>
                         </div>
 

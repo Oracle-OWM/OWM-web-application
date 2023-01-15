@@ -78,8 +78,10 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
         Route::group(['middleware'=>'auth.guard:user-api'], function () {
             Route::group(['prefix'=>'IoT-devices'], function() {
+                Route::get('/associated-devices', [IoTDevicesController::class, 'associatedDevices']);
                 Route::get('/{token}', [IoTDevicesController::class, 'getIoTDevice']);
                 Route::post('/associate-user', [IoTDevicesController::class, 'associateDeviceToUser']);
+                Route::post('/get-device-details', [IoTDevicesController::class, 'getIoTDeviceDetails']);
             });
 
             Route::get('/show-profile', [UsersController::class, 'getProfile']);

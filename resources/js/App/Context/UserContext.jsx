@@ -13,12 +13,15 @@ const UserContext = React.createContext();
 const UserState = (props) => {
   const initialState = {
     loading: false,
+    loading2: false,
     users: [],
     user: {},
     message: '',
     errors: {},
     status: 0,
+    IoTDeviceDetails: {},
     inputsState: {},
+    inputsState2: {},
   };
   const { logout } = useContext(AdminContext);
   const { setAlert } = useContext(AlertContext);
@@ -42,15 +45,46 @@ const UserState = (props) => {
     console.log(state.inputsState);
   }
 
+  function setInput2(e) {
+    let inputsState2 = { ...state.inputsState2 };
+    
+    switch (e.target.name) {
+      default:
+        console.log('inputsState2');
+        dispatch({
+          type: TYPES.SET_INPUT_VALUE2, payload: {
+            inputsState2: { ...inputsState2, [e.target.name]: e.target.value },
+          }
+        });
+    }      
+
+    console.log(state.inputsState);
+  }
+
   function resetAllInputs() {
     dispatch({type:TYPES.RESET_ALL_INPUTS, payload: {
       inputsState: {
+        // associated_geofences: [],
+      },
+      inputsState2: {
         // associated_geofences: [],
       },
     }});
     console.log(state.inputsState);
   }
 
+  function resetAllInputs() {
+    dispatch({type:TYPES.RESET_ALL_INPUTS, payload: {
+      inputsState: {
+        // associated_geofences: [],
+      },
+      inputsState2: {
+        // associated_geofences: [],
+      },
+    }});
+    console.log(state.inputsState);
+  }
+  
   function resetAllErrors() {
     dispatch({type:TYPES.RESET_ALL_ERRORS, payload: {
       errors: {},
@@ -263,6 +297,60 @@ const UserState = (props) => {
     });
   };
 
+  const getIoTDeviceDetails = async (inputsState) => {
+    dispatch({ type: TYPES.SET_LOADING });
+    
+    const resp = await API.post(`/user/IoT-devices/get-device-details`, inputsState, {
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('user')).token_data.access_token}` },
+    }).then(async(response)=> {
+      console.log("get user");
+      console.log(response);
+      if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
+        console.log('aa');
+        dispatch({ 
+          type: TYPES.GET_OBJECT_DETAILS, payload: { 
+          IoTDeviceDetails: response.data.IoTDeviceDetails,
+          message: response.data.message,
+          errorNum: response.data.errorNum,
+          status: response.data.status, 
+        }});
+      } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
+        await logout();
+        history.replace(`/admin/login`);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      } else {
+        dispatch({ 
+          type: TYPES.GENERAL_ERRORS, payload: { 
+          message: response.data.message,
+          errorNum: response.data.errorNum,
+          status: response.data.status, 
+          }
+        });
+      }
+    }).catch((error)=> {
+      if(error.hasOwnProperty('response')) {
+        dispatch({ 
+          type: TYPES.VALIDATION_ERRORS, payload: { 
+          message: error.response.data.message,
+          errors: error.response.data.errors,
+          status: error.response.status, 
+        }});
+        console.log(error);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      }
+    });
+  };
+
   const updateUser = (id, inputsState) => {
     swal({
       title: "Are you sure?",
@@ -429,10 +517,13 @@ const UserState = (props) => {
     })
     .then(async(willAdd) => {
       if (willAdd) {
-        console.log(inputsState);
+        console.log('inputsState ', inputsState);
+        console.log('inputsState ', inputsState);
+        console.log('inputsState ', inputsState);
+        console.log('inputsState ', inputsState);
         dispatch({ type: TYPES.SET_LOADING });
         const resp = await API.post(`/user/register`, inputsState, {
-          headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` },
+          // headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('user')).token_data.access_token}` },
         }).then(async (response) => {
           if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
             console.log("Register user");
@@ -529,7 +620,7 @@ const UserState = (props) => {
             status: response.data.status,
           }
         });
-        history.replace(`/user/dashboard/IoTDevices/all`);
+        history.replace(`/dashboard/IoTDevices/all`);
       } else if(response.data.errorNum === 'S001') {
         dispatch({ 
           type: TYPES.VALIDATION_ERRORS, payload: { 
@@ -574,19 +665,20 @@ const UserState = (props) => {
     });
   };
 
+
   async function userLogout() {
     dispatch({ type: TYPES.SET_LOADING });
     
     const resp = await API.post(`/logout`, {}, {
-      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('admin')).token_data.access_token}` }
+      headers: { Authorization: `Bearer ${JSON.parse(Cookies.get('user')).token_data.access_token}` }
     })
     .then(async(response)=> {
       console.log("logout");
       // console.log(response);
-      Cookies.remove('admin');
+      Cookies.remove('user');
       dispatch({ 
         type: TYPES.LOGOUT, payload: {
-        admin: {},   
+        user: {},   
         message: response.data.message,
         errorNum: response.data.errorNum,
         status: response.data.status, 
@@ -615,15 +707,17 @@ const UserState = (props) => {
     <UserContext.Provider
       value={{
         loading: state.loading,
+        loading2: state.loading2,
         message: state.message,
         status: state.status,
         errors: state.errors,
         
         users: state.users,
-        user: state.user,
+        IoTDeviceDetails: state.IoTDeviceDetails,
         totalUsersNo: state.totalUsersNo,
         getAllUsers,
         getUserById,
+        getIoTDeviceDetails,
         getUser,
         addUser,
         updateUser,
@@ -633,7 +727,9 @@ const UserState = (props) => {
         userLogout,
 
         inputsState: state.inputsState,
+        inputsState2: state.inputsState2,
         setInput,
+        setInput2,
         resetAllInputs,
         resetAllErrors,
 
@@ -649,7 +745,8 @@ const userReducer = (state, action) => {
     case TYPES.SET_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
+        loading2: true,
       };
     
     case TYPES.SET_INPUT_VALUE:
@@ -657,10 +754,16 @@ const userReducer = (state, action) => {
         ...state,
         inputsState: action.payload.inputsState ? action.payload.inputsState : {},
       };
+    case TYPES.SET_INPUT_VALUE2:
+      return {
+        ...state,
+        inputsState2: action.payload.inputsState2 ? action.payload.inputsState2 : {},
+      };
     case TYPES.RESET_ALL_INPUTS:
       return {
         ...state,
         inputsState: action.payload.inputsState ? action.payload.inputsState : {},
+        inputsState2: action.payload.inputsState2 ? action.payload.inputsState2 : {},
       };
     case TYPES.RESET_ALL_ERRORS:
       return {
@@ -724,6 +827,14 @@ const userReducer = (state, action) => {
         message: action.payload.message,
         status: action.payload.status,
         loading: false,
+      };
+    case TYPES.GET_OBJECT_DETAILS:
+      return {
+        ...state,
+        IoTDeviceDetails: action.payload.IoTDeviceDetails ? action.payload.IoTDeviceDetails: {},
+        message: action.payload.message,
+        status: action.payload.status,
+        loading2: false,
       };
     case TYPES.ADD_OBJECT:
       return {

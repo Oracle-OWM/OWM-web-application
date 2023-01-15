@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router'
+import { useHistory } from "react-router";
 import Cookies from 'js-cookie'
 import { UserContext } from '../Context/UserContext';
 
@@ -7,6 +7,7 @@ const UserProtected = ({children}) => {
   const { getUser, } = useContext(UserContext);
 
   const history = useHistory();
+  
   useEffect(async() => {
     if(Cookies.get('user')) {
       await getUser();

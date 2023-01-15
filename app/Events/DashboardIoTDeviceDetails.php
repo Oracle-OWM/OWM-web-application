@@ -20,10 +20,11 @@ class DashboardIoTDeviceDetails implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($device_id)
     {
         $this->title = 'dashboard_ToTDevice_details';
-        $IoTDevice = IoTDevice::where('token', '=', $token)->get()->first();
+        $IoTDevice = IoTDevice::find($device_id);
+
         $IoTDevice =  [
             'id'=> $IoTDevice->id,
             'name'=> $IoTDevice->name,

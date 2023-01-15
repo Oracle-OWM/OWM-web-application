@@ -54,7 +54,7 @@ class UsersController extends Controller
                     'image'=> $user->image,
                     'token_data'=> $this->createNewToken($token),
                 ];
-                return $this->returnData('data', $data, 'returned token');
+                return $this->returnData('user', $data, 'returned data');
             } else {
                 return $this->returnError('password doesn\'t match', 'S002');
             }

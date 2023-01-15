@@ -9,33 +9,33 @@ const LandingPage = () => {
       <Navbar />
       <main className='w-full'>
         {/* About */}
-        <section className='py-44 bg-gray-100'>
-          <div className='w-10/12 mx-auto grid grid-flow-row md:grid-cols-2 grid-cols-1'>
-            <div>
+        <section className=' pt-64 bg-gray-100'>
+          <div className='w-10/12 mx-auto grid justify-between items-center grid-flow-row md:grid-cols-2 grid-cols-1'>
+            <div className=''>
               <h1 className='font-extrabold text-3xl text-blue-dark mb-2'>The Oracle Water-Flow Meter (OWM) is here.</h1>
               <h2 className='font-extrabold text-3xl text-blue-dark mb-3'>OWM is the future</h2>
               <p className='text-base text-gray-400 mb-3'>The OWM detects and stops leaks at the source using Artificial Intelligence. It alerts you when water is leaking and automatically shuts it off. Intelligent real-time monitoring identifies sources of leaks and waste, reducing your water consumption and preventing damage.</p>
               <button className='text-lg text-white bg-blue-400 text-center px-5 py-3 rounded'>GET STARTED</button>
             </div>
 
-            <div className='relative'>
-              <img className='w-10/12 h-96 z-100' src={`./images/owm-system3.png`} alt=''/>
-              <img style={{zIndex: 1}} className='absolute opacity-70 -bottom-44 right-8 w-60 h-60' src={`./images/points2.png`} alt=''/>
+            <div className=' relative'>
+              <img className='w-10/12 ml-auto h-96 z-100' src={`./images/owm-system3.png`} alt=''/>
+              <img style={{zIndex: 1}} className='absolute opacity-70 -bottom-32 -right-24 w-44 h-44' src={`./images/points2.png`} alt=''/>
             </div>
           </div>
         </section>
 
         {/* Overview */}
-        <section className='py-44 bg-gray-100'>
-          <div className='w-10/12 mx-auto grid grid-flow-row md:grid-cols-2 grid-cols-1'>
-            <div>
+        <section className=' pt-64 pb-64 bg-gray-100'>
+          <div className='w-10/12 mx-auto grid items-center grid-flow-row md:grid-cols-2 grid-cols-1'>
+            <div className=''>
               <h3 className='font-extrabold text-3xl text-blue-dark mb-3'>An Overview</h3>
               <p className='text-base text-gray-400 mb-3'>The oracle detects and stops leaks at the source using Artificial Intelligence. It alerts you when water is leaking and automatically shuts it off. Intelligent real-time monitoring identifies sources of leaks and waste, reducing your water consumption and preventing damage.</p>
             </div>
 
-            <div className='relative'>
-              <img className='w-10/12 h-96 z-100' src={`./images/owm-system1.png`} alt=''/>
-              <img style={{zIndex: 1}} className='absolute opacity-7 -bottom-44 right-8 w-60 h-60' src={`./images/points2.png`} alt=''/>
+            <div className=' relative'>
+              <img className='w-10/12 ml-auto h-96 z-100' src={`./images/owm-system1.png`} alt=''/>
+              <img style={{zIndex: 1}} className='absolute opacity-7 -bottom-32 -right-24 w-44 h-44' src={`./images/points2.png`} alt=''/>
             </div>
           </div>
         </section>

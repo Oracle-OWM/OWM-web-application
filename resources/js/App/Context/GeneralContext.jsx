@@ -35,21 +35,21 @@ const GeneralState = (props) => {
 
       //opened!
       ws.onopen = function(e) {
-          console.log('opened!');
-          console.log('open event',e);
-          //Subscribe to the channel
-          ws.send(JSON.stringify({"event":"pusher:subscribe","data":{"auth":"","channel":channel}}));
-          console.log('sent!');
+        console.log('opened!');
+        console.log('open event',e);
+        //Subscribe to the channel
+        ws.send(JSON.stringify({"event":"pusher:subscribe","data":{"auth":"","channel":channel}}));
+        console.log('sent!');
       }
 
       ws.onmessage = function(msg) {
-          const message = JSON.parse(msg.data).data && JSON.parse(JSON.parse(msg.data).data).message;
-          // console.log('message event',msg);
-          console.log('message',message);
-          Cookies.set('channelMessage', message);
-          dispatch({type:TYPES.GET_MESSAGE, payload: {
-            channelMessage: message,
-          }});
+        const message = JSON.parse(msg.data).data && JSON.parse(JSON.parse(msg.data).data).message;
+        // console.log('message event',msg);
+        console.log('message',message);
+        Cookies.set('channelMessage', message);
+        dispatch({type:TYPES.GET_MESSAGE, payload: {
+          channelMessage: message,
+        }});
       }
   }
 

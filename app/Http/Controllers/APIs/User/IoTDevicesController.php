@@ -8,6 +8,7 @@ use App\Http\Requests\IoT_devices\AssociateDeviceToUserRequest;
 use App\Http\Requests\IoT_devices\ChangeFlowStatusRequest;
 use App\Http\Requests\IoT_devices\ChangePowerStatusRequest;
 use App\Http\Requests\IoT_devices\SendNewReadRequest;
+use App\Http\Requests\IoT_devices\ShowDeviceDetailsRequest;
 use App\Http\Requests\IoT_devices\UpdateIoTDeviceRequest;
 use App\Http\Traits\APIsTrait;
 use App\Http\Traits\GeneralTrait;
@@ -22,6 +23,25 @@ class IoTDevicesController extends Controller
     use APIsTrait;
     use GeneralTrait;
 
+    public function getIoTDeviceDetails(ShowDeviceDetailsRequest $request) {
+        $IoTDevice = IoTDevice::find($request->device_id);
+        if ($IoTDevice) {
+            $readings = IoTDeviceReadingHistory::where('device_id', '=', $request->device_id)->whereBetween('created_at', [$request->start_date, $request->end_date])->get();
+            $IoTDeviceDetails = [
+                'id'=>$IoTDevice->id,
+                'name'=>$IoTDevice->name,
+                'token'=>$IoTDevice->token,
+                'start_read'=>$IoTDevice->start_read,
+                'connection_status'=>$IoTDevice->connection_status,
+                'flow_status'=>$IoTDevice->flow_status,
+                'readings'=>$readings,
+            ];
+            return $this->returnData('IoTDeviceDetails', $IoTDeviceDetails, 'Device details has been returned successfully');
+        } else {
+            return $this->returnError('This device does\'nt exist', 'S004');
+        }
+    }
+
     public function getAllUserIoTDevices()
     {
         $IoTDevices = IoTDevice::all()->map(function($IoTDevice){
@@ -32,6 +52,31 @@ class IoTDevicesController extends Controller
             return $this->returnData('IoTDevices', $IoTDevices, 'All devices has been returned successfully');
         } else {
             return $this->returnError('There is not any device', 'S004');
+        }
+    }
+
+    public function associatedDevices() {
+        try {
+            $user = Auth::user();
+            if ($user) {
+                $IoTDevices = $user->IoTDevices->map(function ($IoTDevice) {
+                    return [
+                        'id'=>$IoTDevice->id,
+                        'name'=>$IoTDevice->name,
+                        'token'=>$IoTDevice->token,
+                        'start_read'=>$IoTDevice->start_read,
+                        'connection_status'=>$IoTDevice->connection_status,
+                        'flow_status'=>$IoTDevice->flow_status,
+                        'readings'=>$IoTDevice->readings,
+                    ];
+                });
+
+                return $this->returnData('IoTDevices', $IoTDevices, 'Devices has been returned successfully');
+            } else {
+                return $this->returnError('Can\'t get user', "S004");
+            }
+        } catch (\Exception $e) {
+            return $this->returnError($e->getCode(), $e->getMessage());
         }
     }
 
@@ -67,6 +112,7 @@ class IoTDevicesController extends Controller
 
                 if($users_device) {
                     broadcast(new \App\Events\DashboardIoTDevices());
+                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
 
                     return $this-> returnData('IoTDevice', $IoTDevice, 'Device has been associated to user successfully');
                 } else {
@@ -94,7 +140,7 @@ class IoTDevicesController extends Controller
             ]);
 
             broadcast(new \App\Events\DashboardIoTDevices());
-            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
+            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
 
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
@@ -115,7 +161,7 @@ class IoTDevicesController extends Controller
             // update flow status in the WS channel
             broadcast(new \App\Events\DeviceFlowStatus($IoTDevice->token, $request->flow_status));
             broadcast(new \App\Events\DashboardIoTDevices());
-            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
+            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
 
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
@@ -142,11 +188,11 @@ class IoTDevicesController extends Controller
                     $IoTDevice->update([
                         'connection_status'=> 'online',
                     ]);
-                    
+
                     // push data in WS readings channel
                     broadcast(new \App\Events\DeviceReadings($IoTDevice->id));
                     broadcast(new \App\Events\DashboardIoTDevices());
-                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->token));
+                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
 
                     return $this->returnSuccessMessage('Read has been stored returned successfully');
                 } else {
