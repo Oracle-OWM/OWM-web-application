@@ -112,7 +112,6 @@ class IoTDevicesController extends Controller
 
                 if($users_device) {
                     broadcast(new \App\Events\DashboardIoTDevices());
-                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
 
                     return $this-> returnData('IoTDevice', $IoTDevice, 'Device has been associated to user successfully');
                 } else {
@@ -140,7 +139,7 @@ class IoTDevicesController extends Controller
             ]);
 
             broadcast(new \App\Events\DashboardIoTDevices());
-            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
+            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id, 'dashboard_ToTDevice_power_status'));
 
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
@@ -161,7 +160,7 @@ class IoTDevicesController extends Controller
             // update flow status in the WS channel
             broadcast(new \App\Events\DeviceFlowStatus($IoTDevice->token, $request->flow_status));
             broadcast(new \App\Events\DashboardIoTDevices());
-            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
+            broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id, 'dashboard_ToTDevice_flow_status'));
 
             return $this->returnSuccessMessage('Status has been changed successfully');
         } else {
@@ -192,7 +191,7 @@ class IoTDevicesController extends Controller
                     // push data in WS readings channel
                     broadcast(new \App\Events\DeviceReadings($IoTDevice->id));
                     broadcast(new \App\Events\DashboardIoTDevices());
-                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id));
+                    broadcast(new \App\Events\DashboardIoTDeviceDetails($IoTDevice->id, 'dashboard_ToTDevice_readings'));
 
                     return $this->returnSuccessMessage('Read has been stored returned successfully');
                 } else {
