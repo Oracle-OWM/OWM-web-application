@@ -315,8 +315,8 @@ const UserState = (props) => {
           status: response.data.status, 
         }});
       } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
-        await logout();
-        history.replace(`/admin/login`);
+        await userLogout();
+        history.replace(`/login`);
         swal({
           title: "Sorry!",
           text: error.response.data.message,

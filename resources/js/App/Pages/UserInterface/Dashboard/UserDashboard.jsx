@@ -3,7 +3,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Footer from '../../../MainComponents/Footer';
 import Navbar from '../../../MainComponents/Navbar';
 
-import IoTDevicePage from './IoTDevices/IoTDevicePage';
 import IoTDevicesPage from './IoTDevices/IoTDevicesPage';
 
 const UserDashboard = () => {
@@ -16,10 +15,6 @@ const UserDashboard = () => {
       </div>
 
       <Switch>
-        <Route path={`/dashboard/IoTDevices/IoTDevice/:id`}>
-          <IoTDevicePage />
-        </Route>
-
         <Route path={`/dashboard/IoTDevices/all`}>
           <IoTDevicesPage />
         </Route>

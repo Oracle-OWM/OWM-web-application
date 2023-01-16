@@ -2,6 +2,7 @@ import React from 'react'
 import Footer from '../../MainComponents/Footer'
 import { MapPin } from '@heroicons/react/solid';
 import Navbar from '../../MainComponents/Navbar';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   return (<>
@@ -15,7 +16,7 @@ const LandingPage = () => {
               <h1 className='font-extrabold text-3xl text-blue-dark mb-2'>The Oracle Water-Flow Meter (OWM) is here.</h1>
               <h2 className='font-extrabold text-3xl text-blue-dark mb-3'>OWM is the future</h2>
               <p className='text-base text-gray-400 mb-3'>The OWM detects and stops leaks at the source using Artificial Intelligence. It alerts you when water is leaking and automatically shuts it off. Intelligent real-time monitoring identifies sources of leaks and waste, reducing your water consumption and preventing damage.</p>
-              <button className='text-lg text-white bg-blue-400 text-center px-5 py-3 rounded'>GET STARTED</button>
+              <Link to={'/dashboard/IoTDevices/all'} className='text-lg text-white bg-blue-400 text-center px-5 py-3 rounded'>GET STARTED</Link>
             </div>
 
             <div className=' relative'>

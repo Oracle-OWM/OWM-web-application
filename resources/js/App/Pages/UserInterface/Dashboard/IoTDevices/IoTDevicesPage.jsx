@@ -4,23 +4,31 @@ import Cookies from 'js-cookie';
 import { isArray, isEmpty } from 'lodash';
 import { IoTDeviceContext } from '../../../../Context/IoTDeviceContext';
 import { GeneralContext } from '../../../../Context/GeneralContext';
-import { SearchContext } from '../../../../Context/SearchContext';
 import Spinner from '../../../../MainComponents/Spinner';
 import { Link } from 'react-router-dom';
 import DropdownSingleSearchList from '../../../../MainComponents/DropdownSingleSearchList';
 import { UserContext } from '../../../../Context/UserContext';
 
 const IoTDevicesPage = () => {
-  const { loading, message, getAllUserIoTDevices, IoTDevices, } = useContext(IoTDeviceContext);  
-  const { getCommonObjects } = useContext(SearchContext);  
+  const { loading, message, getAllUserIoTDevices, IoTDevices, setToggle } = useContext(IoTDeviceContext);  
   const { channelMessage, subscribeWSChannel } = useContext(GeneralContext);
   const { loading2, errors, inputsState, setInput, getIoTDeviceDetails, IoTDeviceDetails  } = useContext(UserContext);
   const [dashboard_IoTDeviceDetails, setIoTDeviceDetailsState] = useState([])
+  const toggleClass = 'transform translate-x-12';
 
   const submitHandler = async(e) => {
     e.preventDefault();
     await getIoTDeviceDetails(inputsState)
 
+  }
+
+  const _handleClick = (e) => {
+    e.preventDefault();
+    const IoTDevice = IoTDevices.find((IoTDevice) => IoTDevice.id === inputsState.device_id);
+    console.log('start_read', IoTDevice.start_read);
+    console.log('start_read', IoTDevice.start_read);
+    console.log('start_read', IoTDevice.start_read);
+    setToggle({token:IoTDevice.token, start_read:!IoTDevice.start_read, });
   }
 
   const getTime = (dateTime)=> {
@@ -46,16 +54,7 @@ const IoTDevicesPage = () => {
   const ChildComponent = ({IoTDevices}) => {
     
     const IoTDeviceDetailsComponent = ({IoTDeviceDetails}) => {
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
-      console.log('Details', IoTDeviceDetails);
       return (<>
-      
         <section className='w-full'>
           <BarChart
             width={900}
@@ -83,8 +82,8 @@ const IoTDevicesPage = () => {
       <div className='grid grid-flow-col w-full grid-cols-2 mt-5 gap-y-5 lg:justify-between justify-start'>
         {(!loading && inputsState && (<>
           <section className='w-2/3 '>
-            <div className='w-full'>           
-              <h2 className='text-2xl  text-left text-blue-dark font-semibold'>Choose the Meter and Time Period:</h2>
+            <div className='w-full'>
+              <h3 className='text-2xl  text-left text-blue-dark font-semibold'>Choose the Meter</h3>
               <form className='my-8 space-y-6 ' onSubmit={(e)=>submitHandler(e)} encType="multipart/form-data">
                 <input type="hidden" name="_method" value="POST" />
                 <input type="hidden" name="remember" defaultValue="true" />
@@ -100,8 +99,24 @@ const IoTDevicesPage = () => {
                   </div>
                 </div>
 
-                {/* Start Date   */}
+                {inputsState.device_id && (<>
+                  <div className='w-full flex flex-row flex-nowrap mb-5 justify-between items-center'>
+                    <h3 className='text-2xl  text-left text-blue-dark font-semibold'>Water Flow Control:</h3>
+                    <div className="md:w-20  md:h-8 w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer"onClick={(e) => {_handleClick(e);}}>
+                      {/* Switch */}
+                      <div className =  {"bg-white md:w-6 md:h-6 h-5 w-5 rounded-full shadow-md transform " +  (IoTDevices.find((IoTDevice) => IoTDevice.id === inputsState.device_id).start_read ? null : toggleClass)}></div>
+                    
+                      {!IoTDevices.find((IoTDevice) => IoTDevice.id === inputsState.device_id).start_read && (
+                          <span className="text-xs -translate-x-5">OFF</span>
+                      )}
+                      {IoTDevices.find((IoTDevice) => IoTDevice.id === inputsState.device_id).start_read  && (
+                          <span className='text-xs translate-x-2'>ON</span>
+                      )}
+                    </div>
+                  </div>
+
                 <div className="rounded-md shadow-sm -space-y-px">
+                  <h3 className='text-2xl  text-left text-blue-dark font-semibold'>Choose Time Interval:</h3>
                   <div className="mt-4 grid grid-flow-col grid-cols-2">
                     <label htmlFor="start_date" className="capitalize md:text-lg text-xs">
                       Choose the start date <span className='text-red-common'>*</span>:
@@ -127,6 +142,7 @@ const IoTDevicesPage = () => {
                     {errors && (<span className="text-red-common py-3">{errors.end_date}</span>)}
                   </div>
                 </div>
+                </>)}
 
                 {/* Submit   */}
                 <div>
@@ -139,7 +155,7 @@ const IoTDevicesPage = () => {
           </section>
         </>))}
 
-        {IoTDeviceDetails  ? (<>
+        {IoTDevices  ? (<>
           <IoTDeviceDetailsComponent IoTDeviceDetails={IoTDeviceDetails}/>
         </>) : dashboard_IoTDeviceDetails && (<>
           <IoTDeviceDetailsComponent IoTDeviceDetails={dashboard_IoTDeviceDetails}/>

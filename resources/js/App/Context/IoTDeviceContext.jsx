@@ -21,6 +21,7 @@ const IoTDeviceState = (props) => {
     message: '',
     errors: {},
     auth: false,
+    toggle: false,
     IoTDevice: {},
     IoTDevices: [],
     inputsState: {},
@@ -400,6 +401,87 @@ const IoTDeviceState = (props) => {
     });
   };
 
+  const setToggle = async (data) => {
+    dispatch({ type: TYPES.SET_LOADING });
+
+    const resp = await API.put(`/user/IoT-devices/change-power-status`, data, {
+      headers: {
+        ContentType: 'multipart/form-data',
+        Authorization: `Bearer ${JSON.parse(Cookies.get('user')).token_data.access_token}` },
+    }).then(async(response) => {
+      if (response.hasOwnProperty('data') && response.data.errorNum === 'S000') {
+        console.log("Update Device Power Status");
+        console.log(response.data);
+        dispatch({
+          type: TYPES.UPDATE_DEVICE_POWER_STATUS, payload: {
+          message: response.data.message,
+          status: response.data.status,
+        }});
+
+        swal({
+          title: "Good job!",
+          text: response.data.message,
+          icon: "success",
+          button: "Done!",
+        }).then(async(value)=> {
+          window.location.reload();
+        });
+      } else if (response.hasOwnProperty('data') && (response.data.errorNum === "E3001" || response.data.errorNum === "E3002" || response.data.errorNum === "E3003")) {
+        await userLogout();
+        history.replace(`/login`);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        });
+      } else if (response.hasOwnProperty('data') && (response.data.errorNum === 'S004' || response.data.errorNum === 'S003')) {
+        dispatch({
+          type: TYPES.VALIDATION_ERRORS, payload: {
+          errors: response.data.message,
+          status: response.data.status,
+        }});
+        swal({
+          title: "Sorry!",
+          text: "The given data was invalid.",
+          icon: "error",
+          button: "OK",
+        });
+      } else {
+        dispatch({
+          type: TYPES.GENERAL_ERRORS, payload: {
+          message: response.data.message,
+          status: response.data.status,
+          }
+        });
+        swal({
+          title: "Sorry!",
+          text: "Something went wrong.",
+          icon: "error",
+          button: "OK",
+        });
+      }
+    }).catch((error)=> {
+      if(error.hasOwnProperty('response')) {
+        dispatch({
+          type: TYPES.VALIDATION_ERRORS, payload: {
+          message: error.response.data.message,
+          errors: error.response.data.errors,
+          status: error.response.status,
+        }});
+        console.log(error);
+        swal({
+          title: "Sorry!",
+          text: error.response.data.message,
+          icon: "error",
+          button: "OK",
+        }).then(async(value)=> {
+          history.replace(`/dashboard/IoTDevices/all`);
+        });
+      }
+    });
+  };
+
   const deleteIoTDevice = (id) => {
     swal({
       title: "Are you sure?",
@@ -489,6 +571,9 @@ const IoTDeviceState = (props) => {
         addIoTDevice,
         updateIoTDevice,
         deleteIoTDevice,
+        
+        toggle: state.toggle,
+        setToggle,
 
         inputsState: state.inputsState,
         setInput,
@@ -559,7 +644,13 @@ const adminReducer = (state, action) => {
         status: action.payload.status,
         loading: false,
       };
-
+    case TYPES.UPDATE_DEVICE_POWER_STATUS:
+      return {
+        ...state,
+        message: action.payload.message,
+        status: action.payload.status,
+        loading: false,
+      };
     case TYPES.GET_ALL_OBJECTS:
       return {
         ...state,
