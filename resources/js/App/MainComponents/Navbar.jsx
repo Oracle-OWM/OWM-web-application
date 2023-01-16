@@ -50,15 +50,15 @@ const Navbar = () => {
               )}
             </Disclosure.Button>
           </div>
-          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+          <Link to={'/'} className="flex-1 hover:no-underline flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex flex-nowrap items-center">
               {/* <img className="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
               <img className="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow"> */}
               <img src={`../../../images/owm-logo.png`} className='w-20 h-20 rounded-full'/>
-              <h1 className="text-light text-2xl font-extrabold">Oracle Smart Meter</h1>
+              <h1 className="text-light text-2xl font-extrabold">Oracle Water Smart Meter</h1>
             </div>
             
-          </div>
+          </Link>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="hidden sm:block sm:mx-auto">
               <div className="flex space-x-4 ">
