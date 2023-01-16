@@ -22,8 +22,16 @@ class UsersController extends Controller
     {
         $user = User::find(Auth::id());
         if ($user) {
-            $user->IoTDevice;
-            return $this->returnData('user', $user, 'User has been returned successfully');
+            $data = [
+                'first_name'=>$user->first_name,
+                'last_name'=>$user->last_name,
+                'username'=>$user->username,
+                'email'=>$user->email,
+                'phone'=>$user->phone,
+                'IoTDevices_count'=>count($user->IoTDevices),
+                'image'=>$user->image,
+            ];
+            return $this->returnData('user', $data, 'User has been returned successfully');
         } else {
             return $this->returnError('This User is not exist', "S004");
         }

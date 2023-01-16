@@ -36,7 +36,6 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
 
     Route::group(['prefix'=>'IoT-devices'], function () {
         Route::post('/add-reading', [IoTDevicesController::class, 'addReading']);
-        Route::put('/change-power-status', [IoTDevicesController::class, 'changePowerStatus']);
         Route::put('/change-flow-status', [IoTDevicesController::class, 'changeFlowStatus']);
     });
 
@@ -82,6 +81,7 @@ Route::group( ['prefix'=>'auth'] , function ($router) {
                 Route::get('/{token}', [IoTDevicesController::class, 'getIoTDevice']);
                 Route::post('/associate-user', [IoTDevicesController::class, 'associateDeviceToUser']);
                 Route::post('/get-device-details', [IoTDevicesController::class, 'getIoTDeviceDetails']);
+                Route::put('/change-power-status', [IoTDevicesController::class, 'changePowerStatus']);
             });
 
             Route::get('/show-profile', [UsersController::class, 'getProfile']);
