@@ -2,14 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Traits\GeneralTrait;
-use App\Models\Admin\Table;
-use App\Models\User;
+use App\Models\IOTDevice;
+use Carbon\Carbon;
+use Faker\Provider\DateTime;
 use Illuminate\Console\Command;
 
-class sendTodayTableToUser extends Command
+class checkIoTStatus extends Command
 {
-    use GeneralTrait;
     /**
      * The name and signature of the console command.
      *
@@ -41,13 +40,18 @@ class sendTodayTableToUser extends Command
      */
     public function handle()
     {
-        foreach (User::all() as $user) {
-            $table = Table::where('section', '=', $user->section)
-                ->where('academic_year', '=', $user->academic_year)
-                ->where('department', '=', $user->department_id)
-                ->select('start_time', 'end_time', 'subject', 'day', 'location')
-                ->get();
-            $this->sendNotificationToMobile([$user->firebase_token], 'notification', $table);
+        $IoTDevices = IoTDevice::all();
+        foreach ($IoTDevices as $IoTDevice) {
+            $lastRead = $IoTDevice->readings->last();
+            $max_allowed_time_for_IoT_reading = config('settings.max_allowed_time_for_IoT_reading');
+            $now = new Carbon();
+            $then = new Carbon($lastRead->created_at); // "2012-07-18 21:11:12" for example
+            $diff = $now->diffInMinutes($then);
+            if ($diff >= $max_allowed_time_for_IoT_reading) {
+                $IoTDevice->update([
+                    'connection_status'=>'offline',
+                ]);
+            }
         }
     }
 }

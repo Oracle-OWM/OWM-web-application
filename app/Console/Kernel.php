@@ -2,7 +2,7 @@
 
     namespace App\Console;
 
-    use App\Console\Commands\sendTodayTableToUser;
+    use App\Console\Commands\checkIoTStatus;
     use Illuminate\Console\Scheduling\Schedule;
     use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +14,7 @@
      * @var array
      */
     protected $commands = [
-        sendTodayTableToUser::class,
+        checkIoTStatus::class,
     ];
 
     /**
@@ -25,7 +25,8 @@
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('Message:sendTodayTableToUser')->cron("* * */1 * *")->runInBackground();
+        $schedule->command('IoT:checkStatus')->cron("* * * * *")->runInBackground();
+
     }
 
     /**
