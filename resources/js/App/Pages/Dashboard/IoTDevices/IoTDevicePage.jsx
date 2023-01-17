@@ -30,7 +30,7 @@ const IoTDevicePage = ({match,}) => {
   
   const getTime = (dateTime)=> {
     var today = new Date(dateTime);
-    return today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() ;
+    return 'Day '+today.getUTCDate() +' - ' + today.getHours() + ":" + today.getMinutes();
   }
 
   const ChildComponent = ({IoTDevice}) => {
