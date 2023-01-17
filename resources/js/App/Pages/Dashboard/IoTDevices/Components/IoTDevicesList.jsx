@@ -18,16 +18,19 @@ const IoTDevicesList = ({IoTDevices}) => {
   console.log('searchResult', searchResult);
   const currentIoTDevices = [...searchResult];
   const IoTDevicesCols = [
+    // normal devices
+    currentIoTDevices.filter(IoTDevice=> IoTDevice.flow_status==='normal' && IoTDevice.start_read==true && IoTDevice.connection_status==='online'),
     // leakage devices
     currentIoTDevices.filter(IoTDevice=> IoTDevice.flow_status==='leakage'),
     // Turned Off devices 
     currentIoTDevices.filter(IoTDevice=> IoTDevice.start_read==false),
     // offline devices
     currentIoTDevices.filter(IoTDevice=> IoTDevice.connection_status==='offline'),
+    
   ];
   console.log('IoTDevicesCols', IoTDevicesCols);
-  const titles = ['Devices Include water Leakage ', 'Turned Off Devices', 'Offline Devices'];
-  const colors = ['red-400', 'yellow-400', 'gray-400'];
+  const titles = ['Normal Devices','Devices Include water Leakage ', 'Turned Off Devices', 'Offline Devices'];
+  const colors = ['green-400', 'red-400', 'yellow-400', 'gray-400'];
   
   return (<>
     {IoTDevicesCols.length>=1 && IoTDevicesCols.map((IoTDevices, index) => (
