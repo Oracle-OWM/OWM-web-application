@@ -43,7 +43,7 @@ class checkIoTStatus extends Command
         $IoTDevices = IoTDevice::all();
         foreach ($IoTDevices as $IoTDevice) {
             $lastRead = $IoTDevice->readings->last();
-            $max_allowed_time_for_IoT_reading = config('settings.max_allowed_time_for_IoT_reading');
+            $max_allowed_time_for_IoT_reading = config('settings.max_allowed_time_for_IoT_reading', 2);
             $now = new Carbon();
             $then = new Carbon($lastRead->created_at); // "2012-07-18 21:11:12" for example
             $diff = $now->diffInMinutes($then);
