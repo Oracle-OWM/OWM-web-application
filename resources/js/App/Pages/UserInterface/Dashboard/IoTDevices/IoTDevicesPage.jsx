@@ -33,7 +33,7 @@ const IoTDevicesPage = () => {
 
   const getTime = (dateTime)=> {
     var today = new Date(dateTime);
-    return today.getDay() + ":" + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() ;
+    return 'Day '+today.getUTCDate() +' - ' + today.getHours() + ":" + today.getMinutes();
   }
   
   useEffect(async () => {
@@ -55,7 +55,7 @@ const IoTDevicesPage = () => {
     
     const IoTDeviceDetailsComponent = ({IoTDeviceDetails}) => {
       return (<>
-        <section className='w-full'>
+        <section className='w-full text-center'>
           <BarChart
             width={900}
             height={500}
