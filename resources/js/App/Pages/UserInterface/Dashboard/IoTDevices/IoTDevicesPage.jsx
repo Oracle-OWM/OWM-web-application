@@ -33,7 +33,7 @@ const IoTDevicesPage = () => {
 
   const getTime = (dateTime)=> {
     var today = new Date(dateTime);
-    return today.getDay + ":" + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() ;
+    return today.getDay() + ":" + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() ;
   }
   
   useEffect(async () => {

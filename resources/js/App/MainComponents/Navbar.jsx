@@ -55,7 +55,7 @@ const Navbar = () => {
               {/* <img className="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
               <img className="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow"> */}
               <img src={`../../../images/owm-logo.png`} className='w-20 h-20 rounded-full'/>
-              <h1 className="text-light text-2xl font-extrabold">Oracle Water Smart Meter</h1>
+              <h1 className="text-light text-2xl font-extrabold">Oracle Water Flow Meter</h1>
             </div>
             
           </Link>
