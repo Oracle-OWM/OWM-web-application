@@ -33,7 +33,7 @@ const IoTDevicesPage = () => {
 
   const getTime = (dateTime)=> {
     var today = new Date(dateTime);
-    return today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() ;
+    return today.getDay + ":" + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() ;
   }
   
   useEffect(async () => {
@@ -182,10 +182,6 @@ const IoTDevicesPage = () => {
           <h1 className="text-center font-extrabold text-2xl">{`There is not any device`}</h1>
         </div>
       )}
-
-      {IoTDeviceDetails && !isEmpty(IoTDeviceDetails) && (<>
-      sd
-      </>)}
       
     </section>
   </>);
