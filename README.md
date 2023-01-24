@@ -9,7 +9,7 @@
 3. `npm i`
 4. `php artisan key:generate`
 5. `php artisan migrate`
-6. `php artisan jwt:generate`
+6. `php artisan jwt:secrete`
 ```
 * Run the serve
 update the hostname and the portname in the resources/js/App/APIs.js too
