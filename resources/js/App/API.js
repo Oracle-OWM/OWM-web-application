@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const baseURL = 'http://192.168.1.7:8000/api/auth';
-const baseURL = `http://${window.location.hostname}:8000/api/auth`;
+// const baseURL = `http://${window.location.hostname}:8000/api/auth`;
+const baseURL = `http://${window.location.hostname}/api/auth`;
 export const WSbaseURL = `ws://${window.location.hostname}:6001/app/livepost_key?protocol=7&client=js&version=7.5.0&flash=false`;
 //
 export const API = axios.create({

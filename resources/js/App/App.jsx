@@ -27,45 +27,44 @@ function App() {
   const {setAuth, auth} = useContext(AdminContext);
 
 
-  return (
-    <>
-      <div className='flex flex-col w-full'>
-        {/* <Navbar/> */}
-        <div className="flex flex-nowrap flex-row w-full mx-0">
-          <Switch>
-            <Route exact path={`/not-found`}>
-              <NotFound />
-            </Route>
+  return (<>
+    <div className='flex flex-col w-full'>
+    {/* <Navbar/> */}
+    <div className="flex flex-nowrap flex-row w-full mx-0">
+      <Switch>
+        <Route exact path={`/not-found`}>
+          <NotFound />
+        </Route>
 
-            <Route path={`/admin/login`} >
-              <LoginPage />
-            </Route>
+        <Route path={`/admin/login`} >
+          <LoginPage />
+        </Route>
 
-            <Route path={`/admin/dashboard`} >
-              <Protected > <Dashboard /> </Protected>
-            </Route>
+        <Route path={`/admin/dashboard`} >
+          <Protected > <Dashboard /> </Protected>
+        </Route>
 
-            <Route path={`/admin/managementSystem`} >
-              <Protected > <ManagementSystem /> </Protected>
-            </Route>
+        <Route path={`/admin/managementSystem`} >
+          <Protected > <ManagementSystem /> </Protected>
+        </Route>
 
-            <Route exact path={`/`} >
-              <LandingPage />
-            </Route>
+        <Route exact path={`/`} >
+          <LandingPage />
+        </Route>
 
-            <Route path={`/dashboard`} >
-              <UserProtected > <UserDashboard /> </UserProtected>
-            </Route>
+        <Route path={`/dashboard`} >
+          <UserProtected > <UserDashboard /> </UserProtected>
+        </Route>
 
-            <Route path={`/login`} >
-              <LoginRegistrationPage />
-            </Route>
+        <Route path={`/login`} >
+          <LoginRegistrationPage />
+        </Route>
 
-            <Redirect to={`/not-found`} />
-          </Switch>
-        </div>
-      </div>
-    </>);
+        <Redirect to={`/not-found`} />
+      </Switch>
+    </div>
+  </div>
+  </>);
 }
 
 export default App;
