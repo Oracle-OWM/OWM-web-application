@@ -48,7 +48,7 @@ const LoginForm = () => {
                   <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.identifier : ''} id={`identifier`} name="identifier" type="text" placeholder="Enter Your Email Address"
                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                   />
-                  {errors && (<span className="text-red-common p-3">{errors.identifier}</span>)}
+                  {errors && (<span className="text-red-600 p-3">{errors.identifier}</span>)}
                 </div>
               </div>
 
@@ -61,7 +61,7 @@ const LoginForm = () => {
                   <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="password" placeholder="Enter Your Password"
                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                   />
-                  {errors && (<span className="text-red-common p-3">{errors.password}</span>)}
+                  {errors && (<span className="text-red-600 p-3">{errors.password}</span>)}
                 </div>
               </div>
 

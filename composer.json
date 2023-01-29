@@ -18,7 +18,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.4",
         "mcamara/laravel-localization": "^1.7",
-        "pusher/pusher-php-server": "7.0.2",
+        "pusher/pusher-php-server": "6.1.0",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

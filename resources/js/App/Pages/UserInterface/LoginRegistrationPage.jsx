@@ -30,7 +30,7 @@ const LoginRegistrationPage = () => {
         formData.append("password", inputsState.password);
         formData.append("phone", inputsState.phone);
         formData.append("image", inputsState.image);
-        
+
         await register(formData);
 
     };
@@ -61,7 +61,7 @@ const LoginRegistrationPage = () => {
                 </div>
             </div>
         )}
-            
+
         <main className="relative w-full flex flex-col items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div className="container px-5 py-24 mx-auto">
                 <div className="w-full mx-auto flex flex-wrap md:flex-row flex-col justify-center items-start">
@@ -79,7 +79,7 @@ const LoginRegistrationPage = () => {
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.identifier : ''} id={`identifier`} name="identifier" type="text" placeholder="Enter Your Email Address or Username"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                             />
-                            {errors && (<span className="text-red-common p-3">{errors.identifier}</span>)}
+                            {errors && (<span className="text-red-600 p-3">{errors.identifier}</span>)}
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@ const LoginRegistrationPage = () => {
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="password" placeholder="Enter Your Password"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                             />
-                            {errors && (<span className="text-red-common p-3">{errors.password}</span>)}
+                            {errors && (<span className="text-red-600 p-3">{errors.password}</span>)}
                             </div>
                         </div>
 
@@ -106,13 +106,13 @@ const LoginRegistrationPage = () => {
                         </div>
                     </form>
 
-                    <span className="bg-gray-300 rounded-full d-inline-block border-1 p-10 text-center mt-32">OR</span>
+                    <span className="bg-gray-300 rounded-full mx-auto d-inline-block border-1 p-10 text-center my-32">OR</span>
 
                     <form  method="POST" onSubmit={(e)=>RegisterHandler(e)} className="mx-auto  my-8 w-8/12 md:w-4/12" encType="multipart/form-data">
                         <input type="hidden" name="_method" value="POST" />
                         <input type="hidden" name="remember" defaultValue="true" />
                         <h3 style={{lineHeight: 1.2}} className="lg:text-start lg:w-auto w-full text-center font-semibold text-5xl text-blue-dark">Create Account</h3>
-                        
+
                         {/* first_name */}
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mt-4">
@@ -122,7 +122,7 @@ const LoginRegistrationPage = () => {
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.first_name : ''} id={`first_name`} name="first_name" type="text" placeholder="Enter Your First Name"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                             />
-                            {errors && (<span className="text-red-common p-3">{errors.first_name}</span>)}
+                            {errors && (<span className="text-red-600 p-3">{errors.first_name}</span>)}
                             </div>
                         </div>
 
@@ -135,7 +135,7 @@ const LoginRegistrationPage = () => {
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.last_name : ''} id={`last_name`} name="last_name" type="text" placeholder="Enter Your Last Name"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                             />
-                            {errors && (<span className="text-red-common p-3">{errors.last_name}</span>)}
+                            {errors && (<span className="text-red-600 p-3">{errors.last_name}</span>)}
                             </div>
                         </div>
 
@@ -148,7 +148,7 @@ const LoginRegistrationPage = () => {
                             <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.username : ''} id={`username`} name="username" type="text" placeholder="Enter Your Username"
                                 className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                             />
-                            {errors && (<span className="text-red-common p-3">{errors.username}</span>)}
+                            {errors && (<span className="text-red-600 p-3">{errors.username}</span>)}
                             </div>
                         </div>
 
@@ -161,7 +161,7 @@ const LoginRegistrationPage = () => {
                                 <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.email : ''} id={`email`} name="email" type="email" placeholder="Enter Your Email Address"
                                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 />
-                                {errors && (<span className="text-red-common p-3">{errors.email}</span>)}
+                                {errors && (<span className="text-red-600 p-3">{errors.email}</span>)}
                             </div>
                         </div>
 
@@ -174,7 +174,7 @@ const LoginRegistrationPage = () => {
                                 <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.password : ''} id={`password`} name="password" type="password" placeholder="Enter Your Password at least 8 characters"
                                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 />
-                                {errors && (<span className="text-red-common p-3">{errors.password}</span>)}
+                                {errors && (<span className="text-red-600 p-3">{errors.password}</span>)}
                             </div>
                         </div>
 
@@ -187,7 +187,7 @@ const LoginRegistrationPage = () => {
                                 <input onChange={(e)=>setInput(e)} value={inputsState ? inputsState.phone : ''} id={`phone`} name="phone" type="text" placeholder="Enter Your Password at least 8 characters"
                                     className="bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 />
-                                {errors && (<span className="text-red-common p-3">{errors.phone}</span>)}
+                                {errors && (<span className="text-red-600 p-3">{errors.phone}</span>)}
                             </div>
                         </div>
 
@@ -195,13 +195,13 @@ const LoginRegistrationPage = () => {
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div className="mt-4">
                             <label htmlFor="image" className="capitalize md:text-lg text-xs">
-                                Upload Your Image : 
+                                Upload Your Image :
                             </label>
-                            <input id={`image`} onChange={(e)=>setInput(e)} 
-                                name="image" type="file" placeholder="Upload Image" 
+                            <input id={`image`} onChange={(e)=>setInput(e)}
+                                name="image" type="file" placeholder="Upload Image"
                                 className=" bg-blue-thin relative block w-full p-3 border md:text-lg text-xs placeholder-gray-common text-blue-dark rounded-t-md rounded-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                             />
-                            {errors && (<span className="text-red-common p-3">{errors.image}</span>)}
+                            {errors && (<span className="text-red-600 p-3">{errors.image}</span>)}
                             </div>
                         </div>
 
